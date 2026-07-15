@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Farm Stories — Boutique Orchard Communities</title>
+<meta name="description" content="The Farm Stories crafts boutique orchard communities in South India. The Mango Meadows — 26 curated plots among 300+ mature mango trees in Agali, at the foothills of the Nilgiris.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F5F0E8'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='28' text-anchor='middle' fill='%234A3728'%3ETF%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- ══════════ BOOK INTRO EXPERIENCE ══════════ -->
+<div id="book-intro" aria-label="The Farm Stories — opening the book" role="dialog">
+  <canvas id="intro-particles" aria-hidden="true"></canvas>
+  <div class="intro-vignette" aria-hidden="true"></div>
+
+  <div class="book-scene">
+    <div class="book" id="book">
+      <!-- Book spine + back board -->
+      <div class="book-back"></div>
+      <div class="book-spine"></div>
+
+      <!-- Page 3 (last inner page, revealed after 2 turns) -->
+      <div class="book-page" id="bp3" style="z-index:1;">
+        <div class="page-face page-front">
+          <div class="page-inner page-last">
+            <div class="tfs-seal" aria-hidden="true">
+              <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width=".7"/><path d="M50 26 C43 38 38 44 38 53 a12 12 0 0 0 24 0 C62 44 57 38 50 26 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="50" y1="52" x2="50" y2="74" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <p class="page-kicker">And so the story begins</p>
+            <h3 class="page-h">Step into<br><em>the orchard.</em></h3>
+            <button class="page-enter-btn" id="enter-site-btn">Begin reading →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="book-page turnable" id="bp2" style="z-index:2;">
+        <div class="page-face page-front">
+          <div class="page-inner">
+            <p class="page-kicker">Chapter One</p>
+            <h3 class="page-h">The Mango<br><em>Meadows</em></h3>
+            <div class="page-rule" aria-hidden="true"></div>
+            <p class="page-body">Seven acres in Agali, at the foothills of the Nilgiris. Three hundred mango trees, planted long before us — and twenty-six families still to arrive.</p>
+            <p class="page-turn-hint">Turn the page ›</p>
+          </div>
+        </div>
+        <div class="page-face page-back">
+          <div class="page-inner page-inner-verso">
+            <svg class="page-sketch" viewBox="0 0 220 130" aria-hidden="true">
+              <path class="ink" d="M8 96 Q40 60 72 84 Q104 108 138 78 Q170 52 212 88" fill="none"/>
+              <path class="ink" d="M20 96 L20 70 M20 70 q-8 -14 0 -24 q8 10 0 24" fill="none"/>
+              <path class="ink" d="M150 40 q8 -10 16 0 M176 30 q7 -9 14 0" fill="none"/>
+              <circle class="ink-sun" cx="188" cy="26" r="10"/>
+            </svg>
+            <p class="page-body verso">Far enough to feel free.<br>Close enough to feel spontaneous.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 1 (title page) -->
+      <div class="book-page turnable" id="bp1" style="z-index:3;">
+        <div class="page-face page-front">
+          <div class="page-inner page-title-inner">
+            <p class="page-kicker">A living storybook of the land</p>
+            <h2 class="page-title-h">The Farm<br><em>Stories</em></h2>
+            <div class="page-rule" aria-hidden="true"></div>
+            <p class="page-body">Every farm is a chapter.<br>Every project is a book.<br>Every owner becomes part of the story.</p>
+            <p class="page-turn-hint">Turn the page ›</p>
+          </div>
+        </div>
+        <div class="page-face page-back">
+          <div class="page-inner page-inner-verso">
+            <p class="page-body verso" style="margin-top:38%;">“Life is not meant<br>to be rushed.”</p>
+            <p class="page-cite">— Coimbatore, South India</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cover -->
+      <div class="book-cover turnable" id="bcover" style="z-index:4;">
+        <div class="page-face cover-front">
+          <div class="cover-frame">
+            <div class="cover-emboss-rule top" aria-hidden="true"></div>
+            <div class="cover-monogram" aria-hidden="true">
+              <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M50 24 C41 38 35 45 35 56 a15 15 0 0 0 30 0 C65 45 59 38 50 24 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="50" y1="56" x2="50" y2="80" stroke="currentColor" stroke-width="1.2"/><line x1="50" y1="64" x2="42" y2="58" stroke="currentColor" stroke-width="1"/><line x1="50" y1="68" x2="58" y2="62" stroke="currentColor" stroke-width="1"/></svg>
+            </div>
+            <h1 class="cover-title">THE FARM<br>STORIES</h1>
+            <p class="cover-sub">Boutique Orchard Communities · South India</p>
+            <div class="cover-emboss-rule bottom" aria-hidden="true"></div>
+            <p class="cover-open-hint">Click, hover or swipe to open</p>
+          </div>
+        </div>
+        <div class="page-face cover-back"></div>
+      </div>
+    </div>
+  </div>
+
+  <button id="skip-intro" type="button">Skip the introduction</button>
+</div>
+
+<!-- Paper grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+<!-- Cursor glow -->
+<div id="cursor-glow" aria-hidden="true"></div>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="site-nav">
+  <div class="nav-logo-wrap" onclick="show('home')" role="button" aria-label="The Farm Stories — home">
+    <span class="nav-logo-img" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 24 C41 38 35 45 35 56 a15 15 0 0 0 30 0 C65 45 59 38 50 24 Z" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="50" y1="56" x2="50" y2="80" stroke="currentColor" stroke-width="2"/></svg>
+    </span>
+    <span class="nav-wordmark">The Farm <em>Stories</em></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="return show('about')"     id="nl-about">About us</a></li>
+    <li><a href="#" onclick="return show('projects')"  id="nl-projects">Our Projects</a></li>
+    <li><a href="#" onclick="return show('portal')"    id="nl-portal">The Portal</a></li>
+    <li><a href="#" onclick="return show('community')" id="nl-community">The Community</a></li>
+    <li><a href="#" onclick="return show('agritech')"  id="nl-agritech">Agri-tech</a></li>
+    <li><a href="#" onclick="return show('whatsnew')"  id="nl-whatsnew">What's New</a></li>
+  </ul>
+  <button class="nav-cta" onclick="show('portal')">Visit a Site</button>
+  <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ══════════ HOME ══════════ -->
+<section id="home" class="active">
+
+  <!-- Hero: ink sketch dissolving into reality -->
+  <div class="hero-story">
+    <div class="hero-canvas">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="hero-photo-blend" aria-hidden="true"></div>
+      <svg class="hero-sketch" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <!-- Mountains -->
+        <path class="ink d1" d="M-20 250 L120 90 L210 190 L300 60 L420 210 L520 130 L640 250" fill="none"/>
+        <path class="ink d1" d="M60 180 l30 34 M280 110 l26 40 M470 170 l24 32" fill="none"/>
+        <!-- Sun -->
+        <circle class="gold-sun" cx="565" cy="118" r="44"/>
+        <!-- Birds -->
+        <g class="birds">
+          <path class="ink d2" d="M660 90 q7 -9 14 0 M690 74 q7 -9 14 0 M722 96 q6 -8 13 0 M700 118 q6 -8 13 0" fill="none"/>
+        </g>
+        <!-- Farmhouse -->
+        <g class="d2">
+          <path class="ink" d="M150 330 L150 288 L206 258 L262 288 L262 330 Z" fill="none"/>
+          <path class="ink" d="M206 258 L206 330 M168 330 v-24 h18 v24 M226 296 h20 v16 h-20 Z" fill="none"/>
+          <path class="ink" d="M262 296 L316 296 L316 330 L262 330 M282 330 v-20 h18 v20" fill="none"/>
+        </g>
+        <!-- Pines -->
+        <g class="d2">
+          <path class="ink" d="M110 328 v-70 m0 8 l-20 26 h40 l-20 -26 m0 -18 l-15 20 h30 l-15 -20 m0 -16 l-11 15 h22 l-11 -15" fill="none"/>
+          <path class="ink" d="M348 330 v-58 m0 6 l-16 22 h32 l-16 -22 m0 -15 l-12 17 h24 l-12 -17" fill="none"/>
+        </g>
+        <!-- Stream -->
+        <path class="ink d3" d="M40 620 C90 540 160 480 150 420 C144 384 120 360 140 336" fill="none"/>
+        <path class="ink d3" d="M90 620 C136 548 200 492 190 428 C185 392 164 366 180 340" fill="none"/>
+        <path class="ink d3" d="M70 560 q14 8 28 0 M110 500 q13 7 26 0 M150 452 q11 6 22 0" fill="none"/>
+        <!-- Path to orchard -->
+        <path class="ink d3" d="M420 620 C480 520 520 470 610 430 C700 390 760 400 850 380" fill="none"/>
+        <path class="ink d3" d="M500 620 C550 535 590 490 665 455 C740 420 800 425 880 405" fill="none"/>
+        <!-- Orchard trees (sketch side) -->
+        <g class="d4">
+          <path class="ink" d="M600 470 v-52 m0 52 q-40 -6 -46 -44 q-4 -34 28 -48 q36 -14 58 14 q20 26 -2 54 q-16 22 -38 24" fill="none"/>
+          <path class="ink" d="M760 440 v-44 m0 44 q-34 -4 -40 -36 q-4 -30 24 -42 q32 -12 50 12 q18 22 -2 46 q-14 18 -32 20" fill="none"/>
+          <path class="ink" d="M880 470 v-40 m0 40 q-30 -4 -35 -32 q-3 -26 21 -37 q28 -10 44 10 q15 20 -2 40 q-12 16 -28 19" fill="none"/>
+        </g>
+        <!-- Walking figures -->
+        <g class="d4">
+          <path class="ink" d="M700 500 q4 -12 2 -22 q6 -8 2 -16 a5 5 0 1 1 4 0 M700 500 q8 -10 10 -22" fill="none"/>
+          <path class="ink" d="M726 502 q3 -10 2 -19 q5 -7 2 -14 a4.5 4.5 0 1 1 4 0 M726 502 q7 -9 8 -19" fill="none"/>
+        </g>
+        <!-- Foreground grasses -->
+        <path class="ink d4" d="M60 620 q6 -30 -4 -48 m18 48 q8 -26 2 -44 m300 44 q5 -24 -3 -40 m20 40 q7 -22 1 -38" fill="none"/>
+      </svg>
+      <div class="hero-story-overlay" aria-hidden="true"></div>
+
+      <div class="hero-story-content">
+        <div class="hero-kicker reveal">Chapter One · Now being written</div>
+        <h1 class="hero-title" id="hero-title">Some land is sold.<br><em>Ours is storied.</em></h1>
+        <p class="hero-desc reveal">We find the most soulful parcels of South India and turn them into boutique orchard communities — for families who believe the good life is lived closer to the earth.</p>
+        <div class="hero-btns reveal">
+          <button class="btn-sage" onclick="show('projects')">Read Chapter One — Mango Meadows</button>
+          <button class="btn-line-light" onclick="show('portal')">Explore the plots</button>
+        </div>
+      </div>
+
+      <div class="hero-chapter-card reveal">
+        <p class="hcc-kicker">Now selling · Agali, Tamil Nadu</p>
+        <h3>The Mango Meadows</h3>
+        <p class="hcc-sub">26 orchard homesites among 300+ mature mango trees</p>
+        <span class="badge">Plots registering now</span>
+      </div>
+
+      <div class="hero-scroll-hint" aria-hidden="true"><span></span>Scroll to continue the story</div>
+    </div>
+  </div>
+
+  <!-- Trust strip (operational proof) -->
+  <div class="trust-strip">
+    <div class="trust-item reveal"><strong>Clear patta &amp; EC</strong><span>Documentation as a brand promise</span></div>
+    <div class="trust-item reveal"><strong>300+ mature trees</strong><span>A living orchard, not a bare plot</span></div>
+    <div class="trust-item reveal"><strong>26 families only</strong><span>Boutique by design, never mass-built</span></div>
+    <div class="trust-item reveal"><strong>Roads &amp; fencing laid</strong><span>Infrastructure you can walk today</span></div>
+  </div>
+
+  <!-- Story stats -->
+  <div class="story-stats">
+    <div class="hero-stat reveal"><div class="num" data-count="26">0</div><div class="label">Curated plots</div></div>
+    <div class="hero-stat reveal"><div class="num" data-count="7" data-suffix=" ac">0</div><div class="label">Agali, Tamil Nadu</div></div>
+    <div class="hero-stat reveal"><div class="num" data-count="300" data-suffix="+">0</div><div class="label">Mango trees retained</div></div>
+    <div class="hero-stat reveal"><div class="num" data-count="45" data-suffix=" km">0</div><div class="label">From Coimbatore</div></div>
+  </div>
+
+  <!-- Conviction + How we work (dark strip preserved) -->
+  <div class="conviction-strip">
+    <div class="conviction-left">
+      <div class="cv-tag">Our conviction</div>
+      <h2 class="split-lines">Life is not meant<br><em>to be rushed.</em></h2>
+      <p>We founded The Farm Stories on a simple belief: that families deserve land with a soul — not a spec sheet. Every project we take on must already have a story worth telling before we ever draw a boundary.</p>
+      <button class="btn-gold-fill" onclick="show('about')">Our Story →</button>
+    </div>
+    <div class="conviction-right">
+      <div class="how-label">How we work</div>
+      <div class="how-item reveal">
+        <span class="how-num">01</span>
+        <div class="how-body"><h4>Find the soul</h4><p>Locate land with natural character — orchards, views, elevation, water.</p></div>
+      </div>
+      <div class="how-item reveal">
+        <span class="how-num">02</span>
+        <div class="how-body"><h4>Build the community</h4><p>Boutique layouts, max 30 families. Curated, not mass-developed.</p></div>
+      </div>
+      <div class="how-item reveal">
+        <span class="how-num">03</span>
+        <div class="how-body"><h4>Tell the story</h4><p>Every project gets a name, a philosophy, a narrative identity.</p></div>
+      </div>
+      <div class="how-item reveal">
+        <span class="how-num">04</span>
+        <div class="how-body"><h4>Stay present</h4><p>We never disappear after registration. We grow with you.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter preview: editorial spread -->
+  <div class="chapter-spread">
+    <div class="cs-img parallax-img">
+      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="Golden light through the mango orchard at Mango Meadows" loading="lazy">
+    </div>
+    <div class="cs-text">
+      <div class="section-tag">From the field journal</div>
+      <h2 class="split-lines">The orchard was here<br><em>long before us.</em></h2>
+      <p>Most farmland projects begin with empty earth and a promise. Mango Meadows began with three hundred grown trees, already fruiting, already shading the paths between them. We didn't plant a story — we found one, and drew twenty-six quiet boundaries around it.</p>
+      <p class="cs-drop">You'll hear the difference the moment you arrive. Mature orchards hum: birds in the canopy, wind in real leaves, the smell of ripening fruit in April. That is what your family inherits on day one — not a rendering of what might someday grow.</p>
+      <button class="btn-earth" onclick="show('projects')">Continue reading →</button>
+    </div>
+  </div>
+
+  <!-- Testimonial / social proof -->
+  <div class="testimonial-strip">
+    <div class="t-inner reveal">
+      <svg class="t-quote" viewBox="0 0 40 30" aria-hidden="true"><path d="M2 30 Q2 8 18 0 L20 5 Q10 10 9 18 L16 18 L16 30 Z M22 30 Q22 8 38 0 L40 5 Q30 10 29 18 L36 18 L36 30 Z" fill="currentColor"/></svg>
+      <blockquote>We visited on a Sunday morning expecting a sales pitch. Instead we stood under a forty-year-old mango tree while our daughter chased dragonflies. We registered plot 09 the next week.</blockquote>
+      <cite>— An early Mango Meadows family, Coimbatore</cite>
+    </div>
+  </div>
+
+  <!-- CRO closing band -->
+  <div class="closing-band">
+    <div class="closing-inner">
+      <h2>The best way to know a plot<br><em>is to stand on it.</em></h2>
+      <p>Guided site visits run every weekend. 75–90 minutes from Coimbatore. No pressure, no countdown clocks — just a long walk in the orchard.</p>
+      <div class="hero-btns" style="justify-content:center;">
+        <button class="btn-gold-fill" onclick="openVisitForm()">Book a site visit</button>
+        <a class="btn-line-light" href="tel:+919003746953">Call +91 90037 46953</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="page-light">
+
+    <div class="about-grid">
+      <div class="about-title-col">
+        <div class="section-tag">About us</div>
+        <h2 class="about-h split-lines">We believe<br>in <em>slow, soulful,<br>sustainable</em> living.</h2>
+      </div>
+      <div class="about-text" style="padding-top:8px;">
+        <p>The Farm Stories was born from a simple observation: the families who most need a connection to nature are the ones with the least access to it. Professionals. Parents. People building lives in cities who are slowly losing something they can't name.</p>
+        <p>Founded in Coimbatore, The Farm Stories identifies and transforms the most soulful land across South India into <strong>boutique orchard communities</strong> — places where weekends become sacred and where memories outlast generations.</p>
+        <p><strong>Mango Meadows in Agali is our first promise made real.</strong> More are coming.</p>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num">01</div>
+        <h3>Curated land</h3>
+        <p>Every TFS project starts with the land. We look for natural character — mature trees, clean air, elevation, water proximity. The land must already have a soul before we build on it.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">02</div>
+        <h3>Boutique scale</h3>
+        <p>We cap every community at 30–40 families. Small enough to know your neighbours. Large enough to share a pavilion, a trail, a harvest evening together.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">03</div>
+        <h3>Documentation trust</h3>
+        <p>Clear title, clean patta, proper EC, registered layout. We make legal clarity a brand promise — not an afterthought. Every plot is investment-grade from day one.</p>
+      </div>
+    </div>
+
+    <div class="quote-strip">
+      <div>
+        <blockquote>"Mango Meadows is our promise made real. An opportunity to own not just land, but a lifestyle, a legacy, and a slower, more beautiful way of life."</blockquote>
+        <cite>— The Farm Stories · Coimbatore</cite>
+      </div>
+      <span class="quote-logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 24 C41 38 35 45 35 56 a15 15 0 0 0 30 0 C65 45 59 38 50 24 Z" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="50" y1="56" x2="50" y2="80" stroke="currentColor" stroke-width="2"/></svg>
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects">
+  <div class="page-cream">
+
+    <div class="section-tag">Our projects</div>
+    <h2 class="section-title split-lines">Each one a story,<br><em>waiting to be lived.</em></h2>
+
+    <!-- Feature card -->
+    <div class="project-hero-card">
+      <div class="phc-content">
+        <div>
+          <span class="project-badge">Now selling · Agali, Tamil Nadu</span>
+          <h2>The Mango<br><em>Meadows</em></h2>
+          <p class="phc-tagline">A soulful orchard community of boutique homesites, nestled among 300+ mango trees with sweeping Nilgiris views.</p>
+        </div>
+        <div>
+          <div class="project-specs">
+            <div class="spec-item"><div class="spec-val">7 ac</div><div class="spec-key">Total area</div></div>
+            <div class="spec-item"><div class="spec-val">26</div><div class="spec-key">Exclusive plots</div></div>
+            <div class="spec-item"><div class="spec-val">20–30c</div><div class="spec-key">Plot size</div></div>
+            <div class="spec-item"><div class="spec-val">45 km</div><div class="spec-key">From Coimbatore</div></div>
+          </div>
+          <button class="btn-sage" onclick="openTab('overview')">Explore the project</button>
+        </div>
+      </div>
+      <div class="phc-visual parallax-img">
+        <button class="gallery-btn" onclick="openTab('views')">View site photography →</button>
+      </div>
+    </div>
+
+    <!-- Tabs (preserved) -->
+    <div class="project-tabs">
+      <button class="ptab active" onclick="openTab('overview')">Overview</button>
+      <button class="ptab" onclick="openTab('views')">Site Views</button>
+      <button class="ptab" onclick="openTab('benefits')">Benefits</button>
+      <button class="ptab" onclick="openTab('brochure')">Brochure &amp; Contact</button>
+    </div>
+
+    <div id="pane-overview" class="tab-pane active">
+      <div class="overview-2col">
+        <div>
+          <p>Mango Meadows is a thoughtfully planned orchard community spread across 7 acres in Agali, at the foothills of the Nilgiris. Designed for families who value nature, privacy, and open spaces.</p>
+          <p>The community features 26 exclusive 20–30 cent plots surrounded by 300+ mature mango trees, breezy mountains and valley, natural greenery, and quiet landscapes.</p>
+          <p>Only 75–90 minutes — 45 kms from Coimbatore. Close enough to feel spontaneous. Far enough to feel free.</p>
+          <button class="btn-sage" style="margin-top:12px;" onclick="show('portal')">Open the plot explorer →</button>
+        </div>
+        <ul class="feat-list">
+          <li>Secured perimeter fencing</li>
+          <li>Natural entrance arch with aesthetic design</li>
+          <li>22-ft internal roads connecting the community</li>
+          <li>Landscaped greenery with 300+ trees retained</li>
+          <li>Street lighting for visibility and safety</li>
+          <li>Amphitheatre pavilion &amp; community spaces</li>
+          <li>Walking trails &amp; sunset decks</li>
+          <li>Ready-to-register with full documentation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="pane-views" class="tab-pane">
+      <div class="views-grid">
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" alt="Orchard, west boundary" loading="lazy"><div class="view-label">Orchard — west boundary</div></div>
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Nilgiris view from plot 04" loading="lazy"><div class="view-label">Nilgiris view — plot 04</div></div>
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=600&q=80" alt="Forest edge, north boundary" loading="lazy"><div class="view-label">Forest edge — north</div></div>
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80" alt="Morning light at the entrance" loading="lazy"><div class="view-label">Morning light — entrance</div></div>
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Valley panorama from plot 17" loading="lazy"><div class="view-label">Valley panorama — plot 17</div></div>
+        <div class="view-item"><img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=80" alt="Internal road, phase one" loading="lazy"><div class="view-label">Internal road — phase 1</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:14px;text-align:center;">Contact us to schedule your personal site visit.</p>
+    </div>
+
+    <div id="pane-benefits" class="tab-pane">
+      <div class="benefits-grid">
+        <div class="benefit-card reveal"><h4>Weekend farmhouse</h4><p>Build your dream retreat at your own pace. The orchard is your neighbourhood.</p></div>
+        <div class="benefit-card reveal"><h4>A living orchard</h4><p>300+ mature, fruiting mango trees on day one — not saplings and promises.</p></div>
+        <div class="benefit-card reveal"><h4>Nature immersion</h4><p>Nilgiris views, clean air, valley breezes — nature as neighbour, all year.</p></div>
+        <div class="benefit-card reveal"><h4>Clear documentation</h4><p>Patta, EC, survey sketch, layout approval. Zero ambiguity from day one.</p></div>
+        <div class="benefit-card reveal"><h4>Boutique community</h4><p>26 families max. A curated neighbourhood of like-minded people.</p></div>
+        <div class="benefit-card reveal"><h4>Eco-stay potential</h4><p>Build a homestay or rental cabin. The Nilgiris belt draws wellness travellers year-round.</p></div>
+      </div>
+    </div>
+
+    <div id="pane-brochure" class="tab-pane">
+      <div class="brochure-strip">
+        <div>
+          <h3>The Mango Meadows — Full Brochure</h3>
+          <p>Project details, layout plan, features and contact information · 14 pages</p>
+        </div>
+        <button class="btn-white-fill wax-btn"><span class="wax-seal" aria-hidden="true"></span>Download PDF →</button>
+      </div>
+      <div class="contact-row">
+        <div><div class="contact-k">Phone</div><div class="contact-v"><a href="tel:+919003746953">+91 90037 46953</a></div></div>
+        <div><div class="contact-k">Email</div><div class="contact-v"><a href="mailto:hello@thefarmstories.estate">hello@thefarmstories.estate</a></div></div>
+        <div><div class="contact-k">Website</div><div class="contact-v">thefarmstories.estate</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ PORTAL — PLOT EXPLORER ══════════ -->
+<section id="portal">
+  <div class="page-light">
+
+    <div class="section-tag">The Portal</div>
+    <h2 class="section-title split-lines">Find your plot,<br><em>find your story.</em></h2>
+
+    <div class="explorer-topbar">
+      <div class="ex-status-chips" id="ex-status-chips">
+        <button class="ex-chip active" data-status="all">All plots <span class="chip-count" id="cc-all"></span></button>
+        <button class="ex-chip" data-status="available"><span class="dot dot-available"></span>Available <span class="chip-count" id="cc-available"></span></button>
+        <button class="ex-chip" data-status="reserved"><span class="dot dot-reserved"></span>Reserved <span class="chip-count" id="cc-reserved"></span></button>
+        <button class="ex-chip" data-status="sold"><span class="dot dot-sold"></span>Sold <span class="chip-count" id="cc-sold"></span></button>
+      </div>
+      <div class="ex-toggles">
+        <button class="ex-toggle active" id="tg-master">Masterplan</button>
+        <button class="ex-toggle" id="tg-satellite">Satellite</button>
+      </div>
+    </div>
+
+    <div class="explorer-layout">
+
+      <!-- Sidebar filters -->
+      <aside class="explorer-sidebar">
+        <div class="filter-panel">
+          <h3>Refine</h3>
+          <div class="fg"><span class="fl">Plot size</span>
+            <select class="fsel" id="f-size"><option value="all">Any size</option><option value="20">20–24 cents</option><option value="25">25–30 cents</option></select>
+          </div>
+          <div class="fg"><span class="fl">Character</span>
+            <select class="fsel" id="f-char"><option value="all">Any</option><option value="corner">Corner plots</option><option value="orchard">Orchard-dense</option><option value="view">Nilgiris view</option></select>
+          </div>
+          <div class="fg"><span class="fl">Road frontage</span>
+            <select class="fsel" id="f-front"><option value="all">Any</option><option value="40">40 ft +</option><option value="60">60 ft +</option></select>
+          </div>
+          <div class="fg fg-check">
+            <label><input type="checkbox" id="f-sun"> <span>Morning-sun plots (east facing)</span></label>
+          </div>
+          <div class="fg fg-check">
+            <label><input type="checkbox" id="f-saved"> <span>Saved plots only</span></label>
+          </div>
+          <button class="btn-line" style="width:100%;" id="f-reset">Reset filters</button>
+        </div>
+
+        <div class="visit-cta">
+          <h4>Schedule a site visit</h4>
+          <p>The best way to know a plot is to stand on it. Book a guided visit with our team.</p>
+          <button class="btn-sage" style="width:100%;" onclick="openVisitForm()">Book visit</button>
+        </div>
+      </aside>
+
+      <!-- Map -->
+      <div class="explorer-main">
+        <div class="map-stage" id="map-stage">
+          <div class="map-satellite" id="map-satellite" aria-hidden="true"></div>
+          <svg id="masterplan" viewBox="0 0 1000 660" role="img" aria-label="Mango Meadows interactive masterplan"></svg>
+          <div class="map-controls">
+            <button id="zoom-in" aria-label="Zoom in">+</button>
+            <button id="zoom-out" aria-label="Zoom out">−</button>
+            <button id="zoom-reset" aria-label="Reset view">⌂</button>
+          </div>
+          <div class="map-legend">
+            <span><i class="dot dot-available"></i>Available</span>
+            <span><i class="dot dot-reserved"></i>Reserved</span>
+            <span><i class="dot dot-sold"></i>Sold</span>
+            <span class="legend-hint">Scroll to zoom · drag to pan</span>
+          </div>
+          <div id="plot-tooltip" class="plot-tooltip" role="status"></div>
+        </div>
+
+        <!-- Plot detail card -->
+        <div class="plot-detail" id="plot-detail" hidden>
+          <button class="pd-close" id="pd-close" aria-label="Close">×</button>
+          <div class="pd-head">
+            <h3 id="pd-name">Plot 01</h3>
+            <span class="pd-status" id="pd-status">Available</span>
+          </div>
+          <div class="pd-grid" id="pd-grid"></div>
+          <p class="pd-note" id="pd-note"></p>
+          <div class="pd-actions">
+            <button class="btn-sage" id="pd-visit">Book a visit to this plot</button>
+            <button class="btn-line" id="pd-compare">+ Compare</button>
+            <button class="btn-line pd-save" id="pd-save" aria-label="Save plot">♡ Save</button>
+          </div>
+        </div>
+
+        <!-- Compare drawer -->
+        <div class="compare-drawer" id="compare-drawer" hidden>
+          <div class="cd-head">
+            <h4>Compare plots <span id="cd-count"></span></h4>
+            <button id="cd-clear">Clear</button>
+          </div>
+          <div class="cd-table" id="cd-table"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="portal-foot">Distances, elevations and sun hours are indicative, measured from the site survey of March 2025. Walk the land with us to feel what a map can't show.</p>
+
+  </div>
+</section>
+
+<!-- ══════════ COMMUNITY ══════════ -->
+<section id="community">
+  <div class="cs-page">
+    <div class="cs-inner">
+      <div class="section-tag">The Community</div>
+      <h2>A place for<br><em>slow living</em> believers.</h2>
+      <p>We're building a membership community around soulful, sustainable, and slow living — events, farm journals, seasonal gatherings at Mango Meadows, and more.</p>
+      <form class="notify-form" onsubmit="return notifySubmit(this)">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Notify me</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AGRITECH ══════════ -->
+<section id="agritech">
+  <div class="cs-page" style="background:var(--dark-bg);">
+    <div class="cs-inner">
+      <div class="section-tag">Agri-tech</div>
+      <h2>Smart land.<br><em>Intelligent</em> farming.</h2>
+      <p>IoT-enabled farm plots, live farm dashboards, precision irrigation, and managed crop services — making farm ownership effortless for the absentee owner.</p>
+      <form class="notify-form" onsubmit="return notifySubmit(this)">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Notify me</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ WHAT'S NEW ══════════ -->
+<section id="whatsnew">
+  <div class="page-light">
+
+    <div class="section-tag">What's New</div>
+    <h2 class="section-title split-lines">News, updates &amp;<br><em>stories from the field.</em></h2>
+
+    <div class="wn-filter-bar">
+      <button class="wn-filter-btn active" onclick="filterPosts('all', this)">All</button>
+      <button class="wn-filter-btn" onclick="filterPosts('news', this)">News</button>
+      <button class="wn-filter-btn" onclick="filterPosts('update', this)">Project Updates</button>
+      <button class="wn-filter-btn" onclick="filterPosts('blog', this)">From the Farm</button>
+    </div>
+
+    <div class="wn-featured" data-type="update">
+      <div class="wn-featured-img">
+        <div class="wn-featured-img-overlay"></div>
+        <span class="wn-feat-type-pill">Featured</span>
+      </div>
+      <div class="wn-featured-body">
+        <div>
+          <div class="wn-feat-meta">
+            <span class="wn-feat-cat">Project Update</span>
+            <span class="wn-feat-date">May 2025</span>
+          </div>
+          <h2>Mango Meadows breaks ground —<br><em>plots now open for registration.</em></h2>
+          <p>After months of site preparation, legal clearances, and community planning, The Mango Meadows officially opens for plot registration. We walk you through what's been done, what's coming next, and what plot owners can expect in the months ahead.</p>
+        </div>
+        <a href="#" class="wn-read-link">Read the full update</a>
+      </div>
+    </div>
+
+    <div class="wn-grid">
+
+      <div class="wn-card reveal" data-type="news">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&q=80" alt="Nilgiris foothills" loading="lazy">
+          <span class="wn-type-pill pill-news">News</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">News</span><span class="wn-card-date">April 2025</span></div>
+          <h3>The Farm Stories launches its first project in the Nilgiris foothills</h3>
+          <p>Mango Meadows marks the beginning of a new kind of real estate story — boutique, soulful, and community-first. Here's what it means for South India's farmland landscape.</p>
+          <div class="wn-card-footer"><span>4 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+      <div class="wn-card reveal" data-type="blog">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=500&q=80" alt="Forest morning" loading="lazy">
+          <span class="wn-type-pill pill-blog">From the Farm</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">From the Farm</span><span class="wn-card-date">March 2025</span></div>
+          <h3>Why a 7-acre orchard in Agali stopped us in our tracks</h3>
+          <p>We visit hundreds of plots before committing to one. The day we walked into what would become Mango Meadows, we knew within ten minutes. Here's the story of that morning.</p>
+          <div class="wn-card-footer"><span>6 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+      <div class="wn-card reveal" data-type="update">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Valley view" loading="lazy">
+          <span class="wn-type-pill pill-update">Project Update</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">Project Update</span><span class="wn-card-date">February 2025</span></div>
+          <h3>Infrastructure progress: roads, fencing and the entrance arch take shape</h3>
+          <p>The 22-ft internal roads are laid, the perimeter fencing is 60% complete, and the natural entrance arch design has been finalised. A photo update from the ground.</p>
+          <div class="wn-card-footer"><span>3 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+      <div class="wn-card reveal" data-type="blog">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80" alt="Orchard pathway" loading="lazy">
+          <span class="wn-type-pill pill-blog">From the Farm</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">From the Farm</span><span class="wn-card-date">January 2025</span></div>
+          <h3>What does it actually feel like to own a plot inside an orchard?</h3>
+          <p>We spent a weekend at the site with three early buyers. No sales pitch — just three families, a mango tree, and a long slow morning. This is what they told us.</p>
+          <div class="wn-card-footer"><span>8 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+      <div class="wn-card reveal" data-type="news">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=500&q=80" alt="Morning mist" loading="lazy">
+          <span class="wn-type-pill pill-news">News</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">News</span><span class="wn-card-date">December 2024</span></div>
+          <h3>Agali — why we believe this is South India's most underrated weekend address</h3>
+          <p>Clear skies, the Nilgiris on the horizon, and a microclimate most people don't know exists. Our case for why Agali deserves far more attention from families seeking a second home.</p>
+          <div class="wn-card-footer"><span>5 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+      <div class="wn-card reveal" data-type="update">
+        <div class="wn-card-img">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80" alt="Orchard rows" loading="lazy">
+          <span class="wn-type-pill pill-update">Project Update</span>
+        </div>
+        <div class="wn-card-body">
+          <div class="wn-card-meta"><span class="wn-card-cat">Project Update</span><span class="wn-card-date">November 2024</span></div>
+          <h3>Layout plan approved — all 26 plots officially demarcated</h3>
+          <p>The layout plan for Mango Meadows has received approvals and all 26 plots are survey-demarcated. Here's the full plan breakdown and what each zone looks like on the ground.</p>
+          <div class="wn-card-footer"><span>4 min read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wn-newsletter">
+      <div>
+        <h3>The Farm Stories journal</h3>
+        <p>Monthly dispatches from the orchard — project updates, slow living stories, and first access to new plots. No noise, no spam.</p>
+      </div>
+      <form class="wn-sub-form" onsubmit="return notifySubmit(this)">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-brand">
+    <span class="foot-logo" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 24 C41 38 35 45 35 56 a15 15 0 0 0 30 0 C65 45 59 38 50 24 Z" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="50" y1="56" x2="50" y2="80" stroke="currentColor" stroke-width="2"/></svg>
+    </span>
+    <p>Boutique orchard communities for families who believe in a slower, more soulful way of life.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigate</h4>
+    <a href="#" onclick="return show('about')">About us</a>
+    <a href="#" onclick="return show('projects')">Our Projects</a>
+    <a href="#" onclick="return show('portal')">The Portal</a>
+    <a href="#" onclick="return show('community')">The Community</a>
+    <a href="#" onclick="return show('agritech')">Agri-tech</a>
+    <a href="#" onclick="return show('whatsnew')">What's New</a>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <a href="tel:+919003746953">+91 90037 46953</a>
+    <a href="tel:+919790372456">+91 97903 72456</a>
+    <a href="mailto:hello@thefarmstories.estate">hello@thefarmstories.estate</a>
+    <a href="#">thefarmstories.estate</a>
+    <a href="#">Coimbatore, Tamil Nadu</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 The Farm Stories. All rights reserved.</p>
+  <p>Developed with care in South India.</p>
+</div>
+
+<!-- Sticky CRO bar -->
+<div class="sticky-cta" id="sticky-cta" hidden>
+  <p><strong id="sticky-remaining">11</strong> of 26 plots remaining at Mango Meadows</p>
+  <div class="sc-actions">
+    <a href="tel:+919003746953" class="sc-phone">+91 90037 46953</a>
+    <button class="btn-sage" onclick="openVisitForm()">Book a site visit</button>
+  </div>
+</div>
+
+<!-- WhatsApp float -->
+<a class="wa-float" href="https://wa.me/919003746953?text=Hello%2C%20I%27d%20like%20to%20visit%20Mango%20Meadows" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4.6 27.4l5.7-1.6c1.9 1 4 1.6 5.7 1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm5.9 16.9c-.3.8-1.5 1.5-2.4 1.6-.6.1-1.4.2-4.2-.9-3.5-1.5-5.8-5-6-5.3-.2-.2-1.4-1.9-1.4-3.6s.9-2.6 1.2-2.9c.3-.3.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1 2.6 1.1 2.8.1.2.2.4 0 .7-.1.2-.2.4-.4.6l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.1.9-.1.2-.2 1-1.2 1.3-1.6.3-.4.5-.3.9-.2.4.1 2.4 1.1 2.8 1.3.4.2.7.3.8.5.1.2.1 1-.2 1.7z" fill="currentColor"/></svg>
+</a>
+
+<!-- Site visit modal -->
+<div class="modal-overlay" id="visit-modal" hidden>
+  <div class="modal-card" role="dialog" aria-label="Book a site visit">
+    <button class="modal-close" onclick="closeVisitForm()" aria-label="Close">×</button>
+    <div class="section-tag">Site visit</div>
+    <h3>Walk the orchard with us.</h3>
+    <p class="modal-sub">Guided visits every weekend, 75–90 minutes from Coimbatore. We'll confirm on WhatsApp within a few hours.</p>
+    <form id="visit-form" onsubmit="return visitSubmit(this)">
+      <input class="finp" type="text" name="name" placeholder="Your name" required>
+      <input class="finp" type="tel" name="phone" placeholder="Phone / WhatsApp number" required pattern="[0-9+ -]{8,15}">
+      <select class="fsel" name="when"><option>This weekend</option><option>Next weekend</option><option>A weekday works better</option></select>
+      <input type="hidden" name="plot" id="visit-plot-field" value="">
+      <button class="btn-sage" type="submit" style="width:100%;">Request my visit</button>
+    </form>
+    <p class="modal-fine">No spam, no pressure. One call to confirm, that's all.</p>
+    <p class="modal-done" id="visit-done" hidden>Thank you — we've received your request. We'll reach out shortly to confirm your walk in the orchard.</p>
+  </div>
+</div>
+
+<!-- Motion libraries: loaded lazily after intro/first paint -->
+<script>
+  window.TFS_LIBS = [
+    'https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js',
+    'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
+    'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
+    'https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js'
+  ];
+</script>
+<script src="js/plots.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/intro.js" defer></script>
+
+</body>
+</html>
