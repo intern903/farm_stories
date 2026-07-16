@@ -187,13 +187,19 @@ function loadLazyEl(el) {
   }
 }
 function initLazyMedia() {
-  const els = document.querySelectorAll('img[data-src], [data-bg]');
-  if (!('IntersectionObserver' in window)) { els.forEach(loadLazyEl); return; }
-  lazyObserver = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) { loadLazyEl(en.target); lazyObserver.unobserve(en.target); }
-    });
-  }, { rootMargin: '300px 0px' });
+  if ('IntersectionObserver' in window) {
+    lazyObserver = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { loadLazyEl(en.target); lazyObserver.unobserve(en.target); }
+      });
+    }, { rootMargin: '300px 0px' });
+  }
+  observeLazy(document);
+}
+// Register lazy media inside a root — also used for dynamically rendered cards.
+function observeLazy(root) {
+  const els = (root || document).querySelectorAll('img[data-src], [data-bg]');
+  if (!lazyObserver) { els.forEach(loadLazyEl); return; }
   els.forEach(el => lazyObserver.observe(el));
 }
 /* ── Hero artwork: use assets/hero.jpg when it exists in the repo ── */
@@ -223,46 +229,7 @@ function mapTip(e, title, info) {
   tt._t = setTimeout(() => tt.classList.remove('show'), 3200);
 }
 
-/* ── Portal: project aggregator filters ── */
-function initProjectFilters() {
-  const loc = document.getElementById('pf-location');
-  if (!loc) return;
-  const size = document.getElementById('pf-size');
-  const feature = document.getElementById('pf-feature');
-  const selling = document.getElementById('pf-selling');
-  const budget = document.getElementById('pf-budget');
-  const cards = document.querySelectorAll('#project-cards .project-card');
-  const empty = document.getElementById('pf-empty');
-
-  function apply() {
-    let visible = 0;
-    cards.forEach(card => {
-      let ok = true;
-      if (loc.value !== 'all' && card.dataset.loc !== loc.value) ok = false;
-      if (size.value !== 'all' && !card.dataset.sizes.split(' ').includes(size.value)) ok = false;
-      if (feature.value !== 'all' && !card.dataset.features.split(' ').includes(feature.value)) ok = false;
-      if (selling.checked && card.dataset.status !== 'selling') ok = false;
-      // budget: any numeric overlap with the card's price band (₹ lakhs)
-      const m = (budget.value.match(/\d+/g) || []).map(Number);
-      if (ok && m.length && +card.dataset.max > 0) {
-        const lo = Math.min(...m), hi = Math.max(...m);
-        if (hi < +card.dataset.min || lo > +card.dataset.max) ok = false;
-      }
-      card.classList.toggle('filtered-out', !ok);
-      if (ok) visible++;
-    });
-    empty.hidden = visible > 0;
-  }
-
-  [loc, size, feature].forEach(n => n.addEventListener('change', apply));
-  selling.addEventListener('change', apply);
-  budget.addEventListener('input', apply);
-  document.getElementById('pf-reset').addEventListener('click', () => {
-    loc.value = size.value = feature.value = 'all';
-    selling.checked = false; budget.value = '';
-    apply();
-  });
-}
+/* Portal filtering and rendering live in js/portal.js */
 
 /* ── Nav behaviour + sticky CRO bar ── */
 function initScrollChrome() {
@@ -306,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollChrome();
   initLazyMedia();
   initHeroArt();
-  initProjectFilters();
 
   // If the intro is skipped (reduced motion / already seen), wake the hero now.
   if (REDUCED || sessionStorage.getItem('tfs-intro-seen')) wakeHero();
@@ -317,3 +283,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.wakeHero = wakeHero;
+window.observeLazy = observeLazy;

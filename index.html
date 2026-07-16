@@ -200,6 +200,18 @@
           <path class="ink" d="M965 690 q5 -14 2 -26 q7 -9 3 -19 a6 6 0 1 1 5 0 M965 690 q9 -12 12 -26 M960 650 q-6 8 -10 18 M978 648 q7 7 10 16" fill="none"/>
           <path class="ink" d="M1000 694 q4 -12 2 -23 q6 -8 2 -17 a5.5 5.5 0 1 1 5 0 M1000 694 q8 -11 10 -23 M996 660 q-5 7 -8 15" fill="none"/>
         </g>
+        <!-- ── Rolling mid-ground hills, hatched ── -->
+        <g class="d3">
+          <path class="ink faint" d="M430 500 Q560 460 690 486 Q820 510 960 470" fill="none"/>
+          <path class="ink faint" d="M470 540 Q590 505 710 528 Q830 550 950 515" fill="none"/>
+          <path class="ink faint" d="M1080 470 Q1180 440 1290 462 Q1390 480 1500 450" fill="none"/>
+          <path class="ink faint" d="M520 470 q6 14 0 26 M580 462 q5 12 0 22 M650 470 q5 12 0 22 M900 480 q5 12 0 22 M1200 452 q5 12 0 22" fill="none"/>
+        </g>
+        <!-- ── Forked side-path, as in the artwork ── -->
+        <g class="d3">
+          <path class="ink faint" d="M700 590 C660 540 640 500 660 440 C674 400 660 380 640 360" fill="none"/>
+          <path class="ink faint" d="M730 580 C696 536 678 500 696 448 C708 410 696 388 678 368" fill="none"/>
+        </g>
         <!-- ── Foreground grasses & shrubs ── -->
         <g class="d4">
           <path class="ink faint" d="M320 800 q8 -34 -4 -56 m22 56 q10 -30 2 -50 m14 50 q8 -26 0 -44" fill="none"/>
@@ -614,92 +626,24 @@
             <line x1="180" y1="200" x2="330" y2="192" stroke="#C9B99A" stroke-width=".6" opacity=".5"/>
             <line x1="170" y1="290" x2="320" y2="280" stroke="#C9B99A" stroke-width=".6" opacity=".5"/>
 
-            <!-- Active pin — Agali (Mango Meadows) -->
-            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'The Mango Meadows','Agali, Tamil Nadu · 26 plots · 20–30 cents · Now selling')">
-              <circle cx="278" cy="330" r="15" fill="#C9973A" opacity=".18"><animate attributeName="r" values="12;17;12" dur="3.2s" repeatCount="indefinite"/></circle>
-              <circle cx="278" cy="330" r="8" fill="#C9973A" opacity=".45"/>
-              <circle cx="278" cy="330" r="5" fill="#C9973A"/>
-              <circle cx="278" cy="330" r="2" fill="#fff"/>
-              <line x1="278" y1="335" x2="278" y2="348" stroke="#C9973A" stroke-width="1.8"/>
-              <text x="278" y="362" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" fill="#4A3728" letter-spacing=".08em" font-weight="500">AGALI</text>
-            </g>
-
-            <!-- Coming soon — Chikmagalur -->
-            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'Coffee Canopy','Chikmagalur, Karnataka · Coming 2026')">
-              <circle cx="240" cy="252" r="8" fill="#6B8C6A" opacity=".35"/>
-              <circle cx="240" cy="252" r="4" fill="#6B8C6A"/>
-              <text x="240" y="273" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#6B8C6A" letter-spacing=".06em">CHIKMAGALUR</text>
-            </g>
-
-            <!-- Coming soon — Wayanad -->
-            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'Pepper Hollow','Wayanad, Kerala · Coming 2026')">
-              <circle cx="222" cy="312" r="8" fill="#6B8C6A" opacity=".35"/>
-              <circle cx="222" cy="312" r="4" fill="#6B8C6A"/>
-              <text x="212" y="300" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#6B8C6A" letter-spacing=".06em">WAYANAD</text>
-            </g>
+            <!-- Project pins rendered from the registry in js/portal.js -->
+            <g id="map-pins"></g>
 
             <!-- Compass + legend -->
             <text x="545" y="45" font-family="Outfit,sans-serif" font-size="11" fill="#92806B">N ↑</text>
-            <circle cx="60" cy="380" r="5" fill="#C9973A"/>
-            <text x="72" y="384" font-family="Outfit,sans-serif" font-size="10" fill="#4A3728">Now selling</text>
-            <circle cx="60" cy="398" r="5" fill="#6B8C6A"/>
-            <text x="72" y="402" font-family="Outfit,sans-serif" font-size="10" fill="#6B8C6A">Coming soon</text>
+            <circle cx="60" cy="366" r="5" fill="#C9973A"/>
+            <text x="72" y="370" font-family="Outfit,sans-serif" font-size="10" fill="#4A3728">Now selling</text>
+            <circle cx="60" cy="384" r="5" fill="#6B8C6A"/>
+            <text x="72" y="388" font-family="Outfit,sans-serif" font-size="10" fill="#6B8C6A">Coming soon</text>
+            <circle cx="60" cy="402" r="5" fill="none" stroke="#92806B" stroke-width="1.2" stroke-dasharray="2 2"/>
+            <text x="72" y="406" font-family="Outfit,sans-serif" font-size="10" fill="#92806B">Planned</text>
           </svg>
         </div>
 
-        <div class="listing-cards" id="project-cards">
-          <!-- Mango Meadows — active -->
-          <div class="listing-card project-card" data-loc="tn" data-features="orchard mountain" data-sizes="20-30" data-min="40" data-max="240" data-status="selling" onclick="show('projects')">
-            <div class="lcard-img">
-              <img data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80" alt="The Mango Meadows orchard" loading="lazy">
-              <span class="lbadge">Now selling</span>
-            </div>
-            <div class="lcard-body">
-              <div class="lcard-name">The Mango Meadows</div>
-              <div class="lcard-loc">Agali, Tamil Nadu · 45 km from Coimbatore</div>
-              <div class="lcard-specs">
-                <div class="lspec"><strong>7 acres</strong><span>Total area</span></div>
-                <div class="lspec"><strong>26</strong><span>Plots</span></div>
-                <div class="lspec"><strong>300+</strong><span>Mango trees</span></div>
-              </div>
-              <div class="lcard-cta">Read this chapter →</div>
-            </div>
-          </div>
+        <p class="pf-count" id="pf-count" role="status"></p>
 
-          <!-- Coffee Canopy — coming soon -->
-          <div class="listing-card project-card is-soon" data-loc="ka" data-features="coffee mountain" data-sizes="30-50" data-min="0" data-max="0" data-status="soon">
-            <div class="lcard-img lcard-soon-bg">
-              <span class="lcard-soon-label">Coming 2026</span>
-              <span class="lbadge lbadge-soon">Upcoming</span>
-            </div>
-            <div class="lcard-body">
-              <div class="lcard-name">Coffee Canopy</div>
-              <div class="lcard-loc">Chikmagalur, Karnataka</div>
-              <div class="lcard-specs">
-                <div class="lspec"><strong>Coffee estate</strong><span>Character</span></div>
-                <div class="lspec"><strong>30–50c</strong><span>Plot size</span></div>
-              </div>
-              <div class="lcard-cta lcard-cta-soon" onclick="event.stopPropagation();show('community')">Get notified →</div>
-            </div>
-          </div>
-
-          <!-- Pepper Hollow — coming soon -->
-          <div class="listing-card project-card is-soon" data-loc="kl" data-features="orchard water mountain" data-sizes="30-50" data-min="0" data-max="0" data-status="soon">
-            <div class="lcard-img lcard-soon-bg lcard-soon-bg-alt">
-              <span class="lcard-soon-label">Coming 2026</span>
-              <span class="lbadge lbadge-soon">Upcoming</span>
-            </div>
-            <div class="lcard-body">
-              <div class="lcard-name">Pepper Hollow</div>
-              <div class="lcard-loc">Wayanad, Kerala</div>
-              <div class="lcard-specs">
-                <div class="lspec"><strong>Spice orchard</strong><span>Character</span></div>
-                <div class="lspec"><strong>30–50c</strong><span>Plot size</span></div>
-              </div>
-              <div class="lcard-cta lcard-cta-soon" onclick="event.stopPropagation();show('community')">Get notified →</div>
-            </div>
-          </div>
-        </div>
+        <!-- Cards rendered from the registry in js/portal.js -->
+        <div class="listing-cards" id="project-cards"></div>
 
         <p class="pf-empty" id="pf-empty" hidden>No projects match those filters yet — new chapters are being written every season. <a href="#" onclick="return show('community')">Join the community</a> to hear about them first.</p>
       </div>
@@ -941,6 +885,7 @@
 </script>
 <script src="js/plots.js" defer></script>
 <script src="js/main.js" defer></script>
+<script src="js/portal.js" defer></script>
 <script src="js/intro.js" defer></script>
 
 </body>

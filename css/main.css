@@ -310,7 +310,7 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
   -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 42%, rgba(0,0,0,.55) 62%, #000 82%);
   mask-image:linear-gradient(100deg, transparent 0%, transparent 42%, rgba(0,0,0,.55) 62%, #000 82%);
   filter:sepia(.22) saturate(.92) brightness(1.02);
-  opacity:0; transition:opacity 2.8s ease 1s;
+  opacity:0; transition:opacity .9s ease;
 }
 .hero-canvas.awake .hero-photo { opacity:1; }
 .hero-photo-blend {
@@ -325,17 +325,17 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
   opacity:.82;
 }
 .hero-sketch .ink.faint { stroke-width:1.1; opacity:.5; }
-.hero-sketch .gold-sun { fill:var(--gold); opacity:0; transition:opacity 2.4s ease .8s; }
+.hero-sketch .gold-sun { fill:var(--gold); opacity:0; transition:opacity .9s ease; }
 .hero-canvas.awake .gold-sun { opacity:.85; }
-/* Ink drawing animation */
+/* Ink drawing animation — brisk, so the full artwork is present almost at once */
 .hero-canvas.awake .ink {
   stroke-dasharray:1700; stroke-dashoffset:1700;
-  animation:inkDraw 3.6s var(--ease-story) forwards;
+  animation:inkDraw 1.3s var(--ease-story) forwards;
 }
-.hero-canvas.awake .d1 .ink, .hero-canvas.awake .ink.d1 { animation-delay:.1s; }
-.hero-canvas.awake .d2 .ink, .hero-canvas.awake .ink.d2 { animation-delay:.7s; }
-.hero-canvas.awake .d3 .ink, .hero-canvas.awake .ink.d3 { animation-delay:1.3s; }
-.hero-canvas.awake .d4 .ink, .hero-canvas.awake .ink.d4 { animation-delay:1.9s; }
+.hero-canvas.awake .d1 .ink, .hero-canvas.awake .ink.d1 { animation-delay:0s; }
+.hero-canvas.awake .d2 .ink, .hero-canvas.awake .ink.d2 { animation-delay:.15s; }
+.hero-canvas.awake .d3 .ink, .hero-canvas.awake .ink.d3 { animation-delay:.3s; }
+.hero-canvas.awake .d4 .ink, .hero-canvas.awake .ink.d4 { animation-delay:.45s; }
 @keyframes inkDraw { to { stroke-dashoffset:0; } }
 @media (prefers-reduced-motion:reduce) {
   .hero-canvas .ink { animation:none !important; stroke-dasharray:none !important; stroke-dashoffset:0 !important; }
@@ -608,8 +608,11 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
 .portal-layout { display:grid; grid-template-columns:300px 1fr; gap:32px; margin-top:8px; align-items:start; }
 .map-panel { background:var(--cream); border:1px solid var(--border); padding:20px; margin-bottom:22px; position:relative; overflow:hidden; }
 .map-panel-title { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; font-weight:500; }
-.map-pin { transition:opacity .25s; }
+.map-pin { transition:opacity .35s; outline:none; }
 .map-pin:hover { opacity:.8; }
+.map-pin.pin-dimmed { opacity:.14; pointer-events:none; }
+.pf-count { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+.project-card.pin-highlight { border-color:var(--gold); box-shadow:0 0 0 2px var(--gold-dim), 0 10px 28px rgba(74,55,40,.14); transform:translateY(-3px); }
 .map-tooltip {
   position:absolute; background:var(--dark-earth); color:#fff;
   padding:12px 16px; font-size:12px; pointer-events:none;
