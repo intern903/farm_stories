@@ -303,6 +303,21 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
 .hero-canvas.has-art .hero-sketch,
 .hero-canvas.has-art .hero-photo,
 .hero-canvas.has-art .hero-photo-blend { display:none; }
+/* When the real artwork is in, veil the left column so the story text
+   stays legible over the busy sketch, fading into the art on the right. */
+.hero-canvas.has-art::after {
+  content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(100deg,
+    rgba(245,238,224,.92) 0%, rgba(245,238,224,.8) 26%,
+    rgba(245,238,224,.45) 44%, rgba(245,238,224,0) 62%);
+}
+@media (max-width:900px){
+  .hero-canvas.has-art::after {
+    background:linear-gradient(180deg,
+      rgba(245,238,224,.92) 0%, rgba(245,238,224,.7) 34%,
+      rgba(245,238,224,.2) 52%, rgba(245,238,224,0) 72%);
+  }
+}
 /* The real orchard photograph, emerging from the right of the sketch */
 .hero-photo {
   position:absolute; inset:0;
@@ -349,9 +364,7 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
   position:relative; z-index:3; max-width:560px;
   padding:9vh 0 0 clamp(24px, 6vw, 88px);
 }
-.hero-canvas.has-art .hero-story-content {
-  background:radial-gradient(ellipse at 12% 42%, rgba(247,240,225,.85) 0%, rgba(247,240,225,.4) 55%, transparent 75%);
-}
+.hero-canvas.has-art .hero-desc { color:#5E4E3A; }
 .hero-kicker {
   display:flex; align-items:center; gap:12px;
   font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase;
