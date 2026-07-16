@@ -202,17 +202,26 @@ function observeLazy(root) {
   if (!lazyObserver) { els.forEach(loadLazyEl); return; }
   els.forEach(el => lazyObserver.observe(el));
 }
-/* ── Hero artwork: use assets/hero.jpg when it exists in the repo ── */
+/* ── Hero artwork ──
+   Drop the artwork into the repo and it replaces the SVG recreation
+   automatically. We probe a few likely filenames so whatever you commit
+   (assets/hero.jpg, assets/hero.png, assets/asset.jpg, /hero.jpg …) works. */
 function initHeroArt() {
   const img = document.getElementById('hero-art');
   if (!img) return;
+  const candidates = [
+    'assets/hero.jpg', 'assets/hero.jpeg', 'assets/hero.png', 'assets/hero.webp',
+    'assets/asset.jpg', 'assets/asset.png', 'hero.jpg', 'hero.png',
+  ];
+  let i = 0;
   const probe = new Image();
   probe.onload = () => {
     img.src = probe.src;
     img.hidden = false;
     document.querySelector('.hero-canvas').classList.add('has-art');
   };
-  probe.src = 'assets/hero.jpg';
+  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
+  probe.src = candidates[0];
 }
 
 /* ── Portal: South India map tooltip (preserved API) ── */
