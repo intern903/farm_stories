@@ -105,8 +105,6 @@
 
 <!-- Paper grain overlay -->
 <div class="grain" aria-hidden="true"></div>
-<!-- Cursor glow -->
-<div id="cursor-glow" aria-hidden="true"></div>
 
 <!-- ══════════ NAV ══════════ -->
 <nav id="site-nav">
@@ -131,52 +129,84 @@
 <!-- ══════════ HOME ══════════ -->
 <section id="home" class="active">
 
-  <!-- Hero: ink sketch dissolving into reality -->
+  <!-- Hero: ink sketch dissolving into reality.
+       If assets/hero.jpg exists in the repo it is used as the full artwork;
+       otherwise this layered SVG + photo recreation renders. -->
   <div class="hero-story">
     <div class="hero-canvas">
-      <div class="hero-photo" aria-hidden="true"></div>
+      <img class="hero-art" id="hero-art" alt="Ink-sketch landscape of the farm dissolving into the real mango orchard" hidden>
+      <div class="hero-photo" data-bg="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1800&q=80" aria-hidden="true"></div>
       <div class="hero-photo-blend" aria-hidden="true"></div>
-      <svg class="hero-sketch" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <!-- Mountains -->
-        <path class="ink d1" d="M-20 250 L120 90 L210 190 L300 60 L420 210 L520 130 L640 250" fill="none"/>
-        <path class="ink d1" d="M60 180 l30 34 M280 110 l26 40 M470 170 l24 32" fill="none"/>
-        <!-- Sun -->
-        <circle class="gold-sun" cx="565" cy="118" r="44"/>
-        <!-- Birds -->
-        <g class="birds">
-          <path class="ink d2" d="M660 90 q7 -9 14 0 M690 74 q7 -9 14 0 M722 96 q6 -8 13 0 M700 118 q6 -8 13 0" fill="none"/>
+      <svg class="hero-sketch" viewBox="0 0 1500 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <!-- ── Mountains, hatched ── -->
+        <g class="d1">
+          <path class="ink" d="M-20 340 L110 150 L200 250 L285 95 L400 260 L470 190 L560 320" fill="none"/>
+          <path class="ink faint" d="M120 200 l20 28 M150 240 l16 22 M255 150 l18 30 M290 190 l14 24 M320 230 l12 20 M420 240 l14 22" fill="none"/>
+          <path class="ink faint" d="M60 300 q30 -8 55 4 M330 290 q28 -10 52 2 M470 270 q24 -8 44 4" fill="none"/>
+          <path class="ink faint" d="M560 320 Q640 290 720 315 Q800 338 880 318" fill="none"/>
         </g>
-        <!-- Farmhouse -->
+        <!-- Gold sun -->
+        <circle class="gold-sun" cx="705" cy="150" r="52"/>
+        <!-- Birds (static, as in the artwork) -->
         <g class="d2">
-          <path class="ink" d="M150 330 L150 288 L206 258 L262 288 L262 330 Z" fill="none"/>
-          <path class="ink" d="M206 258 L206 330 M168 330 v-24 h18 v24 M226 296 h20 v16 h-20 Z" fill="none"/>
-          <path class="ink" d="M262 296 L316 296 L316 330 L262 330 M282 330 v-20 h18 v20" fill="none"/>
+          <path class="ink" d="M830 95 q8 -10 16 0 M872 70 q8 -10 16 0 M918 100 q7 -9 14 0 M894 128 q7 -9 14 0 M948 82 q6 -8 12 0" fill="none"/>
         </g>
-        <!-- Pines -->
+        <!-- ── Pines around the farmhouse ── -->
         <g class="d2">
-          <path class="ink" d="M110 328 v-70 m0 8 l-20 26 h40 l-20 -26 m0 -18 l-15 20 h30 l-15 -20 m0 -16 l-11 15 h22 l-11 -15" fill="none"/>
-          <path class="ink" d="M348 330 v-58 m0 6 l-16 22 h32 l-16 -22 m0 -15 l-12 17 h24 l-12 -17" fill="none"/>
+          <path class="ink" d="M205 470 v-130 m0 12 l-26 36 h52 l-26 -36 m0 -26 l-21 30 h42 l-21 -30 m0 -24 l-16 24 h32 l-16 -24 m0 -20 l-12 18 h24 l-12 -18" fill="none"/>
+          <path class="ink" d="M285 455 v-150 m0 14 l-24 34 h48 l-24 -34 m0 -26 l-19 28 h38 l-19 -28 m0 -24 l-15 22 h30 l-15 -22 m0 -20 l-11 17 h22 l-11 -17" fill="none"/>
+          <path class="ink" d="M425 470 v-100 m0 10 l-20 28 h40 l-20 -28 m0 -20 l-16 22 h32 l-16 -22 m0 -18 l-12 17 h24 l-12 -17" fill="none"/>
         </g>
-        <!-- Stream -->
-        <path class="ink d3" d="M40 620 C90 540 160 480 150 420 C144 384 120 360 140 336" fill="none"/>
-        <path class="ink d3" d="M90 620 C136 548 200 492 190 428 C185 392 164 366 180 340" fill="none"/>
-        <path class="ink d3" d="M70 560 q14 8 28 0 M110 500 q13 7 26 0 M150 452 q11 6 22 0" fill="none"/>
-        <!-- Path to orchard -->
-        <path class="ink d3" d="M420 620 C480 520 520 470 610 430 C700 390 760 400 850 380" fill="none"/>
-        <path class="ink d3" d="M500 620 C550 535 590 490 665 455 C740 420 800 425 880 405" fill="none"/>
-        <!-- Orchard trees (sketch side) -->
+        <!-- ── Farmhouse (two gables + porch, like the artwork) ── -->
+        <g class="d2">
+          <path class="ink" d="M300 470 V395 L360 358 L420 395 V470 Z" fill="none"/>
+          <path class="ink" d="M360 358 V470 M292 398 L360 355 L428 398" fill="none"/>
+          <path class="ink" d="M318 470 v-30 h20 v30 M372 415 h22 v18 h-22 Z M330 415 h18 v14 h-18 Z" fill="none"/>
+          <path class="ink" d="M240 470 V420 L282 398 L300 410 M240 420 h60 M252 470 v-26 h16 v26 M232 424 L282 395 L308 412" fill="none"/>
+          <path class="ink" d="M420 435 h55 v35 h-55 M430 470 v-22 h16 v22 M414 438 h66" fill="none"/>
+          <path class="ink faint" d="M352 340 v-16 m0 0 h6 v14" fill="none"/>
+          <path class="ink faint" d="M225 475 q70 10 140 4 q60 -5 115 -2" fill="none"/>
+        </g>
+        <!-- ── Rocky stream, lower left ── -->
+        <g class="d3">
+          <path class="ink" d="M-10 800 C60 700 150 630 185 560 C210 512 200 490 225 470" fill="none"/>
+          <path class="ink" d="M70 800 C140 712 218 650 245 585 C262 545 250 505 272 480" fill="none"/>
+          <path class="ink faint" d="M60 740 q18 10 36 0 M110 680 q16 9 32 0 M158 620 q14 8 28 0 M196 560 q12 7 24 0 M222 515 q10 6 20 0" fill="none"/>
+          <path class="ink" d="M40 770 a14 10 0 1 0 28 0 a14 10 0 1 0 -28 0 M120 720 a12 9 0 1 0 24 0 a12 9 0 1 0 -24 0 M95 640 a10 8 0 1 0 20 0 a10 8 0 1 0 -20 0 M185 600 a11 8 0 1 0 22 0 a11 8 0 1 0 -22 0 M235 540 a9 7 0 1 0 18 0 a9 7 0 1 0 -18 0" fill="none"/>
+          <path class="ink faint" d="M2 690 q10 -26 -2 -44 m30 60 q8 -24 0 -40 m130 -60 q7 -20 -2 -34" fill="none"/>
+        </g>
+        <!-- ── Winding path from foreground to the orchard ── -->
+        <g class="d3">
+          <path class="ink" d="M560 800 C600 700 620 640 700 590 C790 535 900 545 1010 520" fill="none"/>
+          <path class="ink" d="M680 800 C700 715 720 665 790 622 C870 574 970 580 1070 555" fill="none"/>
+          <path class="ink faint" d="M620 760 q16 6 30 -2 M655 700 q14 6 28 -2 M700 648 q14 5 26 -2 M760 615 q13 5 25 -2 M830 595 q12 4 24 -2 M900 578 q12 4 24 -2" fill="none"/>
+          <path class="ink faint" d="M600 540 Q680 520 740 528 M480 590 Q560 565 640 570" fill="none"/>
+        </g>
+        <!-- ── Orchard trees, round scribbled canopies ── -->
         <g class="d4">
-          <path class="ink" d="M600 470 v-52 m0 52 q-40 -6 -46 -44 q-4 -34 28 -48 q36 -14 58 14 q20 26 -2 54 q-16 22 -38 24" fill="none"/>
-          <path class="ink" d="M760 440 v-44 m0 44 q-34 -4 -40 -36 q-4 -30 24 -42 q32 -12 50 12 q18 22 -2 46 q-14 18 -32 20" fill="none"/>
-          <path class="ink" d="M880 470 v-40 m0 40 q-30 -4 -35 -32 q-3 -26 21 -37 q28 -10 44 10 q15 20 -2 40 q-12 16 -28 19" fill="none"/>
+          <path class="ink" d="M760 585 v-70 m-6 30 l-14 -12 m6 40 l16 -14" fill="none"/>
+          <path class="ink" d="M760 515 q-52 -4 -60 -52 q-6 -42 34 -58 q44 -18 72 16 q26 32 -2 66 q-20 26 -44 28" fill="none"/>
+          <path class="ink faint" d="M726 470 q16 14 34 6 M740 438 q18 12 36 4 M772 492 q14 -10 18 -26" fill="none"/>
+          <path class="ink" d="M950 545 v-58 m-5 26 l-12 -10" fill="none"/>
+          <path class="ink" d="M950 487 q-42 -4 -50 -42 q-5 -34 28 -48 q38 -14 60 14 q22 26 -2 54 q-16 20 -36 22" fill="none"/>
+          <path class="ink faint" d="M922 452 q14 12 30 5 M938 424 q15 10 30 3" fill="none"/>
+          <path class="ink" d="M1105 565 v-50 m4 22 l11 -9" fill="none"/>
+          <path class="ink" d="M1105 515 q-36 -3 -43 -36 q-4 -30 24 -42 q33 -12 52 12 q18 22 -2 46 q-14 17 -31 20" fill="none"/>
+          <path class="ink" d="M860 640 v-40 m0 0 q-28 -3 -34 -30 q-3 -24 20 -34 q26 -10 42 9 q15 18 -2 38 q-11 14 -26 17" fill="none"/>
+          <path class="ink" d="M620 500 v-36 m0 0 q-24 -3 -29 -26 q-3 -21 17 -29 q23 -9 37 8 q13 16 -1 33 q-10 12 -24 14" fill="none"/>
         </g>
-        <!-- Walking figures -->
+        <!-- ── Two walking figures on the path ── -->
         <g class="d4">
-          <path class="ink" d="M700 500 q4 -12 2 -22 q6 -8 2 -16 a5 5 0 1 1 4 0 M700 500 q8 -10 10 -22" fill="none"/>
-          <path class="ink" d="M726 502 q3 -10 2 -19 q5 -7 2 -14 a4.5 4.5 0 1 1 4 0 M726 502 q7 -9 8 -19" fill="none"/>
+          <path class="ink" d="M965 690 q5 -14 2 -26 q7 -9 3 -19 a6 6 0 1 1 5 0 M965 690 q9 -12 12 -26 M960 650 q-6 8 -10 18 M978 648 q7 7 10 16" fill="none"/>
+          <path class="ink" d="M1000 694 q4 -12 2 -23 q6 -8 2 -17 a5.5 5.5 0 1 1 5 0 M1000 694 q8 -11 10 -23 M996 660 q-5 7 -8 15" fill="none"/>
         </g>
-        <!-- Foreground grasses -->
-        <path class="ink d4" d="M60 620 q6 -30 -4 -48 m18 48 q8 -26 2 -44 m300 44 q5 -24 -3 -40 m20 40 q7 -22 1 -38" fill="none"/>
+        <!-- ── Foreground grasses & shrubs ── -->
+        <g class="d4">
+          <path class="ink faint" d="M320 800 q8 -34 -4 -56 m22 56 q10 -30 2 -50 m14 50 q8 -26 0 -44" fill="none"/>
+          <path class="ink faint" d="M480 790 q6 -28 -4 -46 m20 46 q8 -24 0 -40" fill="none"/>
+          <path class="ink faint" d="M900 760 q5 -22 -3 -36 m17 36 q6 -20 0 -34 m760 -20 q0 0 0 0" fill="none"/>
+          <path class="ink faint" d="M1180 640 q10 -8 24 -6 q10 -14 26 -10 q12 -10 24 -2 q-4 16 -22 18 q-10 10 -26 8 q-16 2 -26 -8 Z" fill="none"/>
+        </g>
       </svg>
       <div class="hero-story-overlay" aria-hidden="true"></div>
 
@@ -186,7 +216,7 @@
         <p class="hero-desc reveal">We find the most soulful parcels of South India and turn them into boutique orchard communities — for families who believe the good life is lived closer to the earth.</p>
         <div class="hero-btns reveal">
           <button class="btn-sage" onclick="show('projects')">Read Chapter One — Mango Meadows</button>
-          <button class="btn-line-light" onclick="show('portal')">Explore the plots</button>
+          <button class="btn-line-light" onclick="show('portal')">Browse our projects</button>
         </div>
       </div>
 
@@ -249,7 +279,7 @@
   <!-- Chapter preview: editorial spread -->
   <div class="chapter-spread">
     <div class="cs-img parallax-img">
-      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="Golden light through the mango orchard at Mango Meadows" loading="lazy">
+      <img data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="Golden light through the mango orchard at Mango Meadows" loading="lazy">
     </div>
     <div class="cs-text">
       <div class="section-tag">From the field journal</div>
@@ -270,7 +300,7 @@
   </div>
 
   <!-- CRO closing band -->
-  <div class="closing-band">
+  <div class="closing-band" data-bg="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1600&q=80" data-overlay="linear-gradient(rgba(13,11,8,.72), rgba(13,11,8,.72))">
     <div class="closing-inner">
       <h2>The best way to know a plot<br><em>is to stand on it.</em></h2>
       <p>Guided site visits run every weekend. 75–90 minutes from Coimbatore. No pressure, no countdown clocks — just a long walk in the orchard.</p>
@@ -355,7 +385,7 @@
           <button class="btn-sage" onclick="openTab('overview')">Explore the project</button>
         </div>
       </div>
-      <div class="phc-visual parallax-img">
+      <div class="phc-visual parallax-img" data-bg="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80">
         <button class="gallery-btn" onclick="openTab('views')">View site photography →</button>
       </div>
     </div>
@@ -363,6 +393,7 @@
     <!-- Tabs (preserved) -->
     <div class="project-tabs">
       <button class="ptab active" onclick="openTab('overview')">Overview</button>
+      <button class="ptab" onclick="openTab('plotmap')">Plot Map</button>
       <button class="ptab" onclick="openTab('views')">Site Views</button>
       <button class="ptab" onclick="openTab('benefits')">Benefits</button>
       <button class="ptab" onclick="openTab('brochure')">Brochure &amp; Contact</button>
@@ -374,7 +405,7 @@
           <p>Mango Meadows is a thoughtfully planned orchard community spread across 7 acres in Agali, at the foothills of the Nilgiris. Designed for families who value nature, privacy, and open spaces.</p>
           <p>The community features 26 exclusive 20–30 cent plots surrounded by 300+ mature mango trees, breezy mountains and valley, natural greenery, and quiet landscapes.</p>
           <p>Only 75–90 minutes — 45 kms from Coimbatore. Close enough to feel spontaneous. Far enough to feel free.</p>
-          <button class="btn-sage" style="margin-top:12px;" onclick="show('portal')">Open the plot explorer →</button>
+          <button class="btn-sage" style="margin-top:12px;" onclick="openTab('plotmap')">Open the plot map →</button>
         </div>
         <ul class="feat-list">
           <li>Secured perimeter fencing</li>
@@ -389,14 +420,102 @@
       </div>
     </div>
 
+    <div id="pane-plotmap" class="tab-pane">
+      <div class="explorer-topbar">
+        <div class="ex-status-chips" id="ex-status-chips">
+          <button class="ex-chip active" data-status="all">All plots <span class="chip-count" id="cc-all"></span></button>
+          <button class="ex-chip" data-status="available"><span class="dot dot-available"></span>Available <span class="chip-count" id="cc-available"></span></button>
+          <button class="ex-chip" data-status="reserved"><span class="dot dot-reserved"></span>Reserved <span class="chip-count" id="cc-reserved"></span></button>
+          <button class="ex-chip" data-status="sold"><span class="dot dot-sold"></span>Sold <span class="chip-count" id="cc-sold"></span></button>
+        </div>
+        <div class="ex-toggles">
+          <button class="ex-toggle active" id="tg-master">Masterplan</button>
+          <button class="ex-toggle" id="tg-satellite">Satellite</button>
+        </div>
+      </div>
+
+      <div class="explorer-layout">
+        <aside class="explorer-sidebar">
+          <div class="filter-panel">
+            <h3>Refine</h3>
+            <div class="fg"><span class="fl">Plot size</span>
+              <select class="fsel" id="f-size"><option value="all">Any size</option><option value="20">20–24 cents</option><option value="25">25–30 cents</option></select>
+            </div>
+            <div class="fg"><span class="fl">Character</span>
+              <select class="fsel" id="f-char"><option value="all">Any</option><option value="corner">Corner plots</option><option value="orchard">Orchard-dense</option><option value="view">Nilgiris view</option></select>
+            </div>
+            <div class="fg"><span class="fl">Road frontage</span>
+              <select class="fsel" id="f-front"><option value="all">Any</option><option value="40">40 ft +</option><option value="60">60 ft +</option></select>
+            </div>
+            <div class="fg fg-check">
+              <label><input type="checkbox" id="f-sun"> <span>Morning-sun plots (east facing)</span></label>
+            </div>
+            <div class="fg fg-check">
+              <label><input type="checkbox" id="f-saved"> <span>Saved plots only</span></label>
+            </div>
+            <button class="btn-line" style="width:100%;" id="f-reset">Reset filters</button>
+          </div>
+          <div class="visit-cta">
+            <h4>Schedule a site visit</h4>
+            <p>The best way to know a plot is to stand on it. Book a guided visit with our team.</p>
+            <button class="btn-sage" style="width:100%;" onclick="openVisitForm()">Book visit</button>
+          </div>
+        </aside>
+
+        <div class="explorer-main">
+          <div class="map-stage" id="map-stage">
+            <div class="map-satellite" id="map-satellite" aria-hidden="true"></div>
+            <svg id="masterplan" viewBox="0 0 1000 660" role="img" aria-label="Mango Meadows interactive masterplan"></svg>
+            <div class="map-controls">
+              <button id="zoom-in" aria-label="Zoom in">+</button>
+              <button id="zoom-out" aria-label="Zoom out">−</button>
+              <button id="zoom-reset" aria-label="Reset view">⌂</button>
+            </div>
+            <div class="map-legend">
+              <span><i class="dot dot-available"></i>Available</span>
+              <span><i class="dot dot-reserved"></i>Reserved</span>
+              <span><i class="dot dot-sold"></i>Sold</span>
+              <span class="legend-hint">Scroll to zoom · drag to pan</span>
+            </div>
+            <div id="plot-tooltip" class="plot-tooltip" role="status"></div>
+          </div>
+
+          <div class="plot-detail" id="plot-detail" hidden>
+            <button class="pd-close" id="pd-close" aria-label="Close">×</button>
+            <div class="pd-head">
+              <h3 id="pd-name">Plot 01</h3>
+              <span class="pd-status" id="pd-status">Available</span>
+            </div>
+            <div class="pd-grid" id="pd-grid"></div>
+            <p class="pd-note" id="pd-note"></p>
+            <div class="pd-actions">
+              <button class="btn-sage" id="pd-visit">Book a visit to this plot</button>
+              <button class="btn-line" id="pd-compare">+ Compare</button>
+              <button class="btn-line pd-save" id="pd-save" aria-label="Save plot">♡ Save</button>
+            </div>
+          </div>
+
+          <div class="compare-drawer" id="compare-drawer" hidden>
+            <div class="cd-head">
+              <h4>Compare plots <span id="cd-count"></span></h4>
+              <button id="cd-clear">Clear</button>
+            </div>
+            <div class="cd-table" id="cd-table"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="portal-foot">Distances, elevations and sun hours are indicative, measured from the site survey of March 2025. Walk the land with us to feel what a map can't show.</p>
+    </div>
+
     <div id="pane-views" class="tab-pane">
       <div class="views-grid">
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" alt="Orchard, west boundary" loading="lazy"><div class="view-label">Orchard — west boundary</div></div>
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Nilgiris view from plot 04" loading="lazy"><div class="view-label">Nilgiris view — plot 04</div></div>
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=600&q=80" alt="Forest edge, north boundary" loading="lazy"><div class="view-label">Forest edge — north</div></div>
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80" alt="Morning light at the entrance" loading="lazy"><div class="view-label">Morning light — entrance</div></div>
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Valley panorama from plot 17" loading="lazy"><div class="view-label">Valley panorama — plot 17</div></div>
-        <div class="view-item"><img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=80" alt="Internal road, phase one" loading="lazy"><div class="view-label">Internal road — phase 1</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" alt="Orchard, west boundary" loading="lazy"><div class="view-label">Orchard — west boundary</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Nilgiris view from plot 04" loading="lazy"><div class="view-label">Nilgiris view — plot 04</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=600&q=80" alt="Forest edge, north boundary" loading="lazy"><div class="view-label">Forest edge — north</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80" alt="Morning light at the entrance" loading="lazy"><div class="view-label">Morning light — entrance</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Valley panorama from plot 17" loading="lazy"><div class="view-label">Valley panorama — plot 17</div></div>
+        <div class="view-item"><img data-src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=80" alt="Internal road, phase one" loading="lazy"><div class="view-label">Internal road — phase 1</div></div>
       </div>
       <p style="font-size:13px;color:var(--muted);margin-top:14px;text-align:center;">Contact us to schedule your personal site visit.</p>
     </div>
@@ -430,105 +549,162 @@
   </div>
 </section>
 
-<!-- ══════════ PORTAL — PLOT EXPLORER ══════════ -->
+<!-- ══════════ PORTAL — PROJECT AGGREGATOR ══════════ -->
 <section id="portal">
   <div class="page-light">
 
     <div class="section-tag">The Portal</div>
-    <h2 class="section-title split-lines">Find your plot,<br><em>find your story.</em></h2>
+    <h2 class="section-title split-lines">Every project is a book.<br><em>Choose yours.</em></h2>
 
-    <div class="explorer-topbar">
-      <div class="ex-status-chips" id="ex-status-chips">
-        <button class="ex-chip active" data-status="all">All plots <span class="chip-count" id="cc-all"></span></button>
-        <button class="ex-chip" data-status="available"><span class="dot dot-available"></span>Available <span class="chip-count" id="cc-available"></span></button>
-        <button class="ex-chip" data-status="reserved"><span class="dot dot-reserved"></span>Reserved <span class="chip-count" id="cc-reserved"></span></button>
-        <button class="ex-chip" data-status="sold"><span class="dot dot-sold"></span>Sold <span class="chip-count" id="cc-sold"></span></button>
-      </div>
-      <div class="ex-toggles">
-        <button class="ex-toggle active" id="tg-master">Masterplan</button>
-        <button class="ex-toggle" id="tg-satellite">Satellite</button>
-      </div>
-    </div>
-
-    <div class="explorer-layout">
+    <div class="portal-layout">
 
       <!-- Sidebar filters -->
-      <aside class="explorer-sidebar">
+      <aside class="portal-sidebar">
         <div class="filter-panel">
-          <h3>Refine</h3>
+          <h3>Filter projects</h3>
+          <div class="fg"><span class="fl">Location</span>
+            <select class="fsel" id="pf-location">
+              <option value="all">All of South India</option>
+              <option value="tn">Tamil Nadu</option>
+              <option value="ka">Karnataka</option>
+              <option value="kl">Kerala</option>
+            </select>
+          </div>
           <div class="fg"><span class="fl">Plot size</span>
-            <select class="fsel" id="f-size"><option value="all">Any size</option><option value="20">20–24 cents</option><option value="25">25–30 cents</option></select>
+            <select class="fsel" id="pf-size">
+              <option value="all">Any size</option>
+              <option value="20-30">20–30 cents</option>
+              <option value="30-50">30–50 cents</option>
+              <option value="50+">50 cents +</option>
+            </select>
           </div>
-          <div class="fg"><span class="fl">Character</span>
-            <select class="fsel" id="f-char"><option value="all">Any</option><option value="corner">Corner plots</option><option value="orchard">Orchard-dense</option><option value="view">Nilgiris view</option></select>
+          <div class="fg"><span class="fl">Budget (₹ lakhs)</span>
+            <input class="finp" id="pf-budget" type="text" placeholder="e.g. 40–80">
           </div>
-          <div class="fg"><span class="fl">Road frontage</span>
-            <select class="fsel" id="f-front"><option value="all">Any</option><option value="40">40 ft +</option><option value="60">60 ft +</option></select>
+          <div class="fg"><span class="fl">Nature feature</span>
+            <select class="fsel" id="pf-feature">
+              <option value="all">Any</option>
+              <option value="orchard">Orchard / Mango</option>
+              <option value="coffee">Coffee estate</option>
+              <option value="mountain">Mountain view</option>
+              <option value="water">Water body</option>
+            </select>
           </div>
           <div class="fg fg-check">
-            <label><input type="checkbox" id="f-sun"> <span>Morning-sun plots (east facing)</span></label>
+            <label><input type="checkbox" id="pf-selling"> <span>Now selling only</span></label>
           </div>
-          <div class="fg fg-check">
-            <label><input type="checkbox" id="f-saved"> <span>Saved plots only</span></label>
-          </div>
-          <button class="btn-line" style="width:100%;" id="f-reset">Reset filters</button>
+          <button class="btn-line" style="width:100%;" id="pf-reset">Reset filters</button>
         </div>
-
         <div class="visit-cta">
           <h4>Schedule a site visit</h4>
-          <p>The best way to know a plot is to stand on it. Book a guided visit with our team.</p>
+          <p>The best way to know a project is to stand in it. Book a guided visit with our team.</p>
           <button class="btn-sage" style="width:100%;" onclick="openVisitForm()">Book visit</button>
         </div>
       </aside>
 
-      <!-- Map -->
-      <div class="explorer-main">
-        <div class="map-stage" id="map-stage">
-          <div class="map-satellite" id="map-satellite" aria-hidden="true"></div>
-          <svg id="masterplan" viewBox="0 0 1000 660" role="img" aria-label="Mango Meadows interactive masterplan"></svg>
-          <div class="map-controls">
-            <button id="zoom-in" aria-label="Zoom in">+</button>
-            <button id="zoom-out" aria-label="Zoom out">−</button>
-            <button id="zoom-reset" aria-label="Reset view">⌂</button>
-          </div>
-          <div class="map-legend">
-            <span><i class="dot dot-available"></i>Available</span>
-            <span><i class="dot dot-reserved"></i>Reserved</span>
-            <span><i class="dot dot-sold"></i>Sold</span>
-            <span class="legend-hint">Scroll to zoom · drag to pan</span>
-          </div>
-          <div id="plot-tooltip" class="plot-tooltip" role="status"></div>
+      <!-- Map + Project listings -->
+      <div>
+        <div class="map-panel">
+          <div class="map-panel-title">Where our stories are set — click a pin to explore</div>
+          <div id="map-tt" class="map-tooltip"></div>
+          <svg width="100%" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of The Farm Stories projects across South India">
+            <!-- South India silhouette (stylised) -->
+            <path d="M150 20 L230 12 L300 24 L360 50 L410 60 L470 92 L505 140 L512 190 L490 235 L468 275 L440 312 L406 345 L370 372 L330 392 L296 406 L262 412 L236 400 L214 378 L196 350 L178 318 L160 282 L146 246 L134 208 L128 170 L132 132 L128 96 L138 58 Z"
+              fill="#EFE6D4" stroke="#C9B99A" stroke-width="1.5"/>
+            <line x1="180" y1="200" x2="330" y2="192" stroke="#C9B99A" stroke-width=".6" opacity=".5"/>
+            <line x1="170" y1="290" x2="320" y2="280" stroke="#C9B99A" stroke-width=".6" opacity=".5"/>
+
+            <!-- Active pin — Agali (Mango Meadows) -->
+            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'The Mango Meadows','Agali, Tamil Nadu · 26 plots · 20–30 cents · Now selling')">
+              <circle cx="278" cy="330" r="15" fill="#C9973A" opacity=".18"><animate attributeName="r" values="12;17;12" dur="3.2s" repeatCount="indefinite"/></circle>
+              <circle cx="278" cy="330" r="8" fill="#C9973A" opacity=".45"/>
+              <circle cx="278" cy="330" r="5" fill="#C9973A"/>
+              <circle cx="278" cy="330" r="2" fill="#fff"/>
+              <line x1="278" y1="335" x2="278" y2="348" stroke="#C9973A" stroke-width="1.8"/>
+              <text x="278" y="362" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" fill="#4A3728" letter-spacing=".08em" font-weight="500">AGALI</text>
+            </g>
+
+            <!-- Coming soon — Chikmagalur -->
+            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'Coffee Canopy','Chikmagalur, Karnataka · Coming 2026')">
+              <circle cx="240" cy="252" r="8" fill="#6B8C6A" opacity=".35"/>
+              <circle cx="240" cy="252" r="4" fill="#6B8C6A"/>
+              <text x="240" y="273" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#6B8C6A" letter-spacing=".06em">CHIKMAGALUR</text>
+            </g>
+
+            <!-- Coming soon — Wayanad -->
+            <g class="map-pin" style="cursor:pointer" onclick="mapTip(event,'Pepper Hollow','Wayanad, Kerala · Coming 2026')">
+              <circle cx="222" cy="312" r="8" fill="#6B8C6A" opacity=".35"/>
+              <circle cx="222" cy="312" r="4" fill="#6B8C6A"/>
+              <text x="212" y="300" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9" fill="#6B8C6A" letter-spacing=".06em">WAYANAD</text>
+            </g>
+
+            <!-- Compass + legend -->
+            <text x="545" y="45" font-family="Outfit,sans-serif" font-size="11" fill="#92806B">N ↑</text>
+            <circle cx="60" cy="380" r="5" fill="#C9973A"/>
+            <text x="72" y="384" font-family="Outfit,sans-serif" font-size="10" fill="#4A3728">Now selling</text>
+            <circle cx="60" cy="398" r="5" fill="#6B8C6A"/>
+            <text x="72" y="402" font-family="Outfit,sans-serif" font-size="10" fill="#6B8C6A">Coming soon</text>
+          </svg>
         </div>
 
-        <!-- Plot detail card -->
-        <div class="plot-detail" id="plot-detail" hidden>
-          <button class="pd-close" id="pd-close" aria-label="Close">×</button>
-          <div class="pd-head">
-            <h3 id="pd-name">Plot 01</h3>
-            <span class="pd-status" id="pd-status">Available</span>
+        <div class="listing-cards" id="project-cards">
+          <!-- Mango Meadows — active -->
+          <div class="listing-card project-card" data-loc="tn" data-features="orchard mountain" data-sizes="20-30" data-min="40" data-max="240" data-status="selling" onclick="show('projects')">
+            <div class="lcard-img">
+              <img data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80" alt="The Mango Meadows orchard" loading="lazy">
+              <span class="lbadge">Now selling</span>
+            </div>
+            <div class="lcard-body">
+              <div class="lcard-name">The Mango Meadows</div>
+              <div class="lcard-loc">Agali, Tamil Nadu · 45 km from Coimbatore</div>
+              <div class="lcard-specs">
+                <div class="lspec"><strong>7 acres</strong><span>Total area</span></div>
+                <div class="lspec"><strong>26</strong><span>Plots</span></div>
+                <div class="lspec"><strong>300+</strong><span>Mango trees</span></div>
+              </div>
+              <div class="lcard-cta">Read this chapter →</div>
+            </div>
           </div>
-          <div class="pd-grid" id="pd-grid"></div>
-          <p class="pd-note" id="pd-note"></p>
-          <div class="pd-actions">
-            <button class="btn-sage" id="pd-visit">Book a visit to this plot</button>
-            <button class="btn-line" id="pd-compare">+ Compare</button>
-            <button class="btn-line pd-save" id="pd-save" aria-label="Save plot">♡ Save</button>
+
+          <!-- Coffee Canopy — coming soon -->
+          <div class="listing-card project-card is-soon" data-loc="ka" data-features="coffee mountain" data-sizes="30-50" data-min="0" data-max="0" data-status="soon">
+            <div class="lcard-img lcard-soon-bg">
+              <span class="lcard-soon-label">Coming 2026</span>
+              <span class="lbadge lbadge-soon">Upcoming</span>
+            </div>
+            <div class="lcard-body">
+              <div class="lcard-name">Coffee Canopy</div>
+              <div class="lcard-loc">Chikmagalur, Karnataka</div>
+              <div class="lcard-specs">
+                <div class="lspec"><strong>Coffee estate</strong><span>Character</span></div>
+                <div class="lspec"><strong>30–50c</strong><span>Plot size</span></div>
+              </div>
+              <div class="lcard-cta lcard-cta-soon" onclick="event.stopPropagation();show('community')">Get notified →</div>
+            </div>
+          </div>
+
+          <!-- Pepper Hollow — coming soon -->
+          <div class="listing-card project-card is-soon" data-loc="kl" data-features="orchard water mountain" data-sizes="30-50" data-min="0" data-max="0" data-status="soon">
+            <div class="lcard-img lcard-soon-bg lcard-soon-bg-alt">
+              <span class="lcard-soon-label">Coming 2026</span>
+              <span class="lbadge lbadge-soon">Upcoming</span>
+            </div>
+            <div class="lcard-body">
+              <div class="lcard-name">Pepper Hollow</div>
+              <div class="lcard-loc">Wayanad, Kerala</div>
+              <div class="lcard-specs">
+                <div class="lspec"><strong>Spice orchard</strong><span>Character</span></div>
+                <div class="lspec"><strong>30–50c</strong><span>Plot size</span></div>
+              </div>
+              <div class="lcard-cta lcard-cta-soon" onclick="event.stopPropagation();show('community')">Get notified →</div>
+            </div>
           </div>
         </div>
 
-        <!-- Compare drawer -->
-        <div class="compare-drawer" id="compare-drawer" hidden>
-          <div class="cd-head">
-            <h4>Compare plots <span id="cd-count"></span></h4>
-            <button id="cd-clear">Clear</button>
-          </div>
-          <div class="cd-table" id="cd-table"></div>
-        </div>
+        <p class="pf-empty" id="pf-empty" hidden>No projects match those filters yet — new chapters are being written every season. <a href="#" onclick="return show('community')">Join the community</a> to hear about them first.</p>
       </div>
+
     </div>
-
-    <p class="portal-foot">Distances, elevations and sun hours are indicative, measured from the site survey of March 2025. Walk the land with us to feel what a map can't show.</p>
-
   </div>
 </section>
 
@@ -577,7 +753,7 @@
     </div>
 
     <div class="wn-featured" data-type="update">
-      <div class="wn-featured-img">
+      <div class="wn-featured-img" data-bg="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80">
         <div class="wn-featured-img-overlay"></div>
         <span class="wn-feat-type-pill">Featured</span>
       </div>
@@ -598,7 +774,7 @@
 
       <div class="wn-card reveal" data-type="news">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&q=80" alt="Nilgiris foothills" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&q=80" alt="Nilgiris foothills" loading="lazy">
           <span class="wn-type-pill pill-news">News</span>
         </div>
         <div class="wn-card-body">
@@ -611,7 +787,7 @@
 
       <div class="wn-card reveal" data-type="blog">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=500&q=80" alt="Forest morning" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=500&q=80" alt="Forest morning" loading="lazy">
           <span class="wn-type-pill pill-blog">From the Farm</span>
         </div>
         <div class="wn-card-body">
@@ -624,7 +800,7 @@
 
       <div class="wn-card reveal" data-type="update">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Valley view" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Valley view" loading="lazy">
           <span class="wn-type-pill pill-update">Project Update</span>
         </div>
         <div class="wn-card-body">
@@ -637,7 +813,7 @@
 
       <div class="wn-card reveal" data-type="blog">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80" alt="Orchard pathway" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80" alt="Orchard pathway" loading="lazy">
           <span class="wn-type-pill pill-blog">From the Farm</span>
         </div>
         <div class="wn-card-body">
@@ -650,7 +826,7 @@
 
       <div class="wn-card reveal" data-type="news">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=500&q=80" alt="Morning mist" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=500&q=80" alt="Morning mist" loading="lazy">
           <span class="wn-type-pill pill-news">News</span>
         </div>
         <div class="wn-card-body">
@@ -663,7 +839,7 @@
 
       <div class="wn-card reveal" data-type="update">
         <div class="wn-card-img">
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80" alt="Orchard rows" loading="lazy">
+          <img data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80" alt="Orchard rows" loading="lazy">
           <span class="wn-type-pill pill-update">Project Update</span>
         </div>
         <div class="wn-card-body">

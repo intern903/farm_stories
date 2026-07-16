@@ -27,7 +27,7 @@ function show(id) {
 /* ── Project tabs (preserved API) ── */
 function openTab(name) {
   show('projects');
-  const tabs = ['overview', 'views', 'benefits', 'brochure'];
+  const tabs = ['overview', 'plotmap', 'views', 'benefits', 'brochure'];
   const btns = document.querySelectorAll('.ptab');
   const panes = document.querySelectorAll('.tab-pane');
   const idx = tabs.indexOf(name);
@@ -140,7 +140,7 @@ async function initMotion() {
 
   // Lenis smooth scroll, calm and slow
   if (window.Lenis) {
-    const lenis = new Lenis({ duration: 1.35, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -170,37 +170,98 @@ async function initMotion() {
   });
 }
 
-/* ── Cursor glow ── */
-function initCursorGlow() {
-  if (REDUCED || !window.matchMedia('(hover:hover)').matches) return;
-  const glow = document.getElementById('cursor-glow');
-  let raf = null, x = 0, y = 0;
-  window.addEventListener('mousemove', e => {
-    x = e.clientX; y = e.clientY;
-    if (!raf) raf = requestAnimationFrame(() => {
-      glow.style.left = x + 'px'; glow.style.top = y + 'px'; raf = null;
+/* ── Lazy loading ──
+   Images use data-src, background elements use data-bg (+ optional
+   data-overlay gradient). Both load only when scrolled near the
+   viewport — display:none sections load on first visit. */
+let lazyObserver;
+function loadLazyEl(el) {
+  if (el.dataset.src) {
+    el.src = el.dataset.src;
+    el.addEventListener('load', () => el.classList.add('lazy-loaded'), { once: true });
+    el.removeAttribute('data-src');
+  } else if (el.dataset.bg) {
+    const url = 'url("' + el.dataset.bg + '")';
+    el.style.backgroundImage = el.dataset.overlay ? el.dataset.overlay + ', ' + url : url;
+    el.removeAttribute('data-bg');
+  }
+}
+function initLazyMedia() {
+  const els = document.querySelectorAll('img[data-src], [data-bg]');
+  if (!('IntersectionObserver' in window)) { els.forEach(loadLazyEl); return; }
+  lazyObserver = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { loadLazyEl(en.target); lazyObserver.unobserve(en.target); }
     });
-  }, { passive: true });
-  document.body.classList.add('glow-on');
+  }, { rootMargin: '300px 0px' });
+  els.forEach(el => lazyObserver.observe(el));
+}
+/* ── Hero artwork: use assets/hero.jpg when it exists in the repo ── */
+function initHeroArt() {
+  const img = document.getElementById('hero-art');
+  if (!img) return;
+  const probe = new Image();
+  probe.onload = () => {
+    img.src = probe.src;
+    img.hidden = false;
+    document.querySelector('.hero-canvas').classList.add('has-art');
+  };
+  probe.src = 'assets/hero.jpg';
 }
 
-/* ── Drifting leaves (very occasional, home hero only) ── */
-function initLeaves() {
-  if (REDUCED) return;
-  const LEAF = '<svg viewBox="0 0 20 20"><path d="M10 1 C5 6 3 10 4 14 a6 6 0 0 0 12 0 C17 10 15 6 10 1 Z" fill="rgba(107,140,106,.7)"/></svg>';
-  setInterval(() => {
-    if (document.hidden) return;
-    if (!document.getElementById('home').classList.contains('active')) return;
-    if (window.scrollY > window.innerHeight) return;
-    const leaf = document.createElement('div');
-    leaf.className = 'leaf';
-    leaf.innerHTML = LEAF;
-    leaf.style.left = (8 + Math.random() * 84) + 'vw';
-    leaf.style.animationDuration = (9 + Math.random() * 7) + 's';
-    leaf.style.transform = 'scale(' + (0.7 + Math.random() * 0.7) + ')';
-    document.body.appendChild(leaf);
-    setTimeout(() => leaf.remove(), 17000);
-  }, 6500);
+/* ── Portal: South India map tooltip (preserved API) ── */
+function mapTip(e, title, info) {
+  const tt = document.getElementById('map-tt');
+  if (!tt) return;
+  const panel = tt.closest('.map-panel');
+  const rect = panel.getBoundingClientRect();
+  tt.innerHTML = '<strong>' + title + '</strong>' + info;
+  tt.style.left = Math.min(e.clientX - rect.left + 14, rect.width - 220) + 'px';
+  tt.style.top = (e.clientY - rect.top - 54) + 'px';
+  tt.classList.add('show');
+  clearTimeout(tt._t);
+  tt._t = setTimeout(() => tt.classList.remove('show'), 3200);
+}
+
+/* ── Portal: project aggregator filters ── */
+function initProjectFilters() {
+  const loc = document.getElementById('pf-location');
+  if (!loc) return;
+  const size = document.getElementById('pf-size');
+  const feature = document.getElementById('pf-feature');
+  const selling = document.getElementById('pf-selling');
+  const budget = document.getElementById('pf-budget');
+  const cards = document.querySelectorAll('#project-cards .project-card');
+  const empty = document.getElementById('pf-empty');
+
+  function apply() {
+    let visible = 0;
+    cards.forEach(card => {
+      let ok = true;
+      if (loc.value !== 'all' && card.dataset.loc !== loc.value) ok = false;
+      if (size.value !== 'all' && !card.dataset.sizes.split(' ').includes(size.value)) ok = false;
+      if (feature.value !== 'all' && !card.dataset.features.split(' ').includes(feature.value)) ok = false;
+      if (selling.checked && card.dataset.status !== 'selling') ok = false;
+      // budget: any numeric overlap with the card's price band (₹ lakhs)
+      const m = (budget.value.match(/\d+/g) || []).map(Number);
+      if (ok && m.length && +card.dataset.max > 0) {
+        const lo = Math.min(...m), hi = Math.max(...m);
+        if (hi < +card.dataset.min || lo > +card.dataset.max) ok = false;
+      }
+      card.classList.toggle('filtered-out', !ok);
+      if (ok) visible++;
+    });
+    empty.hidden = visible > 0;
+  }
+
+  [loc, size, feature].forEach(n => n.addEventListener('change', apply));
+  selling.addEventListener('change', apply);
+  budget.addEventListener('input', apply);
+  document.getElementById('pf-reset').addEventListener('click', () => {
+    loc.value = size.value = feature.value = 'all';
+    selling.checked = false; budget.value = '';
+    apply();
+  });
 }
 
 /* ── Nav behaviour + sticky CRO bar ── */
@@ -243,8 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
   observeReveals();
   animateCounters();
   initScrollChrome();
-  initCursorGlow();
-  initLeaves();
+  initLazyMedia();
+  initHeroArt();
+  initProjectFilters();
 
   // If the intro is skipped (reduced motion / already seen), wake the hero now.
   if (REDUCED || sessionStorage.getItem('tfs-intro-seen')) wakeHero();

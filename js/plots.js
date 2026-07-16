@@ -357,6 +357,11 @@
       document.getElementById('tg-satellite').classList.remove('active');
     });
     document.getElementById('tg-satellite').addEventListener('click', function () {
+      // lazy-load the aerial imagery only when satellite view is first opened
+      const sat = document.getElementById('map-satellite');
+      if (!sat.style.backgroundImage) {
+        sat.style.backgroundImage = 'url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400&q=70")';
+      }
       stage.classList.add('satellite');
       this.classList.add('active');
       document.getElementById('tg-master').classList.remove('active');
