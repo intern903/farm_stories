@@ -1063,9 +1063,21 @@ footer { background:var(--charcoal); padding:60px; display:grid; grid-template-c
   .fh-intro, .fh-plans { grid-template-columns:1fr; gap:28px; }
   .page-light, .page-cream { padding:104px 20px 60px; }
   .story-stats { flex-wrap:wrap; gap:36px; padding:56px 20px; }
-  .hero-chapter-card { position:static; margin:32px 20px 90px; max-width:none; }
+  .hero-chapter-card { position:static; margin:24px 20px 40px; max-width:none; }
   .hero-story-content { padding:9vh 20px 0; }
   .hero-scroll-hint { display:none; }
+  /* Phones: show the full hero artwork uncropped, text stacked below it
+     (no object-fit:cover crop of the wide panorama). */
+  .hero-canvas.has-art {
+    min-height:0; display:flex; flex-direction:column;
+    background:linear-gradient(180deg,#F7F0E1 0%,#F3EBDD 100%);
+  }
+  .hero-canvas.has-art .hero-art {
+    position:static; width:100%; height:auto; object-fit:contain; order:-1;
+  }
+  .hero-canvas.has-art::after { display:none; }
+  .hero-canvas.has-art .hero-story-overlay { display:none; }
+  .hero-canvas.has-art .hero-story-content { padding:26px 20px 4px; }
   .cs-img { min-height:320px; }
   .quote-strip { grid-template-columns:1fr; padding:40px 28px; }
   footer { grid-template-columns:1fr; gap:36px; padding:48px 24px; }
