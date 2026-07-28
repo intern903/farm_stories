@@ -35,7 +35,11 @@ function openTab(name) {
   panes.forEach(p => p.classList.remove('active'));
   if (idx >= 0) {
     btns[idx].classList.add('active');
-    document.getElementById('pane-' + name).classList.add('active');
+    const pane = document.getElementById('pane-' + name);
+    pane.classList.add('active');
+    // Force-load any lazy media in the just-opened pane — a tab pane starts
+    // display:none, where IntersectionObserver may never fire.
+    if (typeof loadLazyIn === 'function') loadLazyIn(pane);
   }
   requestAnimationFrame(observeReveals);
 }
@@ -225,6 +229,11 @@ function observeLazy(root) {
   const els = (root || document).querySelectorAll('img[data-src], [data-bg]');
   if (!lazyObserver) { els.forEach(loadLazyEl); return; }
   els.forEach(el => lazyObserver.observe(el));
+}
+// Immediately load all lazy media inside a container (used when a hidden
+// pane/section becomes visible, so we never depend on the observer firing).
+function loadLazyIn(root) {
+  (root || document).querySelectorAll('img[data-src], [data-bg]').forEach(loadLazyEl);
 }
 /* ── Hero artwork ──
    Drop the artwork into the repo and it replaces the SVG recreation
