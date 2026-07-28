@@ -406,6 +406,7 @@
     <div class="project-tabs">
       <button class="ptab active" onclick="openTab('overview')">Overview</button>
       <button class="ptab" onclick="openTab('plotmap')">Plot Map</button>
+      <button class="ptab" onclick="openTab('farmhouse')">Farmhouse Design</button>
       <button class="ptab" onclick="openTab('views')">Site Views</button>
       <button class="ptab" onclick="openTab('benefits')">Benefits</button>
       <button class="ptab" onclick="openTab('brochure')">Brochure &amp; Contact</button>
@@ -441,7 +442,8 @@
           <button class="ex-chip" data-status="sold"><span class="dot dot-sold"></span>Sold <span class="chip-count" id="cc-sold"></span></button>
         </div>
         <div class="ex-toggles">
-          <button class="ex-toggle active" id="tg-master">Masterplan</button>
+          <button class="ex-toggle active" id="tg-master">Interactive</button>
+          <button class="ex-toggle" id="tg-siteplan">Architect's plan</button>
           <button class="ex-toggle" id="tg-satellite">Satellite</button>
         </div>
       </div>
@@ -518,6 +520,56 @@
       </div>
 
       <p class="portal-foot">Distances, elevations and sun hours are indicative, measured from the site survey of March 2025. Walk the land with us to feel what a map can't show.</p>
+    </div>
+
+    <div id="pane-farmhouse" class="tab-pane">
+      <div class="fh-intro">
+        <div>
+          <p class="fh-eyebrow">A model farmhouse · designed by &amp;t studio</p>
+          <h3 class="fh-title">One plot. A whole<br><em>weekend world.</em></h3>
+        </div>
+        <p class="fh-lead">This is how a single Mango Meadows homesite can live — a two-storey farmhouse woven into the orchard, with a swimming pool, a fire-pit hangout, a treehouse over the stream, and three rooms that each frame the Nilgiris differently. A starting point for your own architect, or a home we can help you build.</p>
+      </div>
+
+      <div class="fh-plans">
+        <figure class="fh-plan">
+          <button class="fh-plan-img" data-lightbox data-full="assets/floor-ground.jpg" aria-label="Enlarge ground floor plan">
+            <img data-src="assets/floor-ground.jpg" alt="Mango Meadows farmhouse — ground floor plan" loading="lazy">
+            <span class="fh-zoom">⤢ View full plan</span>
+          </button>
+          <figcaption>
+            <h4>Ground floor</h4>
+            <ul class="fh-rooms">
+              <li><strong>Games area &amp; two-way bar</strong> — 33 × 19 ft, opening straight to the lawn</li>
+              <li><strong>Swimming pool</strong> — 11 × 30 ft, wrapped by the dining deck</li>
+              <li><strong>Dining &amp; common hall</strong> — 17 × 23 ft, with pantry and staircase</li>
+              <li><strong>Fire-pit hangout</strong> — 19 ft circle, plus gated security &amp; parking for four</li>
+              <li><strong>Treehouse</strong> — 12 × 12 ft over the seasonal stream</li>
+            </ul>
+          </figcaption>
+        </figure>
+
+        <figure class="fh-plan">
+          <button class="fh-plan-img" data-lightbox data-full="assets/floor-first.jpg" aria-label="Enlarge first floor plan">
+            <img data-src="assets/floor-first.jpg" alt="Mango Meadows farmhouse — first floor plan" loading="lazy">
+            <span class="fh-zoom">⤢ View full plan</span>
+          </button>
+          <figcaption>
+            <h4>First floor · three rooms</h4>
+            <ul class="fh-rooms">
+              <li><strong>Room 1</strong> — a compact, Japanese-inspired room with west-facing light and two balconies. Sleeps 2–4.</li>
+              <li><strong>Room 2</strong> — the largest room, with a Murphy bed, a balcony over the pool and lawn, and direct access to the common terrace. Sleeps up to 4.</li>
+              <li><strong>Room 3</strong> — designed for couples: a luxurious bathtub with forest views, a private balcony and a hanging terrace.</li>
+              <li><strong>Common terrace</strong> — 29 × 25 ft, with a shared hangout and nook.</li>
+            </ul>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="fh-note">
+        <p>Concept design shown for illustration — &amp;t studio, 21 July 2026. Every plot can carry its own home; we’ll introduce you to the architects who drew this one.</p>
+        <button class="btn-sage" onclick="openVisitForm('Farmhouse design — Mango Meadows')">Talk to us about building</button>
+      </div>
     </div>
 
     <div id="pane-views" class="tab-pane">
@@ -854,6 +906,12 @@
 <a class="wa-float" href="https://wa.me/919003746953?text=Hello%2C%20I%27d%20like%20to%20visit%20Mango%20Meadows" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4.6 27.4l5.7-1.6c1.9 1 4 1.6 5.7 1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm5.9 16.9c-.3.8-1.5 1.5-2.4 1.6-.6.1-1.4.2-4.2-.9-3.5-1.5-5.8-5-6-5.3-.2-.2-1.4-1.9-1.4-3.6s.9-2.6 1.2-2.9c.3-.3.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1 2.6 1.1 2.8.1.2.2.4 0 .7-.1.2-.2.4-.4.6l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.1.9-.1.2-.2 1-1.2 1.3-1.6.3-.4.5-.3.9-.2.4.1 2.4 1.1 2.8 1.3.4.2.7.3.8.5.1.2.1 1-.2 1.7z" fill="currentColor"/></svg>
 </a>
+
+<!-- Lightbox for plans / imagery -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <img id="lightbox-img" alt="">
+</div>
 
 <!-- Site visit modal -->
 <div class="modal-overlay" id="visit-modal" hidden>

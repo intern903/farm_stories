@@ -91,6 +91,14 @@
     svg.innerHTML = '';
     viewport = el('g', { id: 'mp-viewport' }, svg);
 
+    // Real architect's site plan (lazy: href set on first Site-Plan toggle).
+    // Sits at the back of the viewport so it pans/zooms with the controls.
+    const spW = 1000, spH = Math.round(1000 * 1752 / 1900);
+    el('image', {
+      id: 'mp-siteplan', x: 0, y: (660 - spH) / 2, width: spW, height: spH,
+      preserveAspectRatio: 'xMidYMid meet',
+    }, viewport);
+
     // Paper base + boundary
     const paper = el('g', { class: 'mp-paper' }, viewport);
     el('rect', { x: 40, y: 24, width: 920, height: 612, fill: 'none', stroke: 'rgba(74,55,40,.45)', 'stroke-width': 1.6, 'stroke-dasharray': '2 6', rx: 6 }, paper);
@@ -356,15 +364,31 @@
       this.classList.add('active');
       document.getElementById('tg-satellite').classList.remove('active');
     });
+    const toggles = ['tg-master', 'tg-siteplan', 'tg-satellite'];
+    function setView(active) {
+      toggles.forEach(id => document.getElementById(id).classList.toggle('active', id === active));
+      stage.classList.toggle('satellite', active === 'tg-satellite');
+      stage.classList.toggle('siteplan', active === 'tg-siteplan');
+    }
+    document.getElementById('tg-master').addEventListener('click', () => setView('tg-master'));
+    document.getElementById('tg-siteplan').addEventListener('click', function () {
+      // lazy-load the architect's site plan only when first opened
+      const sp = document.getElementById('mp-siteplan');
+      if (sp && !sp.getAttribute('href')) {
+        sp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'assets/masterplan.jpg');
+        sp.setAttribute('href', 'assets/masterplan.jpg');
+      }
+      // reset view so the whole plan is framed
+      state.zoom = 1; state.panX = 0; state.panY = 0; applyTransform();
+      setView('tg-siteplan');
+    });
     document.getElementById('tg-satellite').addEventListener('click', function () {
       // lazy-load the aerial imagery only when satellite view is first opened
       const sat = document.getElementById('map-satellite');
       if (!sat.style.backgroundImage) {
         sat.style.backgroundImage = 'url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400&q=70")';
       }
-      stage.classList.add('satellite');
-      this.classList.add('active');
-      document.getElementById('tg-master').classList.remove('active');
+      setView('tg-satellite');
     });
 
     document.getElementById('pd-close').addEventListener('click', () => {

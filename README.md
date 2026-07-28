@@ -20,11 +20,23 @@ The Portal aggregates **projects** (Mango Meadows, Coffee Canopy, Pepper Hollow)
 with location / size / budget / nature filters and a South India pin map. The
 plot-level explorer lives inside Our Projects → Plot Map.
 
-## Hero artwork
+## Drop-in assets
 
-The hero is designed around the sketch-into-reality panorama. Commit the
-original artwork file to `assets/hero.jpg` — on load the site detects it and
-swaps the layered SVG + photo recreation for the real image automatically.
+The site auto-detects files in `assets/` — commit them and they appear with
+zero code changes:
+
+- `assets/hero.jpg` — hero artwork; replaces the SVG recreation on load.
+- `assets/logo.png` (or `.svg` / `.webp` / `.jpg`) — brand logo; replaces the
+  monogram in the nav, footer and about strip, and hides the text wordmark.
+  Works for square badges or wide lockups; dark logos keep a light chip on the
+  dark placements.
+- `assets/masterplan.jpg` — architect's site plan, shown in Our Projects →
+  Plot Map under the "Architect's plan" toggle (zoom / pan).
+- `assets/floor-ground.jpg`, `assets/floor-first.jpg` — farmhouse floor plans,
+  shown in Our Projects → Farmhouse Design (click to enlarge in a lightbox).
+
+The masterplan and floor-plan images here were extracted from the supplied
+Mango Meadows PDFs.
 
 ## Deployment
 

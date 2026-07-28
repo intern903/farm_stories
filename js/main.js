@@ -27,7 +27,7 @@ function show(id) {
 /* ── Project tabs (preserved API) ── */
 function openTab(name) {
   show('projects');
-  const tabs = ['overview', 'plotmap', 'views', 'benefits', 'brochure'];
+  const tabs = ['overview', 'plotmap', 'farmhouse', 'views', 'benefits', 'brochure'];
   const btns = document.querySelectorAll('.ptab');
   const panes = document.querySelectorAll('.tab-pane');
   const idx = tabs.indexOf(name);
@@ -78,6 +78,30 @@ function visitSubmit(form) {
   setTimeout(closeVisitForm, 3200);
   setTimeout(() => { form.hidden = false; document.getElementById('visit-done').hidden = true; form.reset(); }, 3800);
   return false;
+}
+
+/* ── Lightbox for plans / imagery ── */
+function initLightbox() {
+  const box = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  if (!box) return;
+  function open(src, alt) {
+    img.src = src; img.alt = alt || '';
+    box.hidden = false; document.body.style.overflow = 'hidden';
+  }
+  function close() { box.hidden = true; img.src = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', e => {
+    const trigger = e.target.closest('[data-lightbox]');
+    if (trigger) {
+      e.preventDefault();
+      const full = trigger.dataset.full || trigger.querySelector('img')?.src;
+      const alt = trigger.querySelector('img')?.alt;
+      if (full) open(full, alt);
+    }
+  });
+  box.addEventListener('click', close);
+  document.getElementById('lightbox-close').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !box.hidden) close(); });
 }
 
 /* ── Scroll reveals via IntersectionObserver ── */
@@ -224,6 +248,33 @@ function initHeroArt() {
   probe.src = candidates[0];
 }
 
+/* ── Brand logo ──
+   Drop a logo into the repo and it replaces the SVG monogram in the
+   nav, footer and about strip automatically — zero code changes.
+   Probes common filenames; detects square badge vs. wide lockup. */
+function initBrandLogo() {
+  const candidates = [
+    'assets/logo.png', 'assets/logo.svg', 'assets/logo.webp',
+    'assets/logo.jpg', 'assets/logo.jpeg', 'logo.png',
+  ];
+  let i = 0;
+  const probe = new Image();
+  probe.onload = () => applyBrandLogo(probe.src);
+  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
+  probe.src = candidates[0];
+}
+function applyBrandLogo(src) {
+  document.body.classList.add('has-brand-logo');
+  ['.nav-logo-img', '.foot-logo', '.quote-logo'].forEach(sel => {
+    const slot = document.querySelector(sel);
+    if (!slot) return;
+    slot.innerHTML = '';
+    const im = new Image();
+    im.src = src; im.alt = 'The Farm Stories';
+    slot.appendChild(im);
+  });
+}
+
 /* ── Portal: South India map tooltip (preserved API) ── */
 function mapTip(e, title, info) {
   const tt = document.getElementById('map-tt');
@@ -282,6 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollChrome();
   initLazyMedia();
   initHeroArt();
+  initBrandLogo();
+  initLightbox();
 
   // If the intro is skipped (reduced motion / already seen), wake the hero now.
   if (REDUCED || sessionStorage.getItem('tfs-intro-seen')) wakeHero();
@@ -293,3 +346,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.wakeHero = wakeHero;
 window.observeLazy = observeLazy;
+window.mapTip = mapTip;

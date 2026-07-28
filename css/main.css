@@ -251,6 +251,26 @@ nav#site-nav.nav-scrolled { box-shadow:0 4px 24px rgba(74,55,40,.08); }
 }
 .nav-logo-img svg { width:100%; height:100%; }
 .nav-wordmark { font-family:'Libre Baskerville',serif; font-size:16px; color:var(--dark-earth); white-space:nowrap; }
+
+/* Brand logo image (when assets/logo.* is present).
+   Works for square badges or wide lockups: render at full height, auto width,
+   drop the duplicate text wordmark, keep a light chip on dark placements. */
+body.has-brand-logo .nav-logo-img {
+  width:auto; height:52px; background:none; border-radius:0; padding:0; box-shadow:none;
+}
+body.has-brand-logo .nav-logo-img img { height:100%; width:auto; object-fit:contain; display:block; }
+body.has-brand-logo .nav-wordmark { display:none; }
+/* Footer & about strip sit on dark — keep a cream chip so a dark logo stays legible */
+body.has-brand-logo .foot-logo {
+  width:auto; height:64px; min-width:64px; background:var(--cream);
+  border-radius:8px; padding:10px 14px;
+}
+body.has-brand-logo .foot-logo img { height:100%; width:auto; object-fit:contain; display:block; }
+body.has-brand-logo .quote-logo {
+  width:auto; height:60px; background:var(--warm-white); border-radius:8px; padding:10px; opacity:1;
+}
+body.has-brand-logo .quote-logo img { height:100%; width:auto; object-fit:contain; display:block; }
+@media (max-width:900px){ body.has-brand-logo .nav-logo-img { height:44px; } }
 .nav-wordmark em { font-style:italic; color:var(--earth); }
 .nav-links { display:flex; gap:0; list-style:none; }
 .nav-links a {
@@ -749,6 +769,14 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
 .map-stage.satellite #masterplan .mp-text { fill:rgba(243,235,221,.75); }
 .map-stage.satellite #masterplan .plot-shape { stroke:rgba(243,235,221,.65); }
 
+/* Architect's site-plan view: show the real drawing, hide the interactive plots */
+#masterplan #mp-siteplan { display:none; }
+.map-stage.siteplan { background:#fff; }
+.map-stage.siteplan #masterplan .plot,
+.map-stage.siteplan #masterplan .mp-paper { display:none; }
+.map-stage.siteplan #masterplan #mp-siteplan { display:block; }
+.map-stage.siteplan .map-legend .legend-status { display:none; }
+
 .map-controls {
   position:absolute; right:16px; top:16px; z-index:5;
   display:flex; flex-direction:column; gap:6px;
@@ -815,6 +843,54 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
 .cd-table td:first-child { color:var(--muted); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
 .cd-table td { color:var(--dark-earth); }
 .portal-foot { margin-top:34px; font-size:12.5px; color:var(--muted); font-style:italic; max-width:560px; }
+
+/* ═══════════════════════════════════════════
+   FARMHOUSE DESIGN (floor plans)
+   ═══════════════════════════════════════════ */
+.fh-intro { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-bottom:40px; }
+.fh-eyebrow { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+.fh-title { font-family:'Libre Baskerville',serif; font-size:clamp(26px,3vw,38px); font-weight:400; color:var(--dark-earth); line-height:1.15; }
+.fh-title em { font-style:italic; color:var(--earth); }
+.fh-lead { font-size:15px; line-height:1.9; color:var(--muted); }
+.fh-plans { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.fh-plan { background:var(--warm-white); border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column; }
+.fh-plan-img {
+  position:relative; display:block; width:100%; padding:0; border:none; cursor:zoom-in;
+  background:#fff; border-bottom:1px solid var(--border); line-height:0;
+}
+.fh-plan-img img { width:100%; height:auto; display:block; transition:opacity .8s ease; }
+.fh-zoom {
+  position:absolute; right:14px; bottom:14px; z-index:2;
+  background:rgba(44,36,24,.86); color:var(--cream); font-family:'Outfit',sans-serif;
+  font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:7px 14px; border-radius:2px;
+  opacity:0; transition:opacity .3s; line-height:1;
+}
+.fh-plan-img:hover .fh-zoom, .fh-plan-img:focus-visible .fh-zoom { opacity:1; }
+.fh-plan figcaption { padding:26px 28px; }
+.fh-plan figcaption h4 { font-family:'Libre Baskerville',serif; font-size:18px; font-weight:400; color:var(--dark-earth); margin-bottom:14px; }
+.fh-rooms { list-style:none; }
+.fh-rooms li { font-size:13.5px; line-height:1.6; color:var(--muted); padding:8px 0; border-top:1px solid var(--border); }
+.fh-rooms li:first-child { border-top:none; }
+.fh-rooms strong { color:var(--dark-earth); font-weight:500; }
+.fh-note {
+  margin-top:28px; padding:28px 32px; background:var(--cream); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+}
+.fh-note p { font-size:13px; font-style:italic; color:var(--muted); max-width:620px; line-height:1.7; }
+
+/* ═══ LIGHTBOX ═══ */
+.lightbox {
+  position:fixed; inset:0; z-index:950; background:rgba(13,11,8,.92);
+  display:flex; align-items:center; justify-content:center; padding:32px;
+  animation:fadeIn .3s ease; cursor:zoom-out;
+}
+.lightbox[hidden] { display:none; }
+.lightbox img { max-width:96vw; max-height:92vh; box-shadow:0 30px 80px rgba(0,0,0,.5); background:#fff; }
+.lightbox-close {
+  position:absolute; top:18px; right:24px; z-index:2; background:none; border:none;
+  color:var(--cream); font-size:34px; cursor:pointer; line-height:1; opacity:.8;
+}
+.lightbox-close:hover { opacity:1; }
 
 /* ═══ COMING SOON PAGES (preserved) ═══ */
 .cs-page { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:120px 60px; background:var(--dark-earth); text-align:center; }
@@ -983,6 +1059,7 @@ footer { background:var(--charcoal); padding:60px; display:grid; grid-template-c
   .trust-strip { grid-template-columns:1fr 1fr; }
   .trust-item { border-left:none; border-top:1px solid var(--border); }
   .pillars, .benefits-grid, .views-grid, .wn-grid { grid-template-columns:1fr; }
+  .fh-intro, .fh-plans { grid-template-columns:1fr; gap:28px; }
   .page-light, .page-cream { padding:104px 20px 60px; }
   .story-stats { flex-wrap:wrap; gap:36px; padding:56px 20px; }
   .hero-chapter-card { position:static; margin:32px 20px 90px; max-width:none; }
