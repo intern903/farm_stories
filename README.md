@@ -34,9 +34,14 @@ zero code changes:
   Plot Map under the "Architect's plan" toggle (zoom / pan).
 - `assets/floor-ground.jpg`, `assets/floor-first.jpg` — farmhouse floor plans,
   shown in Our Projects → Farmhouse Design (click to enlarge in a lightbox).
+- `assets/mango-cover.jpg` + `assets/mango-render-*.jpg` + `assets/mango-view-*.jpg`
+  — Mango Meadows design renders, used as the project cover, the Site Views
+  gallery (click to enlarge), the home chapter spread and the What's New feature.
+- `assets/logo-mango.png` / `assets/logo-mango-cream.png` — the Mango Meadows
+  project wordmark (green for light backgrounds, cream for dark).
 
-The masterplan and floor-plan images here were extracted from the supplied
-Mango Meadows PDFs.
+The masterplan, floor-plan and render images here were extracted from the
+supplied Mango Meadows PDFs.
 
 ## Deployment
 
