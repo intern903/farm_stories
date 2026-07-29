@@ -166,9 +166,13 @@ async function initMotion() {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Lenis smooth scroll, calm and slow
+  // Lenis smooth scroll — faster/snappier across all pages
   if (window.Lenis) {
-    const lenis = new Lenis({ duration: 0.85, smoothWheel: true });
+    const lenis = new Lenis({
+      duration: 0.6, smoothWheel: true,
+      wheelMultiplier: 1.6, touchMultiplier: 2.2,
+      easing: t => 1 - Math.pow(1 - t, 3),
+    });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);

@@ -93,9 +93,9 @@
 
     // Real architect's site plan (lazy: href set on first Site-Plan toggle).
     // Sits at the back of the viewport so it pans/zooms with the controls.
-    const spW = 1000, spH = Math.round(1000 * 1752 / 1900);
+    // 'meet' contains the whole drawing within the viewBox, centered.
     el('image', {
-      id: 'mp-siteplan', x: 0, y: (660 - spH) / 2, width: spW, height: spH,
+      id: 'mp-siteplan', x: 0, y: 0, width: 1000, height: 660,
       preserveAspectRatio: 'xMidYMid meet',
     }, viewport);
 
