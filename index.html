@@ -490,7 +490,7 @@
               <span><i class="dot dot-available"></i>Available</span>
               <span><i class="dot dot-reserved"></i>Reserved</span>
               <span><i class="dot dot-sold"></i>Sold</span>
-              <span class="legend-hint">Scroll to zoom · drag to pan</span>
+              <span class="legend-hint">Ctrl + scroll to zoom · drag to pan · +/− buttons</span>
             </div>
             <div id="plot-tooltip" class="plot-tooltip" role="status"></div>
           </div>
@@ -935,8 +935,8 @@
 
 <!-- Motion libraries: loaded lazily after intro/first paint -->
 <script>
+  window.TFS_ASSET_V = '3'; // bump to bust the image cache after updating assets
   window.TFS_LIBS = [
-    'https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js',
     'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
     'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
     'https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js'

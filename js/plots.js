@@ -319,7 +319,10 @@
       applyTransform();
     });
     window.addEventListener('pointerup', () => { dragging = false; stage.classList.remove('grabbing'); });
+    // Wheel zooms only with Ctrl/⌘ held; a plain wheel scrolls the page
+    // normally (so the map never hijacks page scrolling).
     stage.addEventListener('wheel', e => {
+      if (!(e.ctrlKey || e.metaKey)) return; // let the page scroll
       e.preventDefault();
       const pt = svgPoint(e);
       zoomTo(state.zoom * (e.deltaY < 0 ? 1.12 : 0.89), pt.x, pt.y);
@@ -375,8 +378,10 @@
       // lazy-load the architect's site plan only when first opened
       const sp = document.getElementById('mp-siteplan');
       if (sp && !sp.getAttribute('href')) {
-        sp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'assets/masterplan.jpg');
-        sp.setAttribute('href', 'assets/masterplan.jpg');
+        // ?v busts the 1-day image cache when the plan is updated
+        const url = 'assets/masterplan.jpg?v=' + (window.TFS_ASSET_V || '2');
+        sp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', url);
+        sp.setAttribute('href', url);
       }
       // reset view so the whole plan is framed
       state.zoom = 1; state.panX = 0; state.panY = 0; applyTransform();

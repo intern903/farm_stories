@@ -166,17 +166,8 @@ async function initMotion() {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Lenis smooth scroll — faster/snappier across all pages
-  if (window.Lenis) {
-    const lenis = new Lenis({
-      duration: 0.6, smoothWheel: true,
-      wheelMultiplier: 1.6, touchMultiplier: 2.2,
-      easing: t => 1 - Math.pow(1 - t, 3),
-    });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(t => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
+  // Native scrolling — no smooth-scroll library (snappy, zero lag).
+  // ScrollTrigger drives the reveals/parallax off the browser's own scroll.
 
   // Typography reveal on the hero title
   if (window.SplitType) {
@@ -250,6 +241,7 @@ function initHeroArt() {
     'assets/hero.jpg', 'assets/hero.jpeg', 'assets/hero.png', 'assets/hero.webp',
     'assets/asset.jpg', 'assets/asset.png', 'hero.jpg', 'hero.png',
   ];
+  const v = '?v=' + (window.TFS_ASSET_V || '1');
   let i = 0;
   const probe = new Image();
   probe.onload = () => {
@@ -257,8 +249,8 @@ function initHeroArt() {
     img.hidden = false;
     document.querySelector('.hero-canvas').classList.add('has-art');
   };
-  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
-  probe.src = candidates[0];
+  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i] + v; };
+  probe.src = candidates[0] + v;
 }
 
 /* ── Brand logo ──

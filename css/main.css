@@ -721,7 +721,8 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
   position:relative; background:var(--paper-deep);
   border:1px solid var(--border); overflow:hidden; border-radius:3px;
   box-shadow:inset 0 0 60px rgba(139,111,71,.10);
-  touch-action:none;
+  /* allow vertical page scroll to pass through the map on touch */
+  touch-action:pan-y;
 }
 .map-stage.grabbing { cursor:grabbing; }
 .map-stage:not(.grabbing) { cursor:grab; }
