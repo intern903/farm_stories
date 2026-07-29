@@ -67,27 +67,6 @@
   }
   drawMotes();
 
-  /* ── Optional soft paper sound (WebAudio, no assets) ── */
-  let audioCtx = null;
-  function pageSound() {
-    try {
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      const dur = 0.38;
-      const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < data.length; i++) {
-        const t = i / data.length;
-        // shaped noise: a soft "shhf" swelling then fading
-        data[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * t) * Math.pow(1 - t, 1.6) * 0.18;
-      }
-      const src = audioCtx.createBufferSource();
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'bandpass'; filter.frequency.value = 2600; filter.Q.value = 0.6;
-      src.buffer = buf;
-      src.connect(filter).connect(audioCtx.destination);
-      src.start();
-    } catch (e) { /* sound is optional */ }
-  }
 
   /* ── Page turning ── */
   const turnables = [
@@ -104,7 +83,6 @@
     turning = true;
     const page = turnables[current];
     page.classList.add('turning', 'turned');
-    pageSound();
     // once a page is turned it stacks under the next ones
     setTimeout(() => {
       page.classList.remove('turning');
@@ -124,7 +102,6 @@
     page.classList.add('turning');
     page.classList.remove('turned');
     page.style.zIndex = String(4 - current);
-    pageSound();
     setTimeout(() => { page.classList.remove('turning'); turning = false; }, 1500);
   }
 
@@ -141,7 +118,6 @@
       intro.classList.add('removed');
       running = false;
       if (rafId) cancelAnimationFrame(rafId);
-      if (audioCtx) audioCtx.close().catch(() => {});
     }, 1700);
   }
 

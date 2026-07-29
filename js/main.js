@@ -168,7 +168,7 @@ async function initMotion() {
 
   // Lenis smooth scroll, calm and slow
   if (window.Lenis) {
-    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    const lenis = new Lenis({ duration: 0.85, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
