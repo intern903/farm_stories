@@ -12,32 +12,28 @@
      sun = morning-sun (east-facing) plot, view = Nilgiris view,
      orchard = orchard-dense (6+ mature trees inside boundary) */
   const PLOTS = [
-    { id: 1,  status: 'sold',      size: 24, frontage: 60, elev: 4,  trees: 7,  corner: true,  sun: true,  view: true,  dist: 40  },
-    { id: 2,  status: 'sold',      size: 22, frontage: 40, elev: 4,  trees: 5,  corner: false, sun: true,  view: true,  dist: 70  },
-    { id: 3,  status: 'reserved',  size: 21, frontage: 40, elev: 5,  trees: 6,  corner: false, sun: true,  view: true,  dist: 100 },
-    { id: 4,  status: 'available', size: 26, frontage: 40, elev: 6,  trees: 8,  corner: false, sun: true,  view: true,  dist: 130 },
-    { id: 5,  status: 'available', size: 28, frontage: 62, elev: 7,  trees: 9,  corner: true,  sun: true,  view: true,  dist: 160 },
-    { id: 6,  status: 'sold',      size: 23, frontage: 58, elev: 3,  trees: 6,  corner: true,  sun: false, view: false, dist: 55  },
-    { id: 7,  status: 'available', size: 20, frontage: 40, elev: 3,  trees: 4,  corner: false, sun: false, view: false, dist: 85  },
-    { id: 8,  status: 'reserved',  size: 22, frontage: 40, elev: 4,  trees: 6,  corner: false, sun: false, view: false, dist: 115 },
-    { id: 9,  status: 'sold',      size: 25, frontage: 40, elev: 5,  trees: 7,  corner: false, sun: false, view: true,  dist: 145 },
-    { id: 10, status: 'available', size: 27, frontage: 60, elev: 6,  trees: 8,  corner: true,  sun: false, view: true,  dist: 175 },
-    { id: 11, status: 'sold',      size: 21, frontage: 56, elev: 2,  trees: 5,  corner: true,  sun: true,  view: false, dist: 45  },
-    { id: 12, status: 'available', size: 20, frontage: 40, elev: 2,  trees: 5,  corner: false, sun: true,  view: false, dist: 75  },
-    { id: 13, status: 'available', size: 23, frontage: 40, elev: 3,  trees: 7,  corner: false, sun: true,  view: false, dist: 105 },
-    { id: 14, status: 'reserved',  size: 24, frontage: 40, elev: 4,  trees: 6,  corner: false, sun: true,  view: true,  dist: 135 },
-    { id: 15, status: 'available', size: 29, frontage: 64, elev: 6,  trees: 10, corner: true,  sun: true,  view: true,  dist: 165 },
-    { id: 16, status: 'sold',      size: 22, frontage: 58, elev: 2,  trees: 5,  corner: true,  sun: false, view: false, dist: 60  },
-    { id: 17, status: 'available', size: 30, frontage: 44, elev: 7,  trees: 11, corner: false, sun: false, view: true,  dist: 90  },
-    { id: 18, status: 'reserved',  size: 23, frontage: 40, elev: 4,  trees: 6,  corner: false, sun: false, view: false, dist: 120 },
-    { id: 19, status: 'sold',      size: 21, frontage: 40, elev: 4,  trees: 5,  corner: false, sun: false, view: false, dist: 150 },
-    { id: 20, status: 'available', size: 26, frontage: 60, elev: 5,  trees: 8,  corner: true,  sun: false, view: true,  dist: 180 },
-    { id: 21, status: 'sold',      size: 24, frontage: 62, elev: 1,  trees: 6,  corner: true,  sun: true,  view: false, dist: 35  },
-    { id: 22, status: 'available', size: 20, frontage: 40, elev: 2,  trees: 4,  corner: false, sun: true,  view: false, dist: 65  },
-    { id: 23, status: 'reserved',  size: 22, frontage: 40, elev: 3,  trees: 6,  corner: false, sun: true,  view: false, dist: 95  },
-    { id: 24, status: 'sold',      size: 25, frontage: 40, elev: 4,  trees: 7,  corner: false, sun: true,  view: true,  dist: 125 },
-    { id: 25, status: 'available', size: 27, frontage: 42, elev: 5,  trees: 9,  corner: false, sun: true,  view: true,  dist: 155 },
-    { id: 26, status: 'sold',      size: 30, frontage: 66, elev: 6,  trees: 12, corner: true,  sun: true,  view: true,  dist: 185 },
+    { id: 1,  status: 'sold',      size: 22, frontage: 40, elev: 6,  trees: 6,  corner: true,  sun: true,  view: true,  dist: 60  },
+    { id: 2,  status: 'available', size: 23, frontage: 40, elev: 6,  trees: 7,  corner: false, sun: true,  view: true,  dist: 90  },
+    { id: 3,  status: 'reserved',  size: 24, frontage: 44, elev: 5,  trees: 6,  corner: false, sun: true,  view: true,  dist: 120 },
+    { id: 4,  status: 'available', size: 22, frontage: 40, elev: 5,  trees: 5,  corner: true,  sun: true,  view: true,  dist: 150 },
+    { id: 5,  status: 'available', size: 22, frontage: 40, elev: 4,  trees: 7,  corner: true,  sun: true,  view: true,  dist: 175 },
+    { id: 6,  status: 'sold',      size: 24, frontage: 40, elev: 4,  trees: 8,  corner: false, sun: true,  view: false, dist: 205 },
+    { id: 7,  status: 'available', size: 24, frontage: 40, elev: 3,  trees: 8,  corner: false, sun: false, view: false, dist: 235 },
+    { id: 8,  status: 'reserved',  size: 25, frontage: 42, elev: 3,  trees: 9,  corner: false, sun: false, view: false, dist: 265 },
+    { id: 9,  status: 'sold',      size: 24, frontage: 40, elev: 2,  trees: 8,  corner: false, sun: false, view: false, dist: 295 },
+    { id: 10, status: 'available', size: 25, frontage: 42, elev: 2,  trees: 9,  corner: true,  sun: false, view: false, dist: 325 },
+    { id: 11, status: 'sold',      size: 27, frontage: 44, elev: 2,  trees: 10, corner: true,  sun: true,  view: false, dist: 300 },
+    { id: 12, status: 'available', size: 25, frontage: 40, elev: 2,  trees: 8,  corner: false, sun: true,  view: false, dist: 270 },
+    { id: 13, status: 'available', size: 23, frontage: 40, elev: 3,  trees: 7,  corner: false, sun: true,  view: false, dist: 240 },
+    { id: 14, status: 'reserved',  size: 30, frontage: 46, elev: 3,  trees: 11, corner: false, sun: true,  view: false, dist: 210 },
+    { id: 15, status: 'available', size: 25, frontage: 40, elev: 4,  trees: 9,  corner: false, sun: true,  view: true,  dist: 180 },
+    { id: 16, status: 'sold',      size: 26, frontage: 42, elev: 4,  trees: 9,  corner: true,  sun: true,  view: true,  dist: 150 },
+    { id: 17, status: 'available', size: 22, frontage: 40, elev: 5,  trees: 6,  corner: true,  sun: false, view: true,  dist: 130 },
+    { id: 18, status: 'reserved',  size: 23, frontage: 40, elev: 5,  trees: 6,  corner: false, sun: false, view: true,  dist: 160 },
+    { id: 19, status: 'sold',      size: 22, frontage: 40, elev: 6,  trees: 5,  corner: false, sun: false, view: true,  dist: 190 },
+    { id: 20, status: 'available', size: 19, frontage: 40, elev: 6,  trees: 5,  corner: true,  sun: false, view: true,  dist: 220 },
+    { id: 21, status: 'available', size: 29, frontage: 60, elev: 1,  trees: 10, corner: true,  sun: true,  view: false, dist: 250 },
+    { id: 22, status: 'available', size: 30, frontage: 62, elev: 1,  trees: 11, corner: true,  sun: true,  view: false, dist: 230 },
   ];
 
   const NOTES = {
@@ -57,21 +53,39 @@
 
   let svg, viewport, stage, tooltip;
 
-  /* ── Layout: 26 plots in 4 rows flanking a central spine road ── */
-  function plotRect(p) {
-    const i = p.id - 1;
-    const row = Math.floor(i / 7);           // 0..3
-    const col = i % 7;
-    const rowsY = [78, 218, 388, 528];
-    const bandH = 108;
-    // Rows 0-1 sit above the horizontal road, rows 2-3 below.
-    const count = row === 3 ? 5 : 7;         // last row holds 5 wider plots
-    const gutter = 10;
-    const x0 = 96, x1 = 906;
-    const w = (x1 - x0 - gutter * (count - 1)) / count;
-    const c = Math.min(col, count - 1);
-    return { x: x0 + c * (w + gutter), y: rowsY[row], w, h: bandH };
-  }
+  /* ── Layout: 22 plots echoing the site plan ──
+     Entrance top-centre; plots 01-04 a top-right strip; 05-10 an upper
+     band; 11-16 a middle band; 17-20 the right-side cluster; 21-22 the
+     lower plots by the stream; amenity block bottom-left. */
+  const POS = {
+    1:  { x: 838, y: 118, w: 96,  h: 98 },
+    2:  { x: 735, y: 110, w: 96,  h: 100 },
+    3:  { x: 632, y: 130, w: 96,  h: 102 },
+    4:  { x: 548, y: 168, w: 78,  h: 100 },
+    // upper band (10 → 05, left to right)
+    10: { x: 60,  y: 300, w: 100, h: 112 },
+    9:  { x: 170, y: 300, w: 100, h: 112 },
+    8:  { x: 280, y: 300, w: 100, h: 112 },
+    7:  { x: 390, y: 300, w: 100, h: 112 },
+    6:  { x: 500, y: 300, w: 100, h: 112 },
+    5:  { x: 610, y: 300, w: 100, h: 112 },
+    // middle band (11 → 16, left to right)
+    11: { x: 60,  y: 430, w: 100, h: 112 },
+    12: { x: 170, y: 430, w: 100, h: 112 },
+    13: { x: 280, y: 430, w: 100, h: 112 },
+    14: { x: 390, y: 430, w: 100, h: 112 },
+    15: { x: 500, y: 430, w: 100, h: 112 },
+    16: { x: 610, y: 430, w: 100, h: 112 },
+    // right-side cluster (17-20)
+    17: { x: 742, y: 300, w: 92,  h: 112 },
+    18: { x: 842, y: 300, w: 92,  h: 112 },
+    19: { x: 742, y: 430, w: 92,  h: 112 },
+    20: { x: 842, y: 430, w: 92,  h: 112 },
+    // lower plots by the stream
+    21: { x: 300, y: 556, w: 150, h: 80  },
+    22: { x: 460, y: 556, w: 150, h: 80  },
+  };
+  function plotRect(p) { return POS[p.id]; }
 
   function el(name, attrs, parent) {
     const n = document.createElementNS(SVG_NS, name);
@@ -101,40 +115,50 @@
 
     // Paper base + boundary
     const paper = el('g', { class: 'mp-paper' }, viewport);
-    el('rect', { x: 40, y: 24, width: 920, height: 612, fill: 'none', stroke: 'rgba(74,55,40,.45)', 'stroke-width': 1.6, 'stroke-dasharray': '2 6', rx: 6 }, paper);
-    const t = el('text', { x: 500, y: 52, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 13 }, paper);
-    t.textContent = 'THE MANGO MEADOWS · MASTERPLAN · 7 ACRES';
+    el('rect', { x: 34, y: 24, width: 932, height: 612, fill: 'none', stroke: 'rgba(74,55,40,.4)', 'stroke-width': 1.4, 'stroke-dasharray': '2 6', rx: 6 }, paper);
+    const t = el('text', { x: 500, y: 50, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 13 }, paper);
+    t.textContent = 'THE MANGO MEADOWS · SITE PLAN · 22 PLOTS';
 
-    // 22-ft spine road (horizontal) + entrance stem
-    el('path', { d: 'M40 355 H960', class: 'mp-road', 'stroke-width': 30 }, paper);
-    el('path', { d: 'M40 355 H960', class: 'mp-road-dash' }, paper);
-    el('path', { d: 'M500 636 V355', class: 'mp-road', 'stroke-width': 26 }, paper);
-    el('path', { d: 'M500 636 V360', class: 'mp-road-dash' }, paper);
-    const rd = el('text', { x: 728, y: 351, class: 'mp-text', 'font-size': 9 }, paper);
-    rd.textContent = '22 FT INTERNAL ROAD';
+    // Roads: two horizontal 14-ft roads between the bands + a right spine,
+    // and the entrance drive coming in from the top.
+    const road = (d, w) => { el('path', { d, class: 'mp-road', 'stroke-width': w }, paper); el('path', { d, class: 'mp-road-dash' }, paper); };
+    road('M40 285 H710', 20);          // between top strip / upper band
+    road('M40 421 H930', 22);          // central 14-ft road
+    road('M725 300 V545', 20);         // right spine to the cluster
+    road('M610 40 Q640 150 660 285', 22); // entrance drive
+    const rd = el('text', { x: 360, y: 417, class: 'mp-text', 'font-size': 9 }, paper);
+    rd.textContent = '14 FEET WIDE ROAD';
 
-    // Entrance arch
-    el('path', { d: 'M472 632 Q500 596 528 632', fill: 'none', stroke: 'rgba(139,111,71,.8)', 'stroke-width': 2.5 }, paper);
-    const en = el('text', { x: 500, y: 652, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 9 }, paper);
-    en.textContent = 'ENTRANCE ARCH';
+    // Main entrance (top)
+    el('path', { d: 'M596 46 L624 46 L610 66 Z', fill: 'rgba(74,55,40,.8)' }, paper);
+    const en = el('text', { x: 610, y: 34, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 10, 'font-weight': 500 }, paper);
+    en.textContent = 'MAIN ENTRANCE';
 
-    // Amphitheatre pavilion + sunset deck
-    el('circle', { cx: 60, cy: 355, r: 34, class: 'mp-amenity' }, paper);
-    const am = el('text', { x: 60, y: 408, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 8 }, paper);
-    am.textContent = 'PAVILION';
-    el('rect', { x: 922, y: 330, width: 34, height: 50, rx: 4, class: 'mp-amenity' }, paper);
-    const sd = el('text', { x: 940, y: 396, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 8 }, paper);
-    sd.textContent = 'SUNSET DECK';
+    // Forest labels
+    const f1 = el('text', { x: 190, y: 150, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 12 }, paper);
+    f1.textContent = 'Forest';
+    const f2 = el('text', { x: 470, y: 628, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 12 }, paper);
+    f2.textContent = 'Forest';
+
+    // Amenity cluster bottom-left (pavilion + pool)
+    el('rect', { x: 60, y: 556, width: 210, height: 80, rx: 4, class: 'mp-amenity' }, paper);
+    el('rect', { x: 78, y: 576, width: 46, height: 42, rx: 3, fill: 'rgba(107,140,106,.5)', stroke: 'rgba(74,100,73,.7)', 'stroke-width': 1 }, paper);
+    el('rect', { x: 140, y: 582, width: 54, height: 30, rx: 12, fill: 'rgba(90,150,180,.5)', stroke: 'rgba(60,110,150,.7)', 'stroke-width': 1 }, paper); // pool
+    const am = el('text', { x: 165, y: 550, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 8 }, paper);
+    am.textContent = 'PAVILION · POOL · FIRE PIT';
+
+    // Stream along the bottom-right
+    el('path', { d: 'M270 616 Q430 636 560 612 Q660 594 700 560', fill: 'none', stroke: 'rgba(90,150,180,.55)', 'stroke-width': 6, 'stroke-linecap': 'round' }, paper);
 
     // Compass
-    const cp = el('g', { transform: 'translate(925,70)' }, paper);
+    const cp = el('g', { transform: 'translate(930,66)' }, paper);
     el('circle', { cx: 0, cy: 0, r: 16, fill: 'none', stroke: 'rgba(74,55,40,.4)', 'stroke-width': 1 }, cp);
     el('path', { d: 'M0 -12 L4 4 L0 1 L-4 4 Z', fill: 'rgba(139,111,71,.85)' }, cp);
     const nl = el('text', { x: 0, y: 30, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 9 }, cp);
     nl.textContent = 'N';
 
-    // Orchard fringe trees (between plot bands and boundary)
-    const fringe = [[70,100],[70,160],[70,250],[930,120],[930,200],[70,450],[70,560],[930,470],[930,560],[170,340],[330,372],[650,338],[810,372]];
+    // Orchard fringe trees
+    const fringe = [[150,110],[240,120],[70,200],[70,250],[930,150],[930,220],[300,596],[540,600],[650,585]];
     fringe.forEach(([x, y]) => drawTree(paper, x, y, 9));
 
     // Plots
