@@ -46,16 +46,22 @@
       tip: 'Wayanad, Kerala · Coming 2026',
     },
     {
-      id: 'coconut-chronicle', name: 'The Coconut Chronicle',
-      place: 'Pollachi, Tamil Nadu', note: 'Coconut country, canal-fed',
-      state: 'tn', status: 'soon', statusLabel: 'Coming 2026',
-      sizes: ['20-30'], budgetMin: 0, budgetMax: 0,
+      id: 'coconut-grove', name: 'Coconut Grove',
+      place: 'Govindapuram, Coimbatore', note: 'Kinathukadavu Taluk · 14.07 acres',
+      state: 'tn', status: 'selling', statusLabel: 'Now selling',
+      sizes: ['20-30', '30-50'], budgetMin: 0, budgetMax: 0,
       features: ['orchard', 'water'],
-      specs: [['Coconut groves', 'Character'], ['20–30c', 'Plot size']],
-      grad: 'linear-gradient(135deg, #8B9C6A, #4A3728)',
-      pin: { x: 300, y: 348, label: 'POLLACHI' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Pollachi, Tamil Nadu · Coming 2026',
+      specs: [['14.07 ac', 'Total area'], ['9.19 ac', 'Salable'], ['2', 'Parks']],
+      grad: 'linear-gradient(135deg, #8B9C6A, #4A6449)',
+      pin: { x: 300, y: 352, label: 'GOVINDAPURAM' },
+      cta: 'Read the layout →', action: 'expand',
+      about: 'Our second project — an approved residential layout of house sites in Govindapuram Village, Kinathukadavu, Coimbatore District. 14.07 acres across S.F. Nos 20/1, 21/1, 22/A1 & 22/B1, with two landscaped parks, 9–12 m layout roads and 9.19 acres of salable plots (65%). Red-earth land fringed by coconut groves.',
+      facts: [['14.07 ac', 'Total area'], ['9.19 ac', 'Salable (65%)'], ['1.13 ac', 'Two parks'], ['3.63 ac', 'Roads'], ['1:800', 'Layout scale'], ['Coimbatore', 'District']],
+      gallery: [
+        { src: 'assets/coconut-layout-1.jpg', label: 'Layout plan — house sites, parks &amp; roads' },
+        { src: 'assets/coconut-layout-2.jpg', label: 'Layout plan — plot areas &amp; dimensions' },
+      ],
+      tip: 'Govindapuram, Coimbatore · 14.07 acres · Now selling',
     },
     {
       id: 'silver-oak-letters', name: 'Silver Oak Letters',
@@ -165,7 +171,20 @@
       card.dataset.id = p.id;
       const media = p.img
         ? `<img data-src="${p.img}" alt="${p.imgAlt || p.name}" loading="lazy">`
-        : `<span class="lcard-soon-label">${p.statusLabel}</span>`;
+        : (p.status === 'selling' ? '' : `<span class="lcard-soon-label">${p.statusLabel}</span>`);
+      // Optional inline "read more" panel (layout plans + facts), no redirect
+      const expand = p.gallery ? (
+        `<div class="lcard-expand" hidden>
+          ${p.about ? `<p class="lcard-about">${p.about}</p>` : ''}
+          ${p.facts ? `<div class="lcard-facts">${p.facts.map(([v, k]) =>
+            `<div class="lfact"><strong>${v}</strong><span>${k}</span></div>`).join('')}</div>` : ''}
+          <div class="lcard-gallery">${p.gallery.map(g =>
+            `<figure class="lcard-shot" data-lightbox data-full="${g.src}">
+              <img data-src="${g.src}" alt="${g.label}" loading="lazy">
+              <figcaption>${g.label}</figcaption>
+            </figure>`).join('')}</div>
+          <p class="lcard-expand-note">Approved layout plan · &amp;t / L.B.S. survey, Aug 2025. Click a plan to enlarge.</p>
+        </div>`) : '';
       card.innerHTML =
         `<div class="lcard-img" ${p.grad ? `style="background:${p.grad};display:flex;align-items:center;justify-content:center;"` : ''}>
           ${media}
@@ -178,8 +197,20 @@
             `<div class="lspec"><strong>${v}</strong><span>${k}</span></div>`).join('')}
           </div>
           <div class="lcard-cta ${p.status !== 'selling' ? 'lcard-cta-soon' : ''}">${p.cta}</div>
+          ${expand}
         </div>`;
-      card.addEventListener('click', () => {
+      card.addEventListener('click', e => {
+        if (p.gallery) {
+          if (e.target.closest('[data-lightbox]')) return; // let the lightbox open
+          const panel = card.querySelector('.lcard-expand');
+          const opening = panel.hidden;
+          panel.hidden = !opening;
+          card.classList.toggle('expanded', opening);
+          const cta = card.querySelector('.lcard-cta');
+          if (cta) cta.textContent = opening ? 'Hide layout ↑' : p.cta;
+          if (opening && typeof window.observeLazy === 'function') window.observeLazy(panel);
+          return;
+        }
         if (p.action === 'projects') window.show('projects');
         else window.show('community');
       });

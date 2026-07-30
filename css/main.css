@@ -681,6 +681,21 @@ section.active { display:block; animation:fadeUp .5s var(--ease-story); }
 .pf-empty { margin-top:22px; font-size:14px; color:var(--muted); font-style:italic; }
 .pf-empty a { color:var(--sage-dark); }
 
+/* Inline "read more" — layout plans & facts, expands full width */
+.listing-card.expanded { grid-column:1 / -1; border-color:var(--gold); box-shadow:0 12px 30px rgba(74,55,40,.12); }
+.listing-card.expanded .lcard-cta { color:var(--gold); }
+.lcard-expand { margin-top:16px; padding-top:18px; border-top:1px solid var(--border); animation:fadeUp .35s var(--ease-story); }
+.lcard-about { font-size:14px; line-height:1.85; color:var(--muted); max-width:760px; margin-bottom:18px; }
+.lcard-facts { display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:14px 20px; margin-bottom:22px; }
+.lfact strong { display:block; font-family:'Libre Baskerville',serif; font-weight:400; font-size:17px; color:var(--dark-earth); }
+.lfact span { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.lcard-gallery { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px; }
+.lcard-shot { margin:0; cursor:zoom-in; border:1px solid var(--border); background:#fff; overflow:hidden; }
+.lcard-shot img { width:100%; height:auto; display:block; transition:opacity .6s ease, transform .5s var(--ease-story); }
+.lcard-shot:hover img { transform:scale(1.02); }
+.lcard-shot figcaption { padding:10px 14px; font-size:12px; color:var(--muted); border-top:1px solid var(--border); }
+.lcard-expand-note { margin-top:14px; font-size:12px; font-style:italic; color:var(--muted); }
+
 /* ═══════════════════════════════════════════
    PLOT EXPLORER (inside the project's Plot Map tab)
    ═══════════════════════════════════════════ */
