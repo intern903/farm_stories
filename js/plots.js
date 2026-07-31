@@ -328,11 +328,37 @@
 
   function bindPanZoom() {
     let dragging = false, lx = 0, ly = 0, moved = false;
+    const pointers = new Map();   // active touch pointers, for pinch
+    let pinchDist = 0;
     stage.addEventListener('pointerdown', e => {
-      dragging = true; moved = false; lx = e.clientX; ly = e.clientY;
-      stage.classList.add('grabbing');
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 2) {
+        // begin pinch: capture the two-finger gesture, block page scroll
+        dragging = false;
+        stage.style.touchAction = 'none';
+        const p = [...pointers.values()];
+        pinchDist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+      } else {
+        dragging = true; moved = false; lx = e.clientX; ly = e.clientY;
+        stage.classList.add('grabbing');
+      }
     });
     window.addEventListener('pointermove', e => {
+      if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      // Pinch-to-zoom (two fingers)
+      if (pointers.size === 2) {
+        const p = [...pointers.values()];
+        const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+        if (pinchDist > 0) {
+          const r = svg.getBoundingClientRect();
+          const midX = ((p[0].x + p[1].x) / 2 - r.left) * (1000 / r.width);
+          const midY = ((p[0].y + p[1].y) / 2 - r.top) * (660 / r.height);
+          zoomTo(state.zoom * (dist / pinchDist), midX, midY);
+        }
+        pinchDist = dist;
+        e.preventDefault();
+        return;
+      }
       if (!dragging) return;
       const r = svg.getBoundingClientRect();
       const dx = (e.clientX - lx) * (1000 / r.width);
@@ -341,8 +367,14 @@
       state.panX += dx; state.panY += dy;
       lx = e.clientX; ly = e.clientY;
       applyTransform();
-    });
-    window.addEventListener('pointerup', () => { dragging = false; stage.classList.remove('grabbing'); });
+    }, { passive: false });
+    function endPointer(e) {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) { pinchDist = 0; stage.style.touchAction = ''; }
+      if (pointers.size === 0) { dragging = false; stage.classList.remove('grabbing'); }
+    }
+    window.addEventListener('pointerup', endPointer);
+    window.addEventListener('pointercancel', endPointer);
     // Wheel zooms only with Ctrl/⌘ held; a plain wheel scrolls the page
     // normally (so the map never hijacks page scrolling).
     stage.addEventListener('wheel', e => {

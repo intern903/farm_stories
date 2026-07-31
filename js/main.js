@@ -19,10 +19,22 @@ function show(id) {
   if (el) el.classList.add('active');
   document.getElementById('site-nav').classList.remove('menu-open');
   window.scrollTo(0, 0);
+  // keep the URL hash in sync so sections are deep-linkable / shareable
+  if (target && id !== 'home' && ('#' + id) !== location.hash) {
+    history.replaceState(null, '', '#' + id);
+  } else if (id === 'home' && location.hash) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
   requestAnimationFrame(observeReveals);
   if (window.ScrollTrigger) ScrollTrigger.refresh();
   return false;
 }
+// Deep-link: open the section named in the URL hash on load / hashchange
+function routeFromHash() {
+  const id = (location.hash || '').replace('#', '');
+  if (id && document.getElementById(id) && document.getElementById(id).tagName === 'SECTION') show(id);
+}
+window.addEventListener('hashchange', routeFromHash);
 
 /* ── Project tabs (preserved API) ── */
 function openTab(name) {
@@ -123,13 +135,13 @@ function observeReveals() {
     .forEach(n => revealObserver.observe(n));
 }
 
-/* ── Counter animation for story stats ── */
+/* ── Counter animation for story stats ──
+   The HTML already holds the real final values (so no-JS / reduced-motion
+   shows them). We only seed to 0 and count up when motion is allowed, and
+   only for stats below the fold, so there's never a final→0 flash. */
 function animateCounters() {
   const nums = document.querySelectorAll('.hero-stat .num[data-count]');
-  if (REDUCED) {
-    nums.forEach(n => n.textContent = n.dataset.count + (n.dataset.suffix || ''));
-    return;
-  }
+  if (REDUCED) return; // leave the static real values in place
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (!en.isIntersecting) return;
@@ -145,6 +157,10 @@ function animateCounters() {
       })(t0);
     });
   }, { threshold: 0.6 });
+  // Leave the real value in the DOM as the resting/fallback state; the count-up
+  // starts from 0 the moment a stat scrolls into view. Never pre-seed to 0, so a
+  // stat that is navigated-to but never scrolled into view still shows its real
+  // number instead of a stuck "0".
   nums.forEach(n => io.observe(n));
 }
 
@@ -246,6 +262,11 @@ function initHeroArt() {
   const probe = new Image();
   probe.onload = () => {
     img.src = probe.src;
+    // Serve a lighter 1000px variant to phones (saves ~260KB above the fold).
+    if (/assets\/hero\.jpg/.test(probe.src)) {
+      img.srcset = 'assets/hero-mobile.jpg' + v + ' 1000w, ' + probe.src + ' 1823w';
+      img.sizes = '100vw';
+    }
     img.hidden = false;
     document.querySelector('.hero-canvas').classList.add('has-art');
   };
@@ -277,6 +298,64 @@ function applyBrandLogo(src) {
     const im = new Image();
     im.src = src; im.alt = 'The Farm Stories';
     slot.appendChild(im);
+  });
+}
+
+/* ── Mobile: collapse each filter panel into a bottom-sheet ──
+   Applies to both the plot-map filters and the Portal filters (same
+   component). A "Filters" button opens the sheet; a backdrop / × closes it. */
+function initMobileFilters() {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'filter-backdrop';
+  document.body.appendChild(backdrop);
+  let openPanel = null;
+  function shut() {
+    if (openPanel) {
+      openPanel.classList.remove('sheet-open');
+      // Return the panel to its original spot in the DOM (see note in open()).
+      if (openPanel._home) openPanel._home.parentNode.insertBefore(openPanel, openPanel._home);
+    }
+    openPanel = null;
+    backdrop.classList.remove('show');
+    document.body.classList.remove('filter-sheet-lock');
+  }
+  backdrop.addEventListener('click', shut);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') shut(); });
+
+  document.querySelectorAll('.filter-panel').forEach(panel => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mobile-filter-btn';
+    btn.innerHTML = '<span aria-hidden="true">⚙</span> Filters';
+    panel.parentNode.insertBefore(btn, panel);
+
+    // Anchor node marking where the panel lives when closed, so we can restore
+    // it after portaling to <body>. (The panel's fields keep their ids, so the
+    // filter logic in plots.js / portal.js keeps working wherever it sits.)
+    const home = document.createComment('filter-panel-home');
+    panel.parentNode.insertBefore(home, panel);
+    panel._home = home;
+
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'filter-sheet-close';
+    close.setAttribute('aria-label', 'Close filters');
+    close.textContent = '×';
+    panel.insertBefore(close, panel.firstChild);
+
+    btn.addEventListener('click', () => {
+      if (openPanel) shut();
+      // The section/tab wrapper carries a transform from the reveal system,
+      // which would trap position:fixed inside it. Portal to <body> so the
+      // sheet anchors to the viewport.
+      document.body.appendChild(panel);
+      openPanel = panel;
+      // next frame so the translateY(101%) start state paints before sliding up
+      requestAnimationFrame(() => panel.classList.add('sheet-open'));
+      backdrop.classList.add('show');
+      document.body.classList.add('filter-sheet-lock');
+    });
+    close.addEventListener('click', shut);
   });
 }
 
@@ -340,6 +419,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroArt();
   initBrandLogo();
   initLightbox();
+  initMobileFilters();
+  routeFromHash();
 
   // If the intro is skipped (reduced motion / already seen), wake the hero now.
   if (REDUCED || sessionStorage.getItem('tfs-intro-seen')) wakeHero();

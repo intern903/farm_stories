@@ -26,15 +26,21 @@
   const ctx = canvas.getContext('2d');
   let motes = [], rafId = null, running = true;
 
+  // Mid-range phones choke on a full-DPR canvas + many particles, so cap the
+  // pixel ratio and thin out the motes on small screens (desktop unchanged).
+  const isSmall = window.matchMedia('(max-width: 640px)').matches;
+  const dpr = Math.min(devicePixelRatio || 1, isSmall ? 1.5 : 2);
+  const MOTE_COUNT = isSmall ? 18 : 42;
+
   function sizeCanvas() {
-    canvas.width = innerWidth * devicePixelRatio;
-    canvas.height = innerHeight * devicePixelRatio;
-    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   sizeCanvas();
   addEventListener('resize', sizeCanvas);
 
-  for (let i = 0; i < 42; i++) {
+  for (let i = 0; i < MOTE_COUNT; i++) {
     motes.push({
       x: Math.random() * innerWidth,
       y: Math.random() * innerHeight,
