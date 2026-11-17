@@ -19,7 +19,7 @@
       imgAlt: 'The Mango Meadows farmhouse over the valley',
       pin: { lon: 76.65, lat: 11.1, label: 'Agali', side: 'r' },
       cta: 'Read this chapter →', action: 'projects',
-      tip: 'Agali, Kerala · 22 plots · 18.7–29.6 cents · Now selling',
+      tip: 'Agali, Kerala · 22 plots · 20–27 cents · Now selling',
     },
     {
       id: 'sol-village', name: 'SOL Creator Village',

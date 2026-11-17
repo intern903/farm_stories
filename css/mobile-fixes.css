@@ -117,3 +117,6 @@
 :where(a, button, summary, input, select, textarea, [role="button"]):focus-visible {
   outline: 2px solid var(--gold, #C9973A); outline-offset: 3px;
 }
+
+/* Keep fact figures such as "20–27" on one line */
+.pj-facts strong{white-space:nowrap}
