@@ -10,16 +10,16 @@
   const PROJECTS = [
     {
       id: 'mango-meadows', name: 'The Mango Meadows',
-      place: 'Agali, Kerala', note: '45 km from Coimbatore',
+      place: 'Agali, Kerala', note: 'About 90 min from Coimbatore',
       state: 'kl', status: 'selling', statusLabel: 'Now selling',
       sizes: ['20-30'], budgetMin: 40, budgetMax: 240,
       features: ['orchard', 'mountain'],
-      specs: [['7 acres', 'Total area'], ['22', 'Plots'], ['300+', 'Mango trees']],
+      specs: [['7.4 acres', 'Total area'], ['22', 'Plots'], ['280+', 'Mango trees']],
       img: 'assets/mm2/aerial-900.jpg',
       imgAlt: 'The Mango Meadows farmhouse over the valley',
       pin: { lon: 76.65, lat: 11.1, label: 'Agali', side: 'r' },
       cta: 'Read this chapter →', action: 'projects',
-      tip: 'Agali, Kerala · 22 plots · 20–30 cents · Now selling',
+      tip: 'Agali, Kerala · 22 plots · 18.7–29.6 cents · Now selling',
     },
     {
       id: 'sol-village', name: 'SOL Creator Village',

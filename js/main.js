@@ -124,7 +124,7 @@ function openVisitForm(plotName) {
   modal.hidden = false;
   document.getElementById('visit-plot-field').value = plotName || '';
   const sub = modal.querySelector('.modal-sub');
-  if (plotName) sub.textContent = 'You asked about ' + plotName + '. Guided visits every weekend, 75–90 minutes from Coimbatore. We’ll confirm on WhatsApp within a few hours.';
+  if (plotName) sub.textContent = 'You asked about ' + plotName + '. Guided visits every weekend, about 90 minutes from Coimbatore. We’ll confirm on WhatsApp within a few hours.';
   document.body.style.overflow = 'hidden';
 }
 function closeVisitForm() {
@@ -328,7 +328,7 @@ function initHeroArt() {
    Probes common filenames; detects square badge vs. wide lockup. */
 function initBrandLogo() {
   const candidates = [
-    'assets/logo.png', 'assets/logo.svg', 'assets/logo.webp',
+    'assets/logo-seal.webp', 'assets/logo.png', 'assets/logo.svg', 'assets/logo.webp',
     'assets/logo.jpg', 'assets/logo.jpeg', 'logo.png',
   ];
   const v = '?v=' + (window.TFS_ASSET_V || '1');   // bust cached copies when the logo changes
@@ -365,7 +365,7 @@ function applyBrandLogo(probe) {
       slot.appendChild(im);
     });
   };
-  night.src = 'assets/logo-night.png?v=' + (window.TFS_ASSET_V || '1');
+  night.src = 'assets/logo-seal-night.webp?v=' + (window.TFS_ASSET_V || '1');
 }
 
 /* ── Mobile: collapse each filter panel into a bottom-sheet ──

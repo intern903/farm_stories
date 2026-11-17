@@ -1,0 +1,14 @@
+{
+  "name": "The Farm Stories",
+  "short_name": "Farm Stories",
+  "description": "Boutique orchard communities on verified farmland in South India. Story One: Mango Meadows, Agali.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F3EBDD",
+  "theme_color": "#3E4A2B",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

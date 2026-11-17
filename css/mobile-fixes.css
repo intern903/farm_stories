@@ -1,0 +1,119 @@
+/* ═══════════════════════════════════════════════════════════════
+   THE FARM STORIES — mobile fixes
+   Load AFTER css/main.css:  <link rel="stylesheet" href="css/mobile-fixes.css">
+   Every rule below answers a problem measured on 17 Nov 2026 on
+   iPhone SE (320), Galaxy S (360), iPhone 14 (390), Pixel (412)
+   and iPhone landscape (844 × 390). Numbers in comments are what
+   the test measured before the fix.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1 · Intro book cover: the three-line promise overlapped itself on
+       320 px phones (no line-height set on a 10 px caps line). */
+.cover-sub { line-height: 1.75; font-size: 10.5px; }
+@media (max-width: 360px) {
+  .cover-sub { letter-spacing: .12em; }
+}
+/* the "Tap to open" hint sits at the foot of the cover; when the promise
+   wraps to three lines it collided with it, so give the cover room */
+@media (max-width: 420px) {
+  .cover-sub { margin-top: 12px; margin-bottom: 26px; }
+  .cover-open-hint { bottom: 10px; }
+}
+/* on 320–360 px phones the title broke onto three lines (THE / FARM / STORIES)
+   and pushed the promise into the hint; two lines leave room for both */
+@media (max-width: 360px) {
+  .cover-title { font-size: 27px; letter-spacing: .09em; line-height: 1.2; }
+}
+
+/* 2 · Intro in landscape phones: the book (588 px tall) did not fit a
+       390 px screen and the Skip button sat on top of the cover text. */
+@media (orientation: landscape) and (max-height: 520px) {
+  /* keep the book's own proportions and type, and scale the whole book down */
+  /* the arrival animation owns `transform`, so shrink with zoom instead */
+  .book-scene { width: 420px; zoom: .6; }
+  #skip-intro {
+    left: auto; right: max(20px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    transform: none; padding: 12px 22px;
+  }
+}
+
+/* 3 · Hero in landscape phones: min-height of 560 px pushed the headline
+       below a 390 px screen. Fit the hero to the screen instead. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .mh-cover { min-height: 100svh; align-items: center; }
+  .mh-cover-inner { padding: 72px 24px 24px; }
+  .mh-cover-title { font-size: clamp(30px, 7.5svh + 8px, 44px); }
+}
+
+/* 4 · WhatsApp button covered headlines and body copy on every section
+       once the bottom "plots remaining" bar appeared (it floats 118 px up,
+       over the content column). While the bar is showing, the bar is the
+       call to action, so the floating button steps aside. It returns at the
+       top of the page and at the footer. Needs :has() (iOS 15.4+, Chrome 105+);
+       older browsers simply keep today's behaviour. */
+@media (max-width: 760px) {
+  .wa-float { width: 48px; height: 48px; right: max(14px, env(safe-area-inset-right)); }
+  body:has(.sticky-cta.shown:not(.at-footer)) .wa-float {
+    opacity: 0; pointer-events: none; transform: translateY(12px) scale(.8);
+  }
+  .wa-float { transition: opacity .25s ease, transform .25s ease; }
+}
+
+/* 5 · Bottom bar took 95 px (iPhone 14) to 113 px (iPhone SE) of the screen
+       as two stacked rows. One compact row on phones: the count on the left,
+       the visit button on the right. The phone number stays in the footer
+       and on the WhatsApp button. */
+@media (max-width: 760px) {
+  .sticky-cta {
+    flex-direction: row; align-items: center; justify-content: space-between;
+    gap: 12px; text-align: left;
+    padding: 8px max(14px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+  .sticky-cta p { font-size: 12.5px; line-height: 1.3; max-width: 17ch; }
+  .sticky-cta .sc-phone { display: none; }
+  .sticky-cta .btn-sage { min-height: 44px; padding: 0 18px; white-space: nowrap; }
+}
+
+/* 6 · Footer tap targets: Explore links measured 18 px tall and the email
+       and web links 20 px. Fingers need about 44 px. */
+@media (max-width: 760px) {
+  .foot-links a,
+  .footer-col .foot-links a { display: flex; align-items: center; min-height: 44px; padding: 0; }
+  footer .footer-col .foot-contact a { display: block; padding-block: 12px; }
+  .foot-contact { gap: 2px; }
+  .foot-contact small { font-size: 11px; }
+}
+
+/* 7 · Portal map controls measured 32–36 px; the "selling now" checkbox 20 px. */
+@media (pointer: coarse) {
+  .map-zoom button, .map-controls button, [aria-label="Zoom in"], [aria-label="Zoom out"], [aria-label="Recentre the map"] {
+    min-width: 44px; min-height: 44px;
+  }
+  #pf-selling { width: 24px; height: 24px; }
+  #pf-selling + label, label[for="pf-selling"] { padding-block: 10px; }
+}
+
+/* 8 · Small-print readability. Body copy set in Muted (#92806B, 3.2:1 on cream)
+       fails contrast for 15 px text; Text Soft passes at 6.8:1.
+       Card meta (dates, categories) went down to 10–11 px. */
+@media (max-width: 760px) {
+  .tt-step p:last-child,
+  .wn-card-body p,
+  .ab-hero-body,
+  .page-body { color: var(--text-soft); }
+  .wn-card-cat, .wn-card-date, .wn-type-pill, .pj-step-label, .pj-cmp-tag,
+  .lbadge, .section-tag, .cs2-kicker, .ab-side-label, .nb-kicker { font-size: 12px; }
+  footer small, .footer-bottom small { font-size: 12px; }
+}
+
+/* 9 · Scroll-lit statement: unlit words sat at 14% opacity, which fails
+       contrast for anyone who reads before scrolling (and in screenshots,
+       link previews and Google's renderer). Lift the resting state. */
+.tt-word { opacity: .32; }
+.tt-word.lit { opacity: 1; }
+
+/* 10 · Keyboard and switch users: show where focus is. */
+:where(a, button, summary, input, select, textarea, [role="button"]):focus-visible {
+  outline: 2px solid var(--gold, #C9973A); outline-offset: 3px;
+}
