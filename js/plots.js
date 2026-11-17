@@ -6,34 +6,37 @@
 (function () {
   'use strict';
 
-  /* ── Plot data (site survey, March 2025) ─────────────
+  /* ── Plot data ─────────────────────────────────────
+     Geometry, size, frontage and distance are measured from the architect's
+     master layout AR-01-WD-01 (R-03, 28 Aug 2026, 1:300) — see GEO below.
      status: available | reserved | sold
-     size in cents, frontage in ft, elevation in m above site datum,
+     size in cents, road frontage in ft, dist = metres from the main entrance,
+     elevation in m above site datum,
      sun = morning-sun (east-facing) plot, view = Nilgiris view,
      orchard = orchard-dense (6+ mature trees inside boundary) */
   const PLOTS = [
-    { id: 1,  status: 'sold',      size: 22, frontage: 40, elev: 6,  trees: 6,  corner: true,  sun: true,  view: true,  dist: 60  },
-    { id: 2,  status: 'available', size: 23, frontage: 40, elev: 6,  trees: 7,  corner: false, sun: true,  view: true,  dist: 90  },
-    { id: 3,  status: 'reserved',  size: 24, frontage: 44, elev: 5,  trees: 6,  corner: false, sun: true,  view: true,  dist: 120 },
-    { id: 4,  status: 'available', size: 22, frontage: 40, elev: 5,  trees: 5,  corner: true,  sun: true,  view: true,  dist: 150 },
-    { id: 5,  status: 'available', size: 22, frontage: 40, elev: 4,  trees: 7,  corner: true,  sun: true,  view: true,  dist: 175 },
-    { id: 6,  status: 'sold',      size: 24, frontage: 40, elev: 4,  trees: 8,  corner: false, sun: true,  view: false, dist: 205 },
-    { id: 7,  status: 'available', size: 24, frontage: 40, elev: 3,  trees: 8,  corner: false, sun: false, view: false, dist: 235 },
-    { id: 8,  status: 'reserved',  size: 25, frontage: 42, elev: 3,  trees: 9,  corner: false, sun: false, view: false, dist: 265 },
-    { id: 9,  status: 'sold',      size: 24, frontage: 40, elev: 2,  trees: 8,  corner: false, sun: false, view: false, dist: 295 },
-    { id: 10, status: 'available', size: 25, frontage: 42, elev: 2,  trees: 9,  corner: true,  sun: false, view: false, dist: 325 },
-    { id: 11, status: 'sold',      size: 27, frontage: 44, elev: 2,  trees: 10, corner: true,  sun: true,  view: false, dist: 300 },
-    { id: 12, status: 'available', size: 25, frontage: 40, elev: 2,  trees: 8,  corner: false, sun: true,  view: false, dist: 270 },
-    { id: 13, status: 'available', size: 23, frontage: 40, elev: 3,  trees: 7,  corner: false, sun: true,  view: false, dist: 240 },
-    { id: 14, status: 'reserved',  size: 30, frontage: 46, elev: 3,  trees: 11, corner: false, sun: true,  view: false, dist: 210 },
-    { id: 15, status: 'available', size: 25, frontage: 40, elev: 4,  trees: 9,  corner: false, sun: true,  view: true,  dist: 180 },
-    { id: 16, status: 'sold',      size: 26, frontage: 42, elev: 4,  trees: 9,  corner: true,  sun: true,  view: true,  dist: 150 },
-    { id: 17, status: 'available', size: 22, frontage: 40, elev: 5,  trees: 6,  corner: true,  sun: false, view: true,  dist: 130 },
-    { id: 18, status: 'reserved',  size: 23, frontage: 40, elev: 5,  trees: 6,  corner: false, sun: false, view: true,  dist: 160 },
-    { id: 19, status: 'sold',      size: 22, frontage: 40, elev: 6,  trees: 5,  corner: false, sun: false, view: true,  dist: 190 },
-    { id: 20, status: 'available', size: 19, frontage: 40, elev: 6,  trees: 5,  corner: true,  sun: false, view: true,  dist: 220 },
-    { id: 21, status: 'available', size: 29, frontage: 60, elev: 1,  trees: 10, corner: true,  sun: true,  view: false, dist: 250 },
-    { id: 22, status: 'available', size: 30, frontage: 62, elev: 1,  trees: 11, corner: true,  sun: true,  view: false, dist: 230 },
+    { id: 1,  status: 'sold',      size: 22, frontage: 85, elev: 6,  trees: 6,  corner: true,  sun: true,  view: true,  dist: 110  },
+    { id: 2,  status: 'available', size: 23, frontage: 90, elev: 6,  trees: 7,  corner: false, sun: true,  view: true,  dist: 80  },
+    { id: 3,  status: 'reserved',  size: 23, frontage: 90, elev: 5,  trees: 6,  corner: false, sun: true,  view: true,  dist: 50 },
+    { id: 4,  status: 'available', size: 23, frontage: 95, elev: 5,  trees: 5,  corner: true,  sun: true,  view: true,  dist: 30 },
+    { id: 5,  status: 'available', size: 23, frontage: 90, elev: 4,  trees: 7,  corner: true,  sun: true,  view: true,  dist: 20 },
+    { id: 6,  status: 'sold',      size: 24, frontage: 90, elev: 4,  trees: 8,  corner: false, sun: true,  view: false, dist: 50 },
+    { id: 7,  status: 'available', size: 25, frontage: 90, elev: 3,  trees: 8,  corner: false, sun: false, view: false, dist: 80 },
+    { id: 8,  status: 'reserved',  size: 25, frontage: 90, elev: 3,  trees: 9,  corner: false, sun: false, view: false, dist: 100 },
+    { id: 9,  status: 'sold',      size: 24, frontage: 90, elev: 2,  trees: 8,  corner: false, sun: false, view: false, dist: 130 },
+    { id: 10, status: 'available', size: 25, frontage: 90, elev: 2,  trees: 9,  corner: false,  sun: false, view: false, dist: 160 },
+    { id: 11, status: 'sold',      size: 21, frontage: 75, elev: 2,  trees: 10, corner: true,  sun: true,  view: false, dist: 170 },
+    { id: 12, status: 'available', size: 25, frontage: 90, elev: 2,  trees: 8,  corner: false, sun: true,  view: false, dist: 140 },
+    { id: 13, status: 'available', size: 25, frontage: 90, elev: 3,  trees: 7,  corner: false, sun: true,  view: false, dist: 120 },
+    { id: 14, status: 'reserved',  size: 25, frontage: 90, elev: 3,  trees: 11, corner: false, sun: true,  view: false, dist: 90 },
+    { id: 15, status: 'available', size: 25, frontage: 90, elev: 4,  trees: 9,  corner: false, sun: true,  view: true,  dist: 70 },
+    { id: 16, status: 'sold',      size: 26, frontage: 90, elev: 4,  trees: 9,  corner: true,  sun: true,  view: true,  dist: 60 },
+    { id: 17, status: 'available', size: 21, frontage: 90, elev: 5,  trees: 6,  corner: true,  sun: false, view: true,  dist: 60 },
+    { id: 18, status: 'reserved',  size: 20, frontage: 85, elev: 5,  trees: 6,  corner: false, sun: false, view: true,  dist: 70 },
+    { id: 19, status: 'sold',      size: 19, frontage: 85, elev: 6,  trees: 5,  corner: false, sun: false, view: true,  dist: 90 },
+    { id: 20, status: 'available', size: 19, frontage: 90, elev: 6,  trees: 5,  corner: true,  sun: false, view: true,  dist: 110 },
+    { id: 21, status: 'available', size: 27, frontage: 110, elev: 1,  trees: 10, corner: false,  sun: true,  view: false, dist: 100 },
+    { id: 22, status: 'available', size: 24, frontage: 85, elev: 1,  trees: 11, corner: false,  sun: true,  view: false, dist: 110 },
   ];
 
   const NOTES = {
@@ -53,39 +56,19 @@
 
   let svg, viewport, stage, tooltip;
 
-  /* ── Layout: 22 plots echoing the site plan ──
-     Entrance top-centre; plots 01-04 a top-right strip; 05-10 an upper
-     band; 11-16 a middle band; 17-20 the right-side cluster; 21-22 the
-     lower plots by the stream; amenity block bottom-left. */
-  const POS = {
-    1:  { x: 838, y: 118, w: 96,  h: 98 },
-    2:  { x: 735, y: 110, w: 96,  h: 100 },
-    3:  { x: 632, y: 130, w: 96,  h: 102 },
-    4:  { x: 548, y: 168, w: 78,  h: 100 },
-    // upper band (10 → 05, left to right)
-    10: { x: 60,  y: 300, w: 100, h: 112 },
-    9:  { x: 170, y: 300, w: 100, h: 112 },
-    8:  { x: 280, y: 300, w: 100, h: 112 },
-    7:  { x: 390, y: 300, w: 100, h: 112 },
-    6:  { x: 500, y: 300, w: 100, h: 112 },
-    5:  { x: 610, y: 300, w: 100, h: 112 },
-    // middle band (11 → 16, left to right)
-    11: { x: 60,  y: 430, w: 100, h: 112 },
-    12: { x: 170, y: 430, w: 100, h: 112 },
-    13: { x: 280, y: 430, w: 100, h: 112 },
-    14: { x: 390, y: 430, w: 100, h: 112 },
-    15: { x: 500, y: 430, w: 100, h: 112 },
-    16: { x: 610, y: 430, w: 100, h: 112 },
-    // right-side cluster (17-20)
-    17: { x: 742, y: 300, w: 92,  h: 112 },
-    18: { x: 842, y: 300, w: 92,  h: 112 },
-    19: { x: 742, y: 430, w: 92,  h: 112 },
-    20: { x: 842, y: 430, w: 92,  h: 112 },
-    // lower plots by the stream
-    21: { x: 300, y: 556, w: 150, h: 80  },
-    22: { x: 460, y: 556, w: 150, h: 80  },
-  };
-  function plotRect(p) { return POS[p.id]; }
+  /* ── Layout: traced from the architect's master layout (R-03) ──
+     Two diagonal 14-ft roads with a loop, 12-ft private roads on the north and
+     east edges, main entrance from the north, clubhouse + pool in the south-west
+     corner, pods beside the stream. Coordinates are in the 1000 x 660 viewBox,
+     framed exactly like assets/masterplan.jpg so the two views line up. */
+  const GEO = {"plots":{"1":{"pts":[[866.1,24.2],[894.4,118.1],[826.8,142.1],[794.4,52.4]],"c":[845.4,84.2],"cents":22,"front":85,"dist":110},"2":{"pts":[[791.7,53.3],[823.6,143.5],[749.6,169.9],[718.1,82.5]],"c":[770.7,112.3],"cents":23,"front":90,"dist":80},"3":{"pts":[[715.3,83.4],[746.3,171.3],[672.3,197.6],[641.3,112.5]],"c":[693.8,141.2],"cents":23,"front":90,"dist":50},"4":{"pts":[[638.6,113.9],[669.1,198.6],[589.1,226.8],[559.5,149.1]],"c":[614.0,172.1],"cents":23,"front":95,"dist":30},"5":{"pts":[[538.2,154.2],[566.9,233.7],[490.1,262.9],[458.2,172.7]],"c":[513.3,205.9],"cents":23,"front":90,"dist":20},"6":{"pts":[[454.9,173.6],[487.3,263.8],[413.3,290.6],[379.1,193.9]],"c":[433.6,230.5],"cents":24,"front":90,"dist":50},"7":{"pts":[[375.8,194.4],[410.5,291.5],[336.5,317.9],[302.3,221.7]],"c":[356.3,256.4],"cents":25,"front":90,"dist":80},"8":{"pts":[[299.5,222.6],[333.7,319.3],[259.7,345.7],[225.5,250.4]],"c":[279.6,284.5],"cents":25,"front":90,"dist":100},"9":{"pts":[[222.7,251.3],[257.0,346.6],[182.9,373.0],[149.2,279.1]],"c":[202.9,312.5],"cents":24,"front":90,"dist":130},"10":{"pts":[[145.9,280.0],[180.2,374.3],[105.2,401.2],[71.5,307.7]],"c":[125.7,340.8],"cents":25,"front":90,"dist":160},"11":{"pts":[[187.1,394.2],[222.3,491.8],[160.7,513.6],[124.7,417.8]],"c":[173.7,454.4],"cents":21,"front":75,"dist":170},"12":{"pts":[[263.9,366.5],[299.0,464.5],[225.0,490.9],[190.3,392.8]],"c":[244.6,428.7],"cents":25,"front":90,"dist":140},"13":{"pts":[[340.7,339.2],[375.4,436.8],[301.8,463.2],[266.7,365.6]],"c":[321.1,401.2],"cents":25,"front":90,"dist":120},"14":{"pts":[[417.5,311.4],[452.2,409.5],[378.6,435.9],[343.4,337.8]],"c":[397.9,373.7],"cents":25,"front":90,"dist":90},"15":{"pts":[[494.2,284.1],[529.4,381.7],[455.4,408.1],[420.7,310.5]],"c":[474.9,346.1],"cents":25,"front":90,"dist":70},"16":{"pts":[[573.3,255.9],[609.0,351.7],[532.2,380.4],[497.0,282.8]],"c":[552.9,317.7],"cents":26,"front":90,"dist":60},"17":{"pts":[[670.9,220.8],[698.7,300.8],[624.7,330.9],[596.0,249.5]],"c":[647.6,275.5],"cents":21,"front":90,"dist":60},"18":{"pts":[[745.4,193.9],[772.7,270.7],[701.5,299.9],[673.7,219.4]],"c":[723.3,246.0],"cents":20,"front":85,"dist":70},"19":{"pts":[[820.8,166.7],[847.2,240.2],[775.9,269.3],[748.7,192.6]],"c":[798.1,217.2],"cents":19,"front":85,"dist":90},"20":{"pts":[[899.9,138.4],[919.8,211.1],[850.4,239.3],[824.0,165.7]],"c":[873.5,188.6],"cents":19,"front":90,"dist":110},"21":{"pts":[[633.5,367.9],[653.4,423.4],[639.0,465.0],[574.3,493.2],[541.4,401.2]],"c":[608.3,430.1],"cents":27,"front":110,"dist":100},"22":{"pts":[[534.5,403.0],[569.6,496.0],[498.4,526.1],[463.7,428.5]],"c":[516.6,463.4],"cents":24,"front":85,"dist":110}},"roads":{"upper":[[109.3,404.2],[912.8,129.4]],"lower":[[150.6,524.9],[623.8,363.0]],"loop":[[109.3,404.2],[150.6,524.9]],"conn":[[582.6,242.4],[623.8,363.0]],"entry":[[542.7,131.6],[580.8,243.0]],"north_l":[[66.9,294.4],[542.7,131.6]],"north_r":[[542.7,131.5],[874.7,17.9]],"east":[[874.7,17.9],[933.7,190.5]]},"w14":20.2,"w12":17.3,"stream":[[167.7,613.0],[180.6,602.9],[193.6,601.9],[206.5,601.9],[219.5,607.0],[232.4,612.6],[245.4,607.9],[258.3,599.2],[271.3,594.5],[284.2,595.0],[297.2,598.2],[310.1,601.0],[323.1,603.3],[336.0,602.4],[349.0,599.2],[362.0,594.1],[374.9,588.0],[387.9,580.2],[400.8,576.5],[413.8,569.1],[426.7,562.6],[439.7,556.1],[452.6,546.0],[465.6,537.2],[478.5,528.4],[491.5,523.3],[504.4,518.2],[517.4,512.2],[530.3,508.0],[543.3,501.1],[556.2,496.0],[569.2,491.8],[582.1,488.6],[595.1,488.1]],"club":[[144.5,539.4],[215.2,544.6],[230.8,596.6],[203.8,635.1],[158.0,635.1]],"pool":[[184.0,562.3],[203.8,565.4],[202.7,591.4],[184.0,589.3]],"pods":[[[307.7,555.0],[332.7,557.1],[332.7,590.4],[307.7,588.3]],[[368.5,548.8],[394.5,550.9],[394.5,583.1],[368.5,581.0]]],"parking":[[199.6,515.5],[230.8,510.3],[232.9,530.1],[201.7,534.2]],"entrance":[544.2,140.3],"labels":{"forest_n":[338.9,166.3],"forest_s":[292.1,640.3]},"angle":-18.9};
+  const pts = a => a.map(p => p.join(',')).join(' ');
+  // Bounding box of a plot polygon — used for the tooltip + saved-mark position
+  function plotRect(p) {
+    const g = GEO.plots[p.id], xs = g.pts.map(q => q[0]), ys = g.pts.map(q => q[1]);
+    const x = Math.min(...xs), y = Math.min(...ys);
+    return { x, y, w: Math.max(...xs) - x, h: Math.max(...ys) - y, cx: g.c[0], cy: g.c[1] };
+  }
 
   function el(name, attrs, parent) {
     const n = document.createElementNS(SVG_NS, name);
@@ -113,66 +96,62 @@
       preserveAspectRatio: 'xMidYMid meet',
     }, viewport);
 
-    // Paper base + boundary
+    // Paper base: the real site, drawn from the master layout
     const paper = el('g', { class: 'mp-paper' }, viewport);
-    el('rect', { x: 34, y: 24, width: 932, height: 612, fill: 'none', stroke: 'rgba(74,55,40,.4)', 'stroke-width': 1.4, 'stroke-dasharray': '2 6', rx: 6 }, paper);
-    const t = el('text', { x: 500, y: 50, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 13 }, paper);
-    t.textContent = 'THE MANGO MEADOWS · SITE PLAN · 22 PLOTS';
-
-    // Roads: two horizontal 14-ft roads between the bands + a right spine,
-    // and the entrance drive coming in from the top.
-    const road = (d, w) => { el('path', { d, class: 'mp-road', 'stroke-width': w }, paper); el('path', { d, class: 'mp-road-dash' }, paper); };
-    road('M40 285 H710', 20);          // between top strip / upper band
-    road('M40 421 H930', 22);          // central 14-ft road
-    road('M725 300 V545', 20);         // right spine to the cluster
-    road('M610 40 Q640 150 660 285', 22); // entrance drive
-    const rd = el('text', { x: 360, y: 417, class: 'mp-text', 'font-size': 9 }, paper);
-    rd.textContent = '14 FEET WIDE ROAD';
-
-    // Main entrance (top)
-    el('path', { d: 'M596 46 L624 46 L610 66 Z', fill: 'rgba(74,55,40,.8)' }, paper);
-    const en = el('text', { x: 610, y: 34, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 10, 'font-weight': 500 }, paper);
-    en.textContent = 'MAIN ENTRANCE';
-
-    // Forest labels
-    const f1 = el('text', { x: 190, y: 150, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 12 }, paper);
-    f1.textContent = 'Forest';
-    const f2 = el('text', { x: 470, y: 628, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 12 }, paper);
-    f2.textContent = 'Forest';
-
-    // Amenity cluster bottom-left (pavilion + pool)
-    el('rect', { x: 60, y: 556, width: 210, height: 80, rx: 4, class: 'mp-amenity' }, paper);
-    el('rect', { x: 78, y: 576, width: 46, height: 42, rx: 3, fill: 'rgba(107,140,106,.5)', stroke: 'rgba(74,100,73,.7)', 'stroke-width': 1 }, paper);
-    el('rect', { x: 140, y: 582, width: 54, height: 30, rx: 12, fill: 'rgba(90,150,180,.5)', stroke: 'rgba(60,110,150,.7)', 'stroke-width': 1 }, paper); // pool
-    const am = el('text', { x: 165, y: 550, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 8 }, paper);
-    am.textContent = 'PAVILION · POOL · FIRE PIT';
-
-    // Stream along the bottom-right
-    el('path', { d: 'M270 616 Q430 636 560 612 Q660 594 700 560', fill: 'none', stroke: 'rgba(90,150,180,.55)', 'stroke-width': 6, 'stroke-linecap': 'round' }, paper);
-
-    // Compass
-    const cp = el('g', { transform: 'translate(930,66)' }, paper);
+    const line = (a, cls, w) => el('polyline', { points: pts(a), class: cls, 'stroke-width': w, fill: 'none' }, paper);
+    const txt = (x, y, str, size, extra = {}) => {
+      const t = el('text', Object.assign({ x, y, class: 'mp-text', 'font-size': size, 'text-anchor': 'middle' }, extra), paper);
+      t.textContent = str; return t;
+    };
+    const roadLabel = (a, f) => {
+      const x = a[0][0] + (a[1][0] - a[0][0]) * f, y = a[0][1] + (a[1][1] - a[0][1]) * f;
+      txt(x, y + 3, '14 FT ROAD', 8, { transform: `rotate(${GEO.angle} ${x} ${y})` });
+    };
+    // Stream along the south edge
+    el('polyline', { points: pts(GEO.stream), class: 'mp-stream', fill: 'none' }, paper);
+    // Roads: 14 ft spine + loop, 12 ft private roads, entrance road
+    ['north_l', 'north_r', 'east'].forEach(k => line(GEO.roads[k], 'mp-road', GEO.w12));
+    ['upper', 'lower', 'loop', 'conn', 'entry'].forEach(k => line(GEO.roads[k], 'mp-road', GEO.w14));
+    ['upper', 'lower', 'conn', 'entry'].forEach(k => line(GEO.roads[k], 'mp-road-dash', 1.4));
+    roadLabel(GEO.roads.upper, .3);
+    roadLabel(GEO.roads.lower, .45);
+    // Clubhouse + pool, pods by the stream, parking
+    el('polygon', { points: pts(GEO.club), class: 'mp-amenity' }, paper);
+    el('polygon', { points: pts(GEO.pool), fill: 'rgba(90,150,180,.5)', stroke: 'rgba(60,110,150,.7)', 'stroke-width': 1 }, paper);
+    GEO.pods.forEach(q => el('polygon', { points: pts(q), class: 'mp-amenity' }, paper));
+    el('polygon', { points: pts(GEO.parking), class: 'mp-amenity' }, paper);
+    const cb = GEO.club, ccx = cb.reduce((a, q) => a + q[0], 0) / cb.length;
+    txt(ccx, Math.max(...cb.map(q => q[1])) + 12, 'CLUBHOUSE · POOL', 7.5, { 'font-weight': 500 });
+    txt(GEO.pods[1][0][0] + 8, GEO.pods[1][0][1] - 6, 'PODS', 7.5);
+    // Main entrance (north)
+    const [ex, ey] = GEO.entrance;
+    el('path', { d: `M${ex - 9} ${ey - 20} L${ex + 9} ${ey - 20} L${ex} ${ey - 6} Z`, fill: 'rgba(74,55,40,.8)' }, paper);
+    txt(ex, ey - 26, 'MAIN ENTRANCE', 9, { 'font-weight': 500 });
+    // Forest on both sides
+    txt(GEO.labels.forest_n[0], GEO.labels.forest_n[1], 'Forest', 12);
+    txt(GEO.labels.forest_s[0], GEO.labels.forest_s[1], 'Forest', 12);
+    // Title + compass in the open south-east corner
+    txt(975, 646, 'THE MANGO MEADOWS · MASTER LAYOUT · 22 PLOTS', 10, { 'text-anchor': 'end' });
+    const cp = el('g', { transform: 'translate(955,592)' }, paper);
     el('circle', { cx: 0, cy: 0, r: 16, fill: 'none', stroke: 'rgba(74,55,40,.4)', 'stroke-width': 1 }, cp);
     el('path', { d: 'M0 -12 L4 4 L0 1 L-4 4 Z', fill: 'rgba(139,111,71,.85)' }, cp);
     const nl = el('text', { x: 0, y: 30, 'text-anchor': 'middle', class: 'mp-text', 'font-size': 9 }, cp);
     nl.textContent = 'N';
-
-    // Orchard fringe trees
-    const fringe = [[150,110],[240,120],[70,200],[70,250],[930,150],[930,220],[300,596],[540,600],[650,585]];
-    fringe.forEach(([x, y]) => drawTree(paper, x, y, 9));
 
     // Plots
     PLOTS.forEach(p => {
       const r = plotRect(p);
       const g = el('g', { class: 'plot ' + p.status, 'data-id': p.id, tabindex: 0, role: 'button',
         'aria-label': `Plot ${String(p.id).padStart(2, '0')}, ${p.size} cents, ${p.status}` }, viewport);
-      el('rect', { x: r.x, y: r.y, width: r.w, height: r.h, rx: 3, class: 'plot-shape' }, g);
-      // In-plot mango trees (sketch dots)
+      const geo = GEO.plots[p.id];
+      el('polygon', { points: pts(geo.pts), class: 'plot-shape' }, g);
+      // In-plot mango trees (sketch dots), set between the centre and the corners
       const n = Math.min(3, Math.max(1, Math.round(p.trees / 4)));
       for (let k = 0; k < n; k++) {
-        drawTree(g, r.x + r.w * (0.25 + k * 0.25), r.y + r.h * (k % 2 ? 0.3 : 0.68), 6);
+        const v = geo.pts[k % geo.pts.length];
+        drawTree(g, r.cx + (v[0] - r.cx) * .5, r.cy + (v[1] - r.cy) * .5 - 3, 5);
       }
-      const label = el('text', { x: r.x + r.w / 2, y: r.y + r.h / 2 + 5, class: 'plot-label' }, g);
+      const label = el('text', { x: r.cx, y: r.cy + 5, class: 'plot-label' }, g);
       label.textContent = String(p.id).padStart(2, '0');
       if (state.saved.has(p.id)) drawSavedMark(g, r);
 
@@ -512,6 +491,9 @@
     buildMap();
     bindControls();
     bindPanZoom();
+    // Phones: open zoomed in on the heart of the site so plots are big enough to
+    // read and tap; drag to explore, and the reset button frames the whole plan.
+    if (window.matchMedia('(max-width: 640px)').matches) zoomTo(1.8, 520, 300);
     updateCounts();
     applyFilters();
     // bloom when the portal section first becomes visible

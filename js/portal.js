@@ -10,40 +10,38 @@
   const PROJECTS = [
     {
       id: 'mango-meadows', name: 'The Mango Meadows',
-      place: 'Agali, Tamil Nadu', note: '45 km from Coimbatore',
-      state: 'tn', status: 'selling', statusLabel: 'Now selling',
+      place: 'Agali, Kerala', note: 'About 90 min from Coimbatore',
+      state: 'kl', status: 'selling', statusLabel: 'Now selling',
       sizes: ['20-30'], budgetMin: 40, budgetMax: 240,
       features: ['orchard', 'mountain'],
-      specs: [['7 acres', 'Total area'], ['22', 'Plots'], ['300+', 'Mango trees']],
-      img: 'assets/mango-cover.jpg',
+      specs: [['7.4 acres', 'Total area'], ['22', 'Plots'], ['280+', 'Mango trees']],
+      img: 'assets/mm2/aerial-900.jpg',
       imgAlt: 'The Mango Meadows farmhouse over the valley',
-      pin: { x: 278, y: 330, label: 'AGALI' },
+      pin: { lon: 76.65, lat: 11.1, label: 'Agali', side: 'r' },
       cta: 'Read this chapter →', action: 'projects',
-      tip: 'Agali, Tamil Nadu · 22 plots · 20–30 cents · Now selling',
+      tip: 'Agali, Kerala · 22 plots · 20–27 cents · Now selling',
     },
     {
-      id: 'coffee-canopy', name: 'Coffee Canopy',
-      place: 'Chikmagalur, Karnataka', note: 'Estate country, 3,400 ft',
-      state: 'ka', status: 'soon', statusLabel: 'Coming 2026',
-      sizes: ['30-50'], budgetMin: 0, budgetMax: 0,
-      features: ['coffee', 'mountain'],
-      specs: [['Coffee estate', 'Character'], ['30–50c', 'Plot size']],
-      grad: 'linear-gradient(135deg, #6B8C6A, #4A3728)',
-      pin: { x: 238, y: 246, label: 'CHIKMAGALUR' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Chikmagalur, Karnataka · Coming 2026',
-    },
-    {
-      id: 'pepper-hollow', name: 'Pepper Hollow',
-      place: 'Wayanad, Kerala', note: 'Spice-belt plateau',
-      state: 'kl', status: 'soon', statusLabel: 'Coming 2026',
-      sizes: ['30-50'], budgetMin: 0, budgetMax: 0,
-      features: ['orchard', 'water', 'mountain'],
-      specs: [['Spice orchard', 'Character'], ['30–50c', 'Plot size']],
-      grad: 'linear-gradient(135deg, #4A6449, #2C2418)',
-      pin: { x: 218, y: 302, label: 'WAYANAD' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Wayanad, Kerala · Coming 2026',
+      id: 'sol-village', name: 'SOL Creator Village',
+      place: 'Attappadi, Kerala', note: 'Private hilltop · tar-road access',
+      state: 'kl', status: 'selling', statusLabel: 'Now selling',
+      sizes: [], budgetMin: 0, budgetMax: 0,
+      features: ['mountain', 'forest'],
+      specs: [['7 acres', 'Private hilltop'], ['Studios', 'Yoga shala · café'], ['Stays', 'Rent it when away']],
+      img: 'assets/mm2/sol-aframe.jpg',
+      imgAlt: 'An A-frame home on a misty hilltop at sunrise, SOL Creator Village',
+      pin: { lon: 76.52, lat: 11.19, label: 'Attappadi', side: 'lb' },
+      cta: 'Read about SOL →', ctaOpen: 'Hide details ↑', action: 'expand',
+      about: 'Spirit of Life (SOL) Creator Village is a place for people who want to create, live, grow and build differently. It is spread across 7 acres of private hilltop land amidst the forests and misty hills of Attappadi, with direct access from the main road. Own your land and build your own home, studio or creative space in your own style. As an owner you can simply enjoy the community or help create it, and when you are away you can make your space available for stays and experiences.',
+      facts: [['7 acres', 'Private hilltop'], ['Tar road', 'Direct access'], ['Studios', 'Yoga shala · café'], ['Amphitheatre', 'Coworking · podcast studio'], ['Clubhouse', 'Coming soon'], ['Retreats', 'Workshops · festivals']],
+      gallery: [
+        { src: 'assets/mm2/sol-aframe.jpg', label: 'Own your home in the wilderness' },
+        { src: 'assets/mm2/sol-hills.jpg', label: 'Up on the hills: mist over Attappadi' },
+        { src: 'assets/mm2/sol-aerial.jpg', label: 'The hilltop from above' },
+        { src: 'assets/mm2/sol-gathering.jpg', label: 'Gatherings under the trees' },
+      ],
+      expandNote: 'From the SOL Creator Village brochure. A limited number of spaces are available. Click a picture to enlarge.',
+      tip: 'Attappadi, Kerala · 7-acre private hilltop · Now selling',
     },
     {
       id: 'coconut-grove', name: 'Coconut Grove',
@@ -54,7 +52,7 @@
       specs: [['14.07 ac', 'Total area'], ['9.19 ac', 'Salable'], ['2', 'Parks']],
       img: 'assets/coconut_grove.jpeg',
       imgAlt: 'Coconut Grove — red-earth site fringed by coconut groves, Govindapuram',
-      pin: { x: 300, y: 352, label: 'GOVINDAPURAM' },
+      pin: { lon: 77.02, lat: 10.82, label: 'Govindapuram', side: 'rb' },
       cta: 'Read the layout →', action: 'expand',
       about: 'Our second project — an approved residential layout of house sites in Govindapuram Village, Kinathukadavu, Coimbatore District. 14.07 acres across S.F. Nos 20/1, 21/1, 22/A1 & 22/B1, with two landscaped parks, 9–12 m layout roads and 9.19 acres of salable plots (65%). Red-earth land fringed by coconut groves.',
       facts: [['14.07 ac', 'Total area'], ['9.19 ac', 'Salable (65%)'], ['1.13 ac', 'Two parks'], ['3.63 ac', 'Roads'], ['1:800', 'Layout scale'], ['Coimbatore', 'District']],
@@ -63,43 +61,8 @@
         { src: 'assets/coconut-layout-1.jpg', label: 'Layout plan — house sites, parks &amp; roads' },
         { src: 'assets/coconut-layout-2.jpg', label: 'Layout plan — plot areas &amp; dimensions' },
       ],
+      expandNote: 'Approved layout plan · &amp;t / L.B.S. survey, Aug 2025. Click a plan to enlarge.',
       tip: 'Govindapuram, Coimbatore · 14.07 acres · Now selling',
-    },
-    {
-      id: 'silver-oak-letters', name: 'Silver Oak Letters',
-      place: 'Sakleshpur, Karnataka', note: 'Misty Western Ghats',
-      state: 'ka', status: 'planned', statusLabel: 'Planned 2027',
-      sizes: ['30-50'], budgetMin: 0, budgetMax: 0,
-      features: ['coffee', 'mountain'],
-      specs: [['Shade forest', 'Character'], ['30–50c', 'Plot size']],
-      grad: 'linear-gradient(135deg, #7A8C7E, #35301F)',
-      pin: { x: 214, y: 216, label: 'SAKLESHPUR' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Sakleshpur, Karnataka · Planned 2027',
-    },
-    {
-      id: 'cardamom-diaries', name: 'The Cardamom Diaries',
-      place: 'Vagamon, Kerala', note: 'High-range meadows',
-      state: 'kl', status: 'planned', statusLabel: 'Planned 2027',
-      sizes: ['20-30'], budgetMin: 0, budgetMax: 0,
-      features: ['mountain', 'water'],
-      specs: [['Hill meadows', 'Character'], ['20–30c', 'Plot size']],
-      grad: 'linear-gradient(135deg, #6A8C88, #3A2A1B)',
-      pin: { x: 258, y: 380, label: 'VAGAMON' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Vagamon, Kerala · Planned 2027',
-    },
-    {
-      id: 'orange-notebook', name: 'The Orange Notebook',
-      place: 'Yercaud, Tamil Nadu', note: 'Shevaroy hills, 4,900 ft',
-      state: 'tn', status: 'planned', statusLabel: 'Planned 2027',
-      sizes: ['50+'], budgetMin: 0, budgetMax: 0,
-      features: ['orchard', 'mountain'],
-      specs: [['Orange orchards', 'Character'], ['50c +', 'Plot size']],
-      grad: 'linear-gradient(135deg, #C9973A, #4A3728)',
-      pin: { x: 336, y: 288, label: 'YERCAUD' },
-      cta: 'Get notified →', action: 'community',
-      tip: 'Yercaud, Tamil Nadu · Planned 2027',
     },
   ];
 
@@ -114,52 +77,198 @@
     return n;
   }
 
-  /* ── Render map pins ── */
-  function renderPins() {
-    const layer = document.getElementById('map-pins');
-    if (!layer) return;
-    layer.innerHTML = '';
-    PROJECTS.forEach(p => {
-      const g = el('g', { class: 'map-pin pin-' + p.status, 'data-id': p.id, tabindex: 0, role: 'button',
-        'aria-label': p.name + ' — ' + p.tip }, layer);
-      g.style.cursor = 'pointer';
-      const c = PIN_COLOR[p.status];
-      if (p.status === 'selling') {
-        const halo = el('circle', { cx: p.pin.x, cy: p.pin.y, r: 15, fill: c, opacity: '.18' }, g);
-        const anim = el('animate', { attributeName: 'r', values: '12;17;12', dur: '3.2s', repeatCount: 'indefinite' }, halo);
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 8, fill: c, opacity: '.45' }, g);
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 5, fill: c }, g);
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 2, fill: '#fff' }, g);
-        el('line', { x1: p.pin.x, y1: p.pin.y + 5, x2: p.pin.x, y2: p.pin.y + 18, stroke: c, 'stroke-width': 1.8 }, g);
-      } else if (p.status === 'soon') {
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 8, fill: c, opacity: '.35' }, g);
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 4, fill: c }, g);
-      } else {
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 7, fill: 'none', stroke: c, 'stroke-width': 1.2, 'stroke-dasharray': '2 2' }, g);
-        el('circle', { cx: p.pin.x, cy: p.pin.y, r: 2.5, fill: c }, g);
-      }
-      const label = el('text', {
-        x: p.pin.x, y: p.pin.y + (p.status === 'selling' ? 32 : 22),
-        'text-anchor': 'middle', 'font-family': 'Outfit,sans-serif',
-        'font-size': p.status === 'selling' ? 10 : 9,
-        fill: p.status === 'selling' ? '#4A3728' : c,
-        'letter-spacing': '.07em', 'font-weight': p.status === 'selling' ? '500' : '400',
-      }, g);
-      label.textContent = p.pin.label;
+  /* ── The map: India → South India → a state, with pins from the registry ── */
+  const MAP = { vb: null, level: 'south', state: null, raf: 0 };
+  const FOCUS = ['ka', 'kl', 'tn'];
+  const STATE_LABELS = { ka: [166, 505, 'Karnataka'], kl: [174, 650, 'Kerala'], tn: [224, 630, 'Tamil Nadu'],
+    ap: [296, 478, 'Andhra Pradesh'], tg: [238, 452, 'Telangana'], mh: [170, 420, 'Maharashtra'] };
+  const SEAS = [[96, 590, 'Arabian Sea'], [322, 596, 'Bay of Bengal'], [240, 690, 'Indian Ocean']];
+  const LEVEL_VB = { india: [0, 0, 612, 696], south: [100, 430, 200, 250] };
 
+  function stateBox(id) {
+    const b = MAP.detail.querySelector('.pm-state[data-id="' + id + '"]').getBBox();
+    const pad = Math.max(b.width, b.height) * 0.14;
+    return [b.x - pad, b.y - pad, b.width + pad * 2, b.height + pad * 2];
+  }
+
+  function buildMap() {
+    const G = window.TFS_INDIA;
+    MAP.india = document.getElementById('pm-india');
+    MAP.detail = document.getElementById('pm-detail');
+    MAP.links = document.getElementById('pm-links');
+    if (!G || !MAP.india || !MAP.detail) return false;
+    // mini India: every state, the south tinted, and a frame showing where the big map is looking
+    const mini = el('g', { class: 'pm-mini-states' }, MAP.india);
+    for (const id in G.states) {
+      const focus = FOCUS.includes(id);
+      const p = el('path', { d: G.states[id].d, class: 'pm-mstate' + (focus ? ' is-focus' : '') }, mini);
+      p.addEventListener('click', () => go(focus ? 'state' : 'south', focus ? id : null));
+    }
+    el('text', { x: 236, y: 330, class: 'pm-mini-label' }, MAP.india).textContent = 'INDIA';
+    MAP.frame = el('rect', { class: 'pm-frame' }, MAP.india);
+    // the big map
+    const states = el('g', { class: 'pm-states' }, MAP.detail);
+    for (const id in G.states) {
+      const focus = FOCUS.includes(id);
+      const p = el('path', { d: G.states[id].d, class: 'pm-state' + (focus ? ' is-focus' : ''), 'data-id': id }, states);
+      if (!focus) continue;
+      p.setAttribute('tabindex', 0); p.setAttribute('role', 'button');
+      p.setAttribute('aria-label', 'Zoom into ' + G.states[id].n);
+      p.addEventListener('click', () => go('state', id));
+      p.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go('state', id); } });
+    }
+    const labels = el('g', { class: 'pm-labels' }, MAP.detail);
+    for (const id in STATE_LABELS) {
+      const [x, y, t] = STATE_LABELS[id];
+      const g = el('g', { class: 'pm-anchor', 'data-x': x, 'data-y': y }, labels);
+      el('text', { class: 'pm-slabel' + (FOCUS.includes(id) ? ' is-focus' : ''), 'text-anchor': 'middle' }, g).textContent = t.toUpperCase();
+    }
+    SEAS.forEach(([x, y, t]) => {
+      const g = el('g', { class: 'pm-anchor', 'data-x': x, 'data-y': y }, labels);
+      el('text', { class: 'pm-sea', 'text-anchor': 'middle' }, g).textContent = t;
+    });
+    renderPins(el('g', { id: 'map-pins' }, MAP.detail));
+    return true;
+  }
+
+  function renderPins(layer) {
+    const project = window.TFS_INDIA.project;
+    PROJECTS.forEach(p => {
+      const [x, y] = project(p.pin.lon, p.pin.lat);
+      const g = el('g', { class: 'map-pin pm-anchor pin-' + p.status, 'data-id': p.id, 'data-x': x, 'data-y': y,
+        tabindex: 0, role: 'button', 'aria-label': p.name + ' — ' + p.tip }, layer);
+      el('circle', { cy: -8, r: 16, fill: 'transparent' }, g);                 // finger-sized tap area
+      if (p.status === 'selling') {
+        const halo = el('circle', { r: 6, class: 'pm-halo' }, g);
+        el('animate', { attributeName: 'r', values: '4;9;4', dur: '3.2s', repeatCount: 'indefinite' }, halo);
+        el('path', { d: 'M0 0c-5-6-8-9.5-8-13.5a8 8 0 0 1 16 0c0 4-3 7.5-8 13.5Z', class: 'pm-drop' }, g);
+        el('circle', { cy: -13.5, r: 3, fill: '#fff' }, g);
+      } else if (p.status === 'soon') {
+        el('path', { d: 'M0 0c-4.4-5.2-7-8.3-7-11.8a7 7 0 0 1 14 0c0 3.5-2.6 6.6-7 11.8Z', class: 'pm-drop' }, g);
+        el('circle', { cy: -11.8, r: 2.6, fill: '#fff' }, g);
+      } else {
+        el('circle', { r: 6.5, class: 'pm-ring' }, g);
+        el('circle', { r: 2.4, class: 'pm-dot' }, g);
+      }
+      // side: l / r, with a trailing b to sit the label below the pin (keeps close pins apart)
+      const left = p.pin.side[0] === 'l', below = p.pin.side[1] === 'b';
+      el('text', { class: 'pm-plabel', x: left ? -11 : 11, y: below ? 10 : (p.status === 'planned' ? 4 : -9),
+        'text-anchor': left ? 'end' : 'start' }, g).textContent = p.pin.label;
       const activate = e => {
-        if (typeof window.mapTip === 'function') {
-          const svg = layer.closest('svg');
-          const r = svg.getBoundingClientRect();
-          const cx = e.clientX || r.left + (p.pin.x / 600) * r.width;
-          const cy = e.clientY || r.top + (p.pin.y / 430) * r.height;
-          window.mapTip({ clientX: cx, clientY: cy }, p.name, p.tip);
-        }
+        const r = g.getBoundingClientRect();
+        if (typeof window.mapTip === 'function')
+          window.mapTip({ clientX: e.clientX || r.left + r.width / 2, clientY: e.clientY || r.top }, p.name, p.tip);
         highlightCard(p.id);
       };
-      g.addEventListener('click', activate);
+      g.addEventListener('click', e => { e.stopPropagation(); activate(e); });
       g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(e); } });
     });
+  }
+
+  // draw the current view; pins and labels keep the same on-screen size at every zoom
+  function paint() {
+    const [x, y, w, h] = MAP.vb;
+    MAP.detail.setAttribute('viewBox', x + ' ' + y + ' ' + w + ' ' + h);
+    const k = Math.max(w / (MAP.detail.clientWidth || 1), h / (MAP.detail.clientHeight || 1));
+    MAP.detail.querySelectorAll('.pm-anchor').forEach(a =>
+      a.setAttribute('transform', 'translate(' + a.dataset.x + ' ' + a.dataset.y + ') scale(' + k + ')'));
+    MAP.detail.style.setProperty('--k', k);
+    // the frame on the mini map shows what the big map covers (what is actually visible)
+    const cw = MAP.detail.clientWidth * k, ch = MAP.detail.clientHeight * k;
+    const fx = x - (cw - w) / 2, fy = y - (ch - h) / 2;
+    const fw = Math.min(cw, 612), fh = Math.min(ch, 696);
+    MAP.frame.setAttribute('x', Math.max(0, fx)); MAP.frame.setAttribute('y', Math.max(0, fy));
+    MAP.frame.setAttribute('width', fw); MAP.frame.setAttribute('height', fh);
+    drawLinks();
+  }
+
+  // dashed guides from the frame on the mini map to the big map
+  function drawLinks() {
+    const L = MAP.links;
+    if (!L || !L.clientWidth || getComputedStyle(L).display === 'none') return;
+    const base = L.getBoundingClientRect(), f = MAP.frame.getBoundingClientRect(), d = MAP.detail.getBoundingClientRect();
+    if (!f.width || MAP.level === 'india') { L.innerHTML = ''; return; }
+    L.innerHTML = [[f.right, f.top, d.left, d.top + 6], [f.right, f.bottom, d.left, d.bottom - 6]].map(([x1, y1, x2, y2]) =>
+      '<line x1="' + (x1 - base.left) + '" y1="' + (y1 - base.top) + '" x2="' + (x2 - base.left) + '" y2="' + (y2 - base.top) + '"/>').join('');
+  }
+
+  function tween(to) {
+    cancelAnimationFrame(MAP.raf);
+    const from = MAP.vb.slice(), t0 = performance.now();
+    const dur = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 750;
+    if (!dur) { MAP.vb = to.slice(); paint(); return; }
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      MAP.vb = from.map((v, i) => v + (to[i] - v) * e); paint();
+      if (k < 1) MAP.raf = requestAnimationFrame(step);
+    };
+    MAP.raf = requestAnimationFrame(step);
+    setTimeout(() => { if (MAP.vb.some((v, i) => Math.abs(v - to[i]) > .01)) { MAP.vb = to.slice(); paint(); } }, dur + 400);
+  }
+
+  function go(level, stateId, fromFilter) {
+    MAP.level = level; MAP.state = level === 'state' ? stateId : null;
+    tween(level === 'state' ? stateBox(stateId) : LEVEL_VB[level]);
+    const pm = document.getElementById('pm');
+    pm.dataset.level = level;
+    MAP.detail.querySelectorAll('.pm-state').forEach(p => p.classList.toggle('is-picked', p.dataset.id === MAP.state));
+    const sep = pm.querySelector('.pm-crumb-sep'), crumb = pm.querySelector('.pm-crumb-state');
+    sep.hidden = crumb.hidden = !MAP.state;
+    if (MAP.state) crumb.textContent = window.TFS_INDIA.states[MAP.state].n;
+    pm.querySelectorAll('.pm-crumbs [data-go]').forEach(b => b.classList.toggle('is-on', b.dataset.go === level));
+    crumb.classList.toggle('is-on', level === 'state');
+    const order = ['india', 'south', 'state'], cur = order.indexOf(level);
+    pm.querySelectorAll('.pm-steps li').forEach(li => {
+      const i = order.indexOf(li.dataset.step);
+      li.classList.toggle('is-on', i === cur); li.classList.toggle('is-done', i < cur);
+    });
+    // the map and the Location filter move together
+    if (!fromFilter) {
+      const sel = document.getElementById('pf-location'), want = MAP.state || 'all';
+      if (sel && sel.value !== want) { sel.value = want; applyFilters(); }
+    }
+  }
+
+  function bindMap() {
+    const pm = document.getElementById('pm');
+    pm.querySelectorAll('.pm-crumbs [data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+    pm.querySelectorAll('.pm-steps li').forEach(li => li.addEventListener('click', () =>
+      li.dataset.step === 'state' ? go('state', MAP.state || 'tn') : go(li.dataset.step)));
+    pm.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.zoom === 'reset') return go(MAP.state ? 'state' : 'south', MAP.state, true);
+      const f = b.dataset.zoom === 'in' ? 0.72 : 1 / 0.72;
+      const [x, y, w, h] = MAP.vb, nw = Math.min(700, Math.max(24, w * f)), nh = nw * h / w;
+      tween([x + (w - nw) / 2, y + (h - nh) / 2, nw, nh]);
+    }));
+    // drag to pan
+    let drag = null;
+    MAP.detail.addEventListener('pointerdown', e => {
+      if (e.target.closest('.map-pin')) return;
+      drag = { x: e.clientX, y: e.clientY, vb: MAP.vb.slice(), moved: false };
+    });
+    window.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 6) return;
+      drag.moved = true; MAP.detail.classList.add('is-dragging');
+      const k = Math.max(drag.vb[2] / MAP.detail.clientWidth, drag.vb[3] / MAP.detail.clientHeight);
+      MAP.vb = [drag.vb[0] - dx * k, drag.vb[1] - dy * k, drag.vb[2], drag.vb[3]]; paint();
+    });
+    window.addEventListener('pointerup', () => {
+      // a drag should not also count as a click on the state underneath
+      if (drag && drag.moved) MAP.detail.addEventListener('click', e => e.stopPropagation(), { capture: true, once: true });
+      drag = null; MAP.detail.classList.remove('is-dragging');
+    });
+    document.getElementById('pf-location').addEventListener('change', e => {
+      const v = e.target.value;
+      go(v === 'all' ? 'south' : 'state', v === 'all' ? null : v, true);
+    });
+    document.getElementById('pf-reset').addEventListener('click', () => go('south', null, true));
+    window.addEventListener('resize', () => MAP.vb && paint());
+    // the portal starts hidden: repaint once it is shown so sizes are right
+    const sec = document.getElementById('portal');
+    if (sec) new MutationObserver(() => { if (sec.classList.contains('active')) requestAnimationFrame(paint); })
+      .observe(sec, { attributes: true, attributeFilter: ['class'] });
   }
 
   /* ── Render project cards ── */
@@ -185,7 +294,7 @@
               <img data-src="${g.src}" alt="${g.label}" loading="lazy">
               <figcaption>${g.label}</figcaption>
             </figure>`).join('')}</div>
-          <p class="lcard-expand-note">Approved layout plan · &amp;t / L.B.S. survey, Aug 2025. Click a plan to enlarge.</p>
+          ${p.expandNote ? `<p class="lcard-expand-note">${p.expandNote}</p>` : ''}
         </div>`) : '';
       card.innerHTML =
         `<div class="lcard-img" ${p.grad ? `style="background:${p.grad};display:flex;align-items:center;justify-content:center;"` : ''}>
@@ -209,7 +318,7 @@
           panel.hidden = !opening;
           card.classList.toggle('expanded', opening);
           const cta = card.querySelector('.lcard-cta');
-          if (cta) cta.textContent = opening ? 'Hide layout ↑' : p.cta;
+          if (cta) cta.textContent = opening ? (p.ctaOpen || 'Hide layout ↑') : p.cta;
           if (opening && typeof window.observeLazy === 'function') window.observeLazy(panel);
           return;
         }
@@ -288,10 +397,11 @@
 
   function init() {
     if (!document.getElementById('project-cards')) return;
-    renderPins();
+    const mapped = buildMap();
     renderCards();
     bindFilters();
     applyFilters();
+    if (mapped) { MAP.vb = LEVEL_VB.south.slice(); bindMap(); go('south', null, true); }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
