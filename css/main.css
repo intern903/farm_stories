@@ -117,12 +117,23 @@ img.lazy-loaded { opacity:1; transition:opacity .8s ease; }
 .book-cover, .book-page {
   position:absolute; inset:0; transform-style:preserve-3d;
   transform-origin:left center;
+  /* Each leaf sits at its own depth. iOS Safari ignores z-index inside a 3D
+     scene and sorts layers by depth, so leaves sharing one plane z-fight and
+     the page underneath shows through while the top one turns. --z is the
+     depth while the leaf is on the right-hand stack, --zt once it is turned
+     (later-turned leaves lie on top). Both transforms keep the same function
+     list so the turn interpolates as a rotation. */
+  transform:translateZ(var(--z, 0px)) rotateY(0deg);
   transition:transform 1.5s cubic-bezier(.35,.1,.22,1);
 }
-.book-cover.turned, .book-page.turned { transform:rotateY(-178deg); }
+#bcover { --z:4px; --zt:1px; }
+#bp1    { --z:3px; --zt:2px; }
+#bp2    { --z:2px; --zt:3px; }
+#bp3    { --z:1px; }
+.book-cover.turned, .book-page.turned { transform:translateZ(var(--zt, 0px)) rotateY(-178deg); }
 
 .page-face {
-  position:absolute; inset:0; backface-visibility:hidden;
+  position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden;
   border-radius:3px 12px 12px 3px; overflow:hidden;
 }
 .page-back, .cover-back { transform:rotateY(180deg); border-radius:12px 3px 3px 12px; }
@@ -232,9 +243,12 @@ img.lazy-loaded { opacity:1; transition:opacity .8s ease; }
   #skip-intro { bottom:max(28px, env(safe-area-inset-bottom)); font-size:13px; padding:14px 30px; color:rgba(235,217,174,.85); }
 }
 
-/* Page-turn hover preview (slight lift of the corner) */
-.turnable:not(.turned):hover { transform:rotateY(-9deg); }
-.turnable.turned:hover { transform:rotateY(-178deg); }
+/* Page-turn hover preview (slight lift of the corner). Mouse only: on touch
+   screens :hover sticks after a tap and leaves the page half-lifted. */
+@media (hover:hover) and (pointer:fine) {
+  .turnable:not(.turned):hover { transform:translateZ(var(--z, 0px)) rotateY(-9deg); }
+  .turnable.turned:hover { transform:translateZ(var(--zt, 0px)) rotateY(-178deg); }
+}
 
 @media (prefers-reduced-motion:reduce) {
   #book-intro { display:none; }
