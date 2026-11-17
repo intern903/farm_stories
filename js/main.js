@@ -11,9 +11,13 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ── Navigation (preserved API) ── */
 function show(id) {
+  // The Community and Agri-tech now live together under one 'Coming soon' page
+  if (id === 'community' || id === 'agritech') id = 'comingsoon';
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
   const target = document.getElementById(id);
   if (target) target.classList.add('active');
+  // the nav sits transparent over the homepage cover until you scroll
+  document.body.classList.toggle('on-home', id === 'home');
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   const el = document.getElementById('nl-' + id);
   if (el) el.classList.add('active');
@@ -31,30 +35,69 @@ function show(id) {
 }
 // Deep-link: open the section named in the URL hash on load / hashchange
 function routeFromHash() {
-  const id = (location.hash || '').replace('#', '');
+  let id = (location.hash || '').replace('#', '');
+  if (id === 'community' || id === 'agritech') id = 'comingsoon';
   if (id && document.getElementById(id) && document.getElementById(id).tagName === 'SECTION') show(id);
 }
 window.addEventListener('hashchange', routeFromHash);
 
 /* ── Project tabs (preserved API) ── */
-function openTab(name) {
-  show('projects');
-  const tabs = ['overview', 'plotmap', 'farmhouse', 'views', 'benefits', 'brochure'];
+const PJ_STEPS = ['overview', 'plotmap', 'farmhouse', 'views', 'benefits', 'brochure'];
+const PJ_LABELS = ['Overview', 'Plot Map', 'Farmhouse Design', 'Site Views', 'Benefits', 'Brochure & Contact'];
+/* Open one step of the Our Projects journey. `guided` (a stepper or Next/Back
+   press) brings the stepper back into view instead of jumping to the page top. */
+function openTab(name, guided) {
+  const proj = document.getElementById('projects');
+  if (!proj.classList.contains('active')) show('projects');
   const btns = document.querySelectorAll('.ptab');
   const panes = document.querySelectorAll('.tab-pane');
-  const idx = tabs.indexOf(name);
-  btns.forEach(b => b.classList.remove('active'));
-  panes.forEach(p => p.classList.remove('active'));
-  if (idx >= 0) {
-    btns[idx].classList.add('active');
-    const pane = document.getElementById('pane-' + name);
-    pane.classList.add('active');
-    // Force-load any lazy media in the just-opened pane — a tab pane starts
-    // display:none, where IntersectionObserver may never fire.
-    if (typeof loadLazyIn === 'function') loadLazyIn(pane);
+  const idx = PJ_STEPS.indexOf(name);
+  if (idx < 0) return;
+  btns.forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.classList.toggle('done', i < idx);
+    if (i === idx) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+  });
+  const prevIdx = PJ_STEPS.findIndex(k => document.getElementById('pane-' + k).classList.contains('active'));
+  panes.forEach(p => p.classList.remove('active', 'from-left', 'from-right'));
+  const pane = document.getElementById('pane-' + name);
+  pane.classList.add('active');
+  // feedback for every click: the step pops, the content slides in from the direction of travel
+  if (prevIdx >= 0 && prevIdx !== idx) {
+    pane.classList.add(idx > prevIdx ? 'from-right' : 'from-left');
+    const btn = btns[idx];
+    btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+    const now = document.getElementById('pj-step-now');
+    if (now) { now.classList.remove('flip'); void now.offsetWidth; now.classList.add('flip'); }
+  }
+  // Force-load any lazy media in the just-opened pane — a tab pane starts
+  // display:none, where IntersectionObserver may never fire.
+  if (typeof loadLazyIn === 'function') loadLazyIn(pane);
+  const bar = document.querySelector('.pj-stepper');
+  if (bar) bar.style.setProperty('--pj-progress', idx / (PJ_STEPS.length - 1));
+  const wrap = document.getElementById('pj-stepper');
+  if (wrap) wrap.style.setProperty('--pj-glow', idx / (PJ_STEPS.length - 1));
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('pj-step-now', idx + 1); set('pj-nav-now', idx + 1);
+  const prev = document.getElementById('pj-prev'), next = document.getElementById('pj-next');
+  if (prev) { prev.disabled = idx === 0; prev.onclick = () => openTab(PJ_STEPS[idx - 1], true); }
+  if (next) {
+    const last = idx === PJ_STEPS.length - 1;
+    next.textContent = last ? 'Book a site visit →' : 'Next: ' + PJ_LABELS[idx + 1] + ' →';
+    next.onclick = last ? () => (typeof openVisitForm === 'function' ? openVisitForm('Mango Meadows') : show('portal')) : () => openTab(PJ_STEPS[idx + 1], true);
+  }
+  if (guided) {
+    const top = document.getElementById('pj-stepper');
+    if (top) window.scrollTo({ top: top.getBoundingClientRect().top + window.scrollY - 84, behavior: 'smooth' });
   }
   requestAnimationFrame(observeReveals);
 }
+// wire the Next / Back controls for step 1 without switching pages
+document.addEventListener('DOMContentLoaded', () => {
+  const next = document.getElementById('pj-next'), prev = document.getElementById('pj-prev');
+  if (next) next.onclick = () => openTab('plotmap', true);
+  if (prev) prev.disabled = true;
+});
 
 /* ── What's New filter (preserved API) ── */
 function filterPosts(type, btn) {
@@ -187,7 +230,11 @@ async function initMotion() {
 
   // Typography reveal on the hero title
   if (window.SplitType) {
-    const split = new SplitType('#hero-title', { types: 'lines,words' });
+    // Split into words only, after the webfonts load: splitting into fixed
+    // lines froze fallback-font line breaks and dropped the spaces at them
+    // ("in nature", "more meaning"). Words keep the browser's own wrapping.
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const split = new SplitType('#hero-title', { types: 'words' });
     gsap.from(split.words, {
       yPercent: 110, opacity: 0, duration: 1.1, ease: 'power3.out',
       stagger: 0.06, delay: 0.15,
@@ -216,6 +263,7 @@ async function initMotion() {
 let lazyObserver;
 function loadLazyEl(el) {
   if (el.dataset.src) {
+    if (el.dataset.srcset) { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); }
     el.src = el.dataset.src;
     el.addEventListener('load', () => el.classList.add('lazy-loaded'), { once: true });
     el.removeAttribute('data-src');
@@ -283,22 +331,41 @@ function initBrandLogo() {
     'assets/logo.png', 'assets/logo.svg', 'assets/logo.webp',
     'assets/logo.jpg', 'assets/logo.jpeg', 'logo.png',
   ];
+  const v = '?v=' + (window.TFS_ASSET_V || '1');   // bust cached copies when the logo changes
   let i = 0;
   const probe = new Image();
-  probe.onload = () => applyBrandLogo(probe.src);
-  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
-  probe.src = candidates[0];
+  probe.onload = () => applyBrandLogo(probe);
+  probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i] + v; };
+  probe.src = candidates[0] + v;
 }
-function applyBrandLogo(src) {
+const LOGO_SLOTS = '.nav-logo-img, .foot-logo, .quote-logo';
+function applyBrandLogo(probe) {
   document.body.classList.add('has-brand-logo');
-  ['.nav-logo-img', '.foot-logo', '.quote-logo'].forEach(sel => {
-    const slot = document.querySelector(sel);
-    if (!slot) return;
+  // A near-square mark is a seal/badge: its lettering is too small to read in
+  // the nav, so the text wordmark stays beside it (see .logo-is-seal in CSS).
+  const ratio = probe.naturalWidth / probe.naturalHeight;
+  if (ratio > 0.85 && ratio < 1.15) document.body.classList.add('logo-is-seal');
+  document.querySelectorAll(LOGO_SLOTS).forEach(slot => {
     slot.innerHTML = '';
     const im = new Image();
-    im.src = src; im.alt = 'The Farm Stories';
+    im.src = probe.src; im.alt = 'The Farm Stories'; im.className = 'logo-day';
     slot.appendChild(im);
   });
+  // Optional light-on-dark version (assets/logo-night.png, made by
+  // tools/logo_variants.py) for night view and the dark bands.
+  const night = new Image();
+  night.onload = () => {
+    document.body.classList.add('has-night-logo');
+    // The book cover is dark leather: it only takes the light version (foiled in CSS)
+    const cover = document.querySelector('.cover-monogram');
+    if (cover) cover.innerHTML = '';
+    document.querySelectorAll(LOGO_SLOTS + ', .cover-monogram').forEach(slot => {
+      const im = new Image();
+      im.src = night.src; im.alt = ''; im.className = 'logo-night';
+      slot.appendChild(im);
+    });
+  };
+  night.src = 'assets/logo-night.png?v=' + (window.TFS_ASSET_V || '1');
 }
 
 /* ── Mobile: collapse each filter panel into a bottom-sheet ──
@@ -388,6 +455,9 @@ function initScrollChrome() {
     if (sticky) {
       sticky.hidden = false;
       sticky.classList.toggle('shown', y > window.innerHeight * 0.9);
+      // step aside once the footer (with its own contacts) comes into view
+      const foot = document.querySelector('footer');
+      sticky.classList.toggle('at-footer', !!foot && foot.getBoundingClientRect().top < window.innerHeight - 40);
     }
   }, { passive: true });
 
@@ -412,6 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeVisitForm();
   });
 
+  document.body.classList.toggle('on-home', !!document.querySelector('#home.active'));
   observeReveals();
   animateCounters();
   initScrollChrome();
@@ -433,3 +504,31 @@ document.addEventListener('DOMContentLoaded', () => {
 window.wakeHero = wakeHero;
 window.observeLazy = observeLazy;
 window.mapTip = mapTip;
+
+/* ── Projects cover: drag the vertical line to move between day and night ── */
+document.querySelectorAll('.pj-compare').forEach(fig => {
+  const range = fig.querySelector('.pj-cmp-range');
+  if (!range) return;
+  const set = v => fig.style.setProperty('--pos', v + '%');
+  range.addEventListener('input', () => set(range.value));
+  // the images start lazy: load both together so the slider never reveals a blank half
+  if (typeof loadLazyIn === 'function') loadLazyIn(fig);
+});
+
+/* ── Site Views: switch between photo albums ── */
+document.querySelectorAll('.sv-albums').forEach(bar => {
+  const pane = bar.closest('.tab-pane');
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('.sv-album');
+    if (!btn) return;
+    const album = btn.dataset.album;
+    bar.querySelectorAll('.sv-album').forEach(b => {
+      const on = b === btn;
+      b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on);
+    });
+    pane.querySelectorAll('.sv-grid').forEach(g => { g.hidden = g.dataset.album !== album; });
+    pane.querySelectorAll('.sv-note').forEach(n => { n.hidden = n.dataset.note !== album; });
+    const grid = pane.querySelector('.sv-grid[data-album="' + album + '"]');
+    if (typeof loadLazyIn === 'function') loadLazyIn(grid);
+  });
+});
